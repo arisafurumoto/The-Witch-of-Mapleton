@@ -1,0 +1,64 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
+size = Vector2(900, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
+size = Vector2(16, 600)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tree_base"]
+size = Vector2(28, 16)
+
+[node name="ForestClearing" type="Node2D"]
+
+[node name="Background" type="Polygon2D" parent="."]
+color = Color(0.13, 0.2, 0.14, 1)
+polygon = PackedVector2Array(0, 0, 900, 0, 900, 600, 0, 600)
+
+[node name="Floor" type="Polygon2D" parent="."]
+color = Color(0.3, 0.42, 0.24, 1)
+polygon = PackedVector2Array(16, 16, 884, 16, 884, 584, 16, 584)
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(450, 8)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="CollBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(450, 592)
+shape = SubResource("RectangleShape2D_wall_h")
+
+[node name="CollLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(8, 300)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="CollRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(892, 300)
+shape = SubResource("RectangleShape2D_wall_v")
+
+[node name="Tree" type="StaticBody2D" parent="."]
+position = Vector2(300, 250)
+
+[node name="Canopy" type="Polygon2D" parent="Tree"]
+color = Color(0.2, 0.34, 0.2, 1)
+polygon = PackedVector2Array(-34, -84, 34, -84, 28, -28, -28, -28)
+
+[node name="Trunk" type="Polygon2D" parent="Tree"]
+color = Color(0.32, 0.22, 0.15, 1)
+polygon = PackedVector2Array(-8, -30, 8, -30, 8, 0, -8, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Tree"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_tree_base")
+
+[node name="Door" parent="." instance=ExtResource("2_door")]
+position = Vector2(450, 540)
+prompt = "To shop"
+target_scene = "res://scenes/world/ShopInterior.tscn"
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(450, 460)

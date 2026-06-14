@@ -1,0 +1,26 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/core/Door.gd" id="1_door"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_door_zone"]
+size = Vector2(56, 60)
+
+[node name="Door" type="Area2D"]
+script = ExtResource("1_door")
+prompt = "Enter"
+
+[node name="Visual" type="Polygon2D" parent="."]
+color = Color(0.36, 0.24, 0.18, 1)
+polygon = PackedVector2Array(-14, -44, 14, -44, 14, 0, -14, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_door_zone")
+
+[node name="PromptLabel" type="Label" parent="."]
+offset_left = -44.0
+offset_top = -70.0
+offset_right = 44.0
+offset_bottom = -54.0
+horizontal_alignment = 1
+text = "Enter"
