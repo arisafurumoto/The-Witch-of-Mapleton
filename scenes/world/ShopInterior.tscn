@@ -1,6 +1,8 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
+[ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="3_door"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -10,6 +12,9 @@ size = Vector2(16, 640)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle"]
 size = Vector2(96, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sign_zone"]
+size = Vector2(56, 56)
 
 [node name="ShopInterior" type="Node2D"]
 
@@ -48,6 +53,31 @@ polygon = PackedVector2Array(-48, -32, 48, -32, 48, 32, -48, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
 shape = SubResource("RectangleShape2D_obstacle")
+
+[node name="Sign" type="Area2D" parent="."]
+position = Vector2(300, 280)
+script = ExtResource("2_interactable")
+prompt = "Read sign"
+
+[node name="Visual" type="Polygon2D" parent="Sign"]
+color = Color(0.78, 0.66, 0.45, 1)
+polygon = PackedVector2Array(-14, -34, 14, -34, 14, -8, -14, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sign"]
+shape = SubResource("RectangleShape2D_sign_zone")
+
+[node name="PromptLabel" type="Label" parent="Sign"]
+offset_left = -40.0
+offset_top = -58.0
+offset_right = 40.0
+offset_bottom = -42.0
+horizontal_alignment = 1
+text = "Read sign"
+
+[node name="Door" parent="." instance=ExtResource("3_door")]
+position = Vector2(480, 64)
+prompt = "To forest"
+target_scene = "res://scenes/world/ForestClearing.tscn"
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(480, 440)

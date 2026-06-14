@@ -11,8 +11,14 @@ const DIRECTIONS := [
 ]
 
 @onready var sprite: AnimatedSprite2D = $Sprite
+@onready var detector: Area2D = $InteractionDetector
 
 var facing: String = "south"
+var _interactables: Array[Area2D] = []
+
+func _ready() -> void:
+	detector.area_entered.connect(_on_detector_area_entered)
+	detector.area_exited.connect(_on_detector_area_exited)
 
 func _physics_process(delta: float) -> void:
 	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
@@ -22,6 +28,13 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, friction * delta)
 	move_and_slide()
 	_update_animation()
+	_update_prompts()
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("interact"):
+		var target := _nearest_interactable()
+		if target:
+			target.interact()
 
 func _update_animation() -> void:
 	if velocity.length() > 5.0:
@@ -34,3 +47,30 @@ func _direction_name(v: Vector2) -> String:
 	var index := int(round(rad_to_deg(v.angle()) / 45.0))
 	index = (index % 8 + 8) % 8
 	return DIRECTIONS[index]
+
+func _on_detector_area_entered(area: Area2D) -> void:
+	if area.has_method("interact") and not _interactables.has(area):
+		_interactables.append(area)
+
+func _on_detector_area_exited(area: Area2D) -> void:
+	_interactables.erase(area)
+	if area.has_method("show_prompt"):
+		area.show_prompt(false)
+
+func _nearest_interactable() -> Area2D:
+	var nearest: Area2D = null
+	var best := INF
+	for it in _interactables:
+		if not is_instance_valid(it):
+			continue
+		var d := global_position.distance_to(it.global_position)
+		if d < best:
+			best = d
+			nearest = it
+	return nearest
+
+func _update_prompts() -> void:
+	var nearest := _nearest_interactable()
+	for it in _interactables:
+		if it.has_method("show_prompt"):
+			it.show_prompt(it == nearest)
