@@ -1,8 +1,12 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="3_door"]
+[ext_resource type="Script" path="res://scripts/core/CraftingStation.gd" id="4_crafting"]
+[ext_resource type="Script" path="res://scripts/npc/CustomerNPC.gd" id="5_customer"]
+[ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="6_cat"]
+[ext_resource type="Script" path="res://scripts/core/Bed.gd" id="7_bed"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -16,7 +20,17 @@ size = Vector2(96, 64)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sign_zone"]
 size = Vector2(56, 56)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cauldron_zone"]
+size = Vector2(64, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_customer_zone"]
+size = Vector2(60, 60)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_zone"]
+size = Vector2(80, 64)
+
 [node name="ShopInterior" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color(0.18, 0.13, 0.16, 1)
@@ -58,6 +72,8 @@ shape = SubResource("RectangleShape2D_obstacle")
 position = Vector2(300, 280)
 script = ExtResource("2_interactable")
 prompt = "Read sign"
+speaker = "Sign"
+dialogue = "Marigold's Magic Shop.\nGather in the forest, brew at the cauldron.\nCustomers welcome."
 
 [node name="Visual" type="Polygon2D" parent="Sign"]
 color = Color(0.78, 0.66, 0.45, 1)
@@ -74,10 +90,81 @@ offset_bottom = -42.0
 horizontal_alignment = 1
 text = "Read sign"
 
+[node name="Cauldron" type="Area2D" parent="."]
+position = Vector2(680, 300)
+script = ExtResource("4_crafting")
+prompt = "Craft Tea"
+
+[node name="Visual" type="Polygon2D" parent="Cauldron"]
+color = Color(0.24, 0.3, 0.36, 1)
+polygon = PackedVector2Array(-22, -34, 22, -34, 26, -6, -26, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cauldron"]
+position = Vector2(0, -18)
+shape = SubResource("RectangleShape2D_cauldron_zone")
+
+[node name="PromptLabel" type="Label" parent="Cauldron"]
+offset_left = -70.0
+offset_top = -64.0
+offset_right = 70.0
+offset_bottom = -48.0
+horizontal_alignment = 1
+text = "Craft Tea"
+
 [node name="Door" parent="." instance=ExtResource("3_door")]
 position = Vector2(480, 64)
 prompt = "To forest"
 target_scene = "res://scenes/world/ForestClearing.tscn"
 
+[node name="Customer" type="Area2D" parent="."]
+position = Vector2(250, 200)
+script = ExtResource("5_customer")
+prompt = "Talk"
+request_id = "first_calming_tea_request"
+
+[node name="Visual" type="Polygon2D" parent="Customer"]
+color = Color(0.45, 0.5, 0.7, 1)
+polygon = PackedVector2Array(-13, -44, 13, -44, 13, 0, -13, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Customer"]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_customer_zone")
+
+[node name="PromptLabel" type="Label" parent="Customer"]
+offset_left = -40.0
+offset_top = -66.0
+offset_right = 40.0
+offset_bottom = -50.0
+horizontal_alignment = 1
+text = "Talk"
+
+[node name="Bed" type="Area2D" parent="."]
+position = Vector2(820, 200)
+script = ExtResource("7_bed")
+prompt = "Sleep"
+
+[node name="Visual" type="Polygon2D" parent="Bed"]
+color = Color(0.6, 0.32, 0.36, 1)
+polygon = PackedVector2Array(-34, -52, 34, -52, 34, 0, -34, 0)
+
+[node name="Pillow" type="Polygon2D" parent="Bed"]
+color = Color(0.9, 0.88, 0.82, 1)
+polygon = PackedVector2Array(-30, -48, 30, -48, 30, -34, -30, -34)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_bed_zone")
+
+[node name="PromptLabel" type="Label" parent="Bed"]
+offset_left = -40.0
+offset_top = -74.0
+offset_right = 40.0
+offset_bottom = -58.0
+horizontal_alignment = 1
+text = "Sleep"
+
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(480, 440)
+
+[node name="Cat" parent="." instance=ExtResource("6_cat")]
+position = Vector2(430, 450)

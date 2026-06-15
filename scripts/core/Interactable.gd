@@ -7,6 +7,8 @@ extends Area2D
 signal interacted
 
 @export var prompt: String = "Examine"
+@export var speaker: String = ""
+@export_multiline var dialogue: String = ""
 
 @onready var _label: Label = get_node_or_null("PromptLabel")
 @onready var _visual: CanvasItem = get_node_or_null("Visual")
@@ -22,8 +24,17 @@ func show_prompt(value: bool) -> void:
 
 func interact() -> void:
 	interacted.emit()
-	print("Interacted with: ", prompt)
+	var lines := _dialogue_lines()
+	if not lines.is_empty():
+		DialogueBox.show_dialogue(speaker, lines)
+		return
 	if _visual:
 		var tween := create_tween()
 		tween.tween_property(_visual, "modulate", Color(1.6, 1.6, 1.6, 1.0), 0.08)
 		tween.tween_property(_visual, "modulate", Color(1, 1, 1, 1), 0.12)
+
+func _dialogue_lines() -> Array:
+	var text := dialogue.strip_edges()
+	if text == "":
+		return []
+	return text.split("\n", false)

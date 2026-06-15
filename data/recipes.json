@@ -1,0 +1,17 @@
+[
+  {
+    "id": "calming_tea",
+    "name": "Calming Tea",
+    "station": "cauldron",
+    "ingredients": {
+      "moonleaf": 2,
+      "forest_water": 1
+    },
+    "output": {
+      "item_id": "calming_tea",
+      "quantity": 1
+    },
+    "craft_time": 1,
+    "known_by_default": true
+  }
+]

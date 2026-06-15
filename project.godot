@@ -15,6 +15,19 @@ run/main_scene="res://scenes/world/ShopInterior.tscn"
 config/features=PackedStringArray("4.1", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+ItemDatabase="*res://scripts/systems/ItemDatabase.gd"
+Inventory="*res://scripts/systems/Inventory.gd"
+RecipeDatabase="*res://scripts/systems/RecipeDatabase.gd"
+CraftingSystem="*res://scripts/systems/CraftingSystem.gd"
+ShopRequestDatabase="*res://scripts/systems/ShopRequestDatabase.gd"
+ShopSystem="*res://scripts/systems/ShopSystem.gd"
+DialogueBox="*res://scenes/ui/DialogueBox.tscn"
+DaySystem="*res://scripts/systems/DaySystem.gd"
+HUD="*res://scenes/ui/HUD.tscn"
+SaveSystem="*res://scripts/systems/SaveSystem.gd"
+
 [display]
 
 window/size/viewport_width=640

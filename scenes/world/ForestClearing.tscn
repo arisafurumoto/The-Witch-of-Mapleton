@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/world/Gatherable.tscn" id="3_gatherable"]
+[ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="4_cat"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(900, 16)
@@ -13,6 +15,7 @@ size = Vector2(16, 600)
 size = Vector2(28, 16)
 
 [node name="ForestClearing" type="Node2D"]
+y_sort_enabled = true
 
 [node name="Background" type="Polygon2D" parent="."]
 color = Color(0.13, 0.2, 0.14, 1)
@@ -55,6 +58,22 @@ polygon = PackedVector2Array(-8, -30, 8, -30, 8, 0, -8, 0)
 position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_tree_base")
 
+[node name="MoonleafBush" parent="." instance=ExtResource("3_gatherable")]
+position = Vector2(680, 190)
+prompt = "Gather Moonleaf"
+gatherable_id = "moonleaf_bush_001"
+item_id = "moonleaf"
+item_quantity = 2
+visual_color = Color(0.55, 0.7, 0.45, 1)
+
+[node name="ForestWaterSpring" parent="." instance=ExtResource("3_gatherable")]
+position = Vector2(200, 430)
+prompt = "Gather Water"
+gatherable_id = "forest_water_spring_001"
+item_id = "forest_water"
+item_quantity = 1
+visual_color = Color(0.4, 0.6, 0.8, 1)
+
 [node name="Door" parent="." instance=ExtResource("2_door")]
 position = Vector2(450, 540)
 prompt = "To shop"
@@ -62,3 +81,6 @@ target_scene = "res://scenes/world/ShopInterior.tscn"
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(450, 460)
+
+[node name="Cat" parent="." instance=ExtResource("4_cat")]
+position = Vector2(400, 470)

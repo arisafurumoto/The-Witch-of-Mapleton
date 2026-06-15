@@ -1,0 +1,22 @@
+[
+  {
+    "id": "first_calming_tea_request",
+    "customer_name": "Villager",
+    "requested_item_id": "calming_tea",
+    "quantity": 1,
+    "offered_gold": 18,
+    "request_lines": [
+      "Oh, a new witch in Mapleton!",
+      "Could you spare a Calming Tea? It has been a long week.",
+      "I can pay 18 gold for one."
+    ],
+    "success_lines": [
+      "This smells wonderful. Thank you, witch.",
+      "Here is your 18 gold. I will be back."
+    ],
+    "fail_lines": [
+      "No Calming Tea brewed yet? That is alright.",
+      "Come find me once you have made some."
+    ]
+  }
+]

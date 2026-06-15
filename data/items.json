@@ -1,0 +1,32 @@
+[
+  {
+    "id": "moonleaf",
+    "name": "Moonleaf",
+    "category": "ingredient",
+    "description": "A soft silver-green leaf that curls toward moonlight.",
+    "stack_limit": 99,
+    "sell_price": 4,
+    "icon": "res://art/items/moonleaf.png",
+    "tags": ["plant", "forest", "moon"]
+  },
+  {
+    "id": "forest_water",
+    "name": "Forest Water",
+    "category": "ingredient",
+    "description": "Clear spring water gathered from a shaded forest pool.",
+    "stack_limit": 99,
+    "sell_price": 2,
+    "icon": "res://art/items/forest_water.png",
+    "tags": ["water", "forest", "spring"]
+  },
+  {
+    "id": "calming_tea",
+    "name": "Calming Tea",
+    "category": "crafted_good",
+    "description": "A gentle herbal tea that settles nerves and softens the edge of a difficult day.",
+    "stack_limit": 99,
+    "sell_price": 18,
+    "icon": "res://art/items/calming_tea.png",
+    "tags": ["tea", "crafted", "calming"]
+  }
+]

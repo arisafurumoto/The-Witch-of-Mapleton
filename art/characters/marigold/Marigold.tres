@@ -1,61 +1,85 @@
-[gd_resource type="SpriteFrames" load_steps=57 format=3]
+[gd_resource type="SpriteFrames" load_steps=81 format=3]
 
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/east/frame_000.png" id="t1"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/east/frame_001.png" id="t2"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/east/frame_002.png" id="t3"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/east/frame_003.png" id="t4"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/east/frame_004.png" id="t5"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/east/frame_005.png" id="t6"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-east/frame_000.png" id="t7"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-east/frame_001.png" id="t8"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-east/frame_002.png" id="t9"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-east/frame_003.png" id="t10"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-east/frame_004.png" id="t11"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-east/frame_005.png" id="t12"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south/frame_000.png" id="t13"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south/frame_001.png" id="t14"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south/frame_002.png" id="t15"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south/frame_003.png" id="t16"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south/frame_004.png" id="t17"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south/frame_005.png" id="t18"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-west/frame_000.png" id="t19"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-west/frame_001.png" id="t20"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-west/frame_002.png" id="t21"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-west/frame_003.png" id="t22"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-west/frame_004.png" id="t23"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/south-west/frame_005.png" id="t24"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/west/frame_000.png" id="t25"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/west/frame_001.png" id="t26"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/west/frame_002.png" id="t27"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/west/frame_003.png" id="t28"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/west/frame_004.png" id="t29"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/west/frame_005.png" id="t30"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-west/frame_000.png" id="t31"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-west/frame_001.png" id="t32"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-west/frame_002.png" id="t33"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-west/frame_003.png" id="t34"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-west/frame_004.png" id="t35"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-west/frame_005.png" id="t36"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north/frame_000.png" id="t37"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north/frame_001.png" id="t38"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north/frame_002.png" id="t39"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north/frame_003.png" id="t40"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north/frame_004.png" id="t41"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north/frame_005.png" id="t42"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-east/frame_000.png" id="t43"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-east/frame_001.png" id="t44"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-east/frame_002.png" id="t45"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-east/frame_003.png" id="t46"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-east/frame_004.png" id="t47"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walk/north-east/frame_005.png" id="t48"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/east.png" id="t49"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/south-east.png" id="t50"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/south.png" id="t51"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/south-west.png" id="t52"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/west.png" id="t53"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/north-west.png" id="t54"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/north.png" id="t55"]
-[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/north-east.png" id="t56"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_000.png" id="t1"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_001.png" id="t2"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_002.png" id="t3"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_003.png" id="t4"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_004.png" id="t5"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_005.png" id="t6"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_006.png" id="t7"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_007.png" id="t8"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/east/frame_008.png" id="t9"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_000.png" id="t10"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_001.png" id="t11"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_002.png" id="t12"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_003.png" id="t13"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_004.png" id="t14"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_005.png" id="t15"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_006.png" id="t16"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_007.png" id="t17"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-east/frame_008.png" id="t18"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_000.png" id="t19"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_001.png" id="t20"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_002.png" id="t21"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_003.png" id="t22"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_004.png" id="t23"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_005.png" id="t24"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_006.png" id="t25"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_007.png" id="t26"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south/frame_008.png" id="t27"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_000.png" id="t28"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_001.png" id="t29"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_002.png" id="t30"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_003.png" id="t31"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_004.png" id="t32"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_005.png" id="t33"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_006.png" id="t34"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_007.png" id="t35"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/south-west/frame_008.png" id="t36"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_000.png" id="t37"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_001.png" id="t38"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_002.png" id="t39"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_003.png" id="t40"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_004.png" id="t41"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_005.png" id="t42"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_006.png" id="t43"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_007.png" id="t44"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/west/frame_008.png" id="t45"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_000.png" id="t46"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_001.png" id="t47"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_002.png" id="t48"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_003.png" id="t49"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_004.png" id="t50"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_005.png" id="t51"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_006.png" id="t52"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_007.png" id="t53"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-west/frame_008.png" id="t54"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_000.png" id="t55"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_001.png" id="t56"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_002.png" id="t57"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_003.png" id="t58"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_004.png" id="t59"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_005.png" id="t60"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_006.png" id="t61"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_007.png" id="t62"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north/frame_008.png" id="t63"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_000.png" id="t64"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_001.png" id="t65"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_002.png" id="t66"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_003.png" id="t67"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_004.png" id="t68"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_005.png" id="t69"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_006.png" id="t70"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_007.png" id="t71"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/animations/Walking_with_a_staff_in_her_right_hand._Her_staff/north-east/frame_008.png" id="t72"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/east.png" id="t73"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/south-east.png" id="t74"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/south.png" id="t75"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/south-west.png" id="t76"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/west.png" id="t77"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/north-west.png" id="t78"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/north.png" id="t79"]
+[ext_resource type="Texture2D" path="res://art/characters/marigold/rotations/north-east.png" id="t80"]
 
 [resource]
 animations = [{
@@ -77,12 +101,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t6")
-}],
-"loop": true,
-"name": &"walk_east",
-"speed": 10.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t7")
 }, {
@@ -91,7 +110,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t9")
+}],
+"loop": true,
+"name": &"walk_east",
+"speed": 12.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t10")
 }, {
@@ -100,12 +124,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t12")
-}],
-"loop": true,
-"name": &"walk_south_east",
-"speed": 10.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t13")
 }, {
@@ -125,8 +144,8 @@ animations = [{
 "texture": ExtResource("t18")
 }],
 "loop": true,
-"name": &"walk_south",
-"speed": 10.0
+"name": &"walk_south_east",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -146,12 +165,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t24")
-}],
-"loop": true,
-"name": &"walk_south_west",
-"speed": 10.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t25")
 }, {
@@ -160,7 +174,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t27")
+}],
+"loop": true,
+"name": &"walk_south",
+"speed": 12.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t28")
 }, {
@@ -169,12 +188,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t30")
-}],
-"loop": true,
-"name": &"walk_west",
-"speed": 10.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t31")
 }, {
@@ -194,8 +208,8 @@ animations = [{
 "texture": ExtResource("t36")
 }],
 "loop": true,
-"name": &"walk_north_west",
-"speed": 10.0
+"name": &"walk_south_west",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -215,12 +229,7 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t42")
-}],
-"loop": true,
-"name": &"walk_north",
-"speed": 10.0
 }, {
-"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t43")
 }, {
@@ -229,7 +238,12 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t45")
+}],
+"loop": true,
+"name": &"walk_west",
+"speed": 12.0
 }, {
+"frames": [{
 "duration": 1.0,
 "texture": ExtResource("t46")
 }, {
@@ -238,14 +252,96 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("t48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t49")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t50")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t51")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t52")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t53")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t54")
 }],
 "loop": true,
-"name": &"walk_north_east",
-"speed": 10.0
+"name": &"walk_north_west",
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t49")
+"texture": ExtResource("t55")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t56")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t57")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t58")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t59")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t60")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t61")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t62")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t63")
+}],
+"loop": true,
+"name": &"walk_north",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("t64")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t65")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t66")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t68")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t69")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t70")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t71")
+}, {
+"duration": 1.0,
+"texture": ExtResource("t72")
+}],
+"loop": true,
+"name": &"walk_north_east",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("t73")
 }],
 "loop": true,
 "name": &"idle_east",
@@ -253,7 +349,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t50")
+"texture": ExtResource("t74")
 }],
 "loop": true,
 "name": &"idle_south_east",
@@ -261,7 +357,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t51")
+"texture": ExtResource("t75")
 }],
 "loop": true,
 "name": &"idle_south",
@@ -269,7 +365,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t52")
+"texture": ExtResource("t76")
 }],
 "loop": true,
 "name": &"idle_south_west",
@@ -277,7 +373,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t53")
+"texture": ExtResource("t77")
 }],
 "loop": true,
 "name": &"idle_west",
@@ -285,7 +381,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t54")
+"texture": ExtResource("t78")
 }],
 "loop": true,
 "name": &"idle_north_west",
@@ -293,7 +389,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t55")
+"texture": ExtResource("t79")
 }],
 "loop": true,
 "name": &"idle_north",
@@ -301,7 +397,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("t56")
+"texture": ExtResource("t80")
 }],
 "loop": true,
 "name": &"idle_north_east",
