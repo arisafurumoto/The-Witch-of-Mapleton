@@ -17,3 +17,6 @@ mono_crash.*.json
 
 # macOS
 .DS_Store
+
+# Local art backups (snapshots; git history is the real version control)
+backups/
