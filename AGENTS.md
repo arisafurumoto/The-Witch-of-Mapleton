@@ -1,4 +1,4 @@
-# The Witch of Mapleton - Claude Code Instructions
+# The Witch of Mapleton - Codex Instructions
 
 This is a Godot 4 GDScript project.
 
