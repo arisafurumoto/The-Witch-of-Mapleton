@@ -3,8 +3,8 @@ extends CanvasLayer
 # Autoload singleton. Minimal heads-up display. For now just shows the gold count,
 # updated whenever the inventory's gold changes.
 
-@onready var _gold_label: Label = $GoldLabel
-@onready var _day_label: Label = $DayLabel
+@onready var _gold_label: Label = $Panel/Margin/VBox/GoldLabel
+@onready var _day_label: Label = $Panel/Margin/VBox/DayLabel
 
 func _ready() -> void:
 	layer = 50

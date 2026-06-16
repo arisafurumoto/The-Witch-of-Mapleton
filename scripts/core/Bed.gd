@@ -5,6 +5,7 @@ extends "res://scripts/core/Interactable.gd"
 
 func interact() -> void:
 	interacted.emit()
+	AudioSystem.play_sleep()
 	DaySystem.advance_day()
 	SaveSystem.save_game()
 	DialogueBox.show_dialogue("", [

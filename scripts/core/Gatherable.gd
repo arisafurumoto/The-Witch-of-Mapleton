@@ -33,6 +33,7 @@ func interact() -> void:
 	if depleted:
 		return
 	Inventory.add_item(item_id, item_quantity)
+	AudioSystem.play_gather()
 	interacted.emit()
 	set_depleted(true)
 	DaySystem.set_gatherable_depleted(gatherable_id, true)

@@ -10,6 +10,7 @@ func try_sell(item_id: String, quantity: int, gold: int) -> bool:
 		return false
 	Inventory.remove_item(item_id, quantity)
 	Inventory.add_gold(gold)
+	AudioSystem.play_sale()
 	item_sold.emit(item_id, quantity, gold)
 	print("Sold %dx %s for %d gold (total gold: %d)" % [quantity, item_id, gold, Inventory.get_gold()])
 	return true

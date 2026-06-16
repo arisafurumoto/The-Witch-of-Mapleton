@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" path="res://art/props/forest/moonleaf_bush.png" id="5_moonleaf"]
 [ext_resource type="Texture2D" path="res://art/props/forest/forest_water_spring.png" id="6_spring"]
 [ext_resource type="Texture2D" path="res://art/props/forest/tree_spring.png" id="7_tree"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_edge_spring.png" id="8_edge"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_grass_spring.png" id="9_grass"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_path_spring.png" id="10_path"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(900, 16)
@@ -20,13 +23,19 @@ size = Vector2(28, 16)
 [node name="ForestClearing" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Background" type="Polygon2D" parent="."]
-color = Color(0.13, 0.2, 0.14, 1)
-polygon = PackedVector2Array(0, 0, 900, 0, 900, 600, 0, 600)
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("8_edge")
+centered = false
 
-[node name="Floor" type="Polygon2D" parent="."]
-color = Color(0.3, 0.42, 0.24, 1)
-polygon = PackedVector2Array(16, 16, 884, 16, 884, 584, 16, 584)
+[node name="Floor" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("9_grass")
+centered = false
+
+[node name="Path" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("10_path")
+centered = false
 
 [node name="Walls" type="StaticBody2D" parent="."]
 

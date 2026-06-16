@@ -15,6 +15,7 @@ func interact() -> void:
 		return
 	if CraftingSystem.craft(recipe_id):
 		var out_id := String(recipe["output"]["item_id"])
+		AudioSystem.play_craft()
 		_flash_message("Made " + ItemDatabase.get_item_name(out_id))
 	else:
 		_flash_message("Need ingredients")

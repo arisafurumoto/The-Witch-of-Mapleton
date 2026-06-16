@@ -90,7 +90,7 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] **Make the initial git commit** (everything is untracked).
+- [x] Initial git baseline exists; continue committing after focused art/system batches.
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in
       `ShopInterior.tscn`; zones/scripts/collision unchanged. Done 2026-06-16.
@@ -106,10 +106,16 @@ Rules:
 - [x] Spring forest tree sprite — `art/props/forest/tree_spring.png` replaces the forest
       tree polygons; trunk collision unchanged. First season visual direction is spring.
       Done 2026-06-16.
+- [x] Forest spring ground tile pass — `art/tilesets/forest/*spring*` source tiles build
+      repeated `art/backgrounds/forest/*spring*.png` ground/path layers for
+      `ForestClearing.tscn`; collisions unchanged. Done 2026-06-16.
+- [x] UI readability pass — styled `DialogueBox` and `HUD` with warm dark panels and
+      readable text; signals/data flow unchanged. Done 2026-06-16.
+- [x] Basic audio feedback — `AudioSystem` autoload plays short gather, craft, sale, and
+      sleep cues from existing success points. No music/settings menu yet. Done 2026-06-16.
 - [ ] Item icons (Moonleaf / Forest Water / Calming Tea) once an inventory UI exists.
-- [ ] Replace remaining placeholders: shop/forest tilesets.
-- [ ] Polish: styled dialogue/HUD (currently default font); customer "enters/leaves"
-      flow; cat idle animation variety.
+- [ ] Replace remaining placeholders: shop floor/walls and broader forest tiles/details.
+- [ ] Polish: customer "enters/leaves" flow; cat idle animation variety.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
       (lines are currently inline in `shop_requests.json`); restoring player position on
       load (save format reserves room for it).
