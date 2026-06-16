@@ -6,6 +6,9 @@ extends Node
 # Auto-loads any existing save on startup. Must be the LAST autoload so the
 # systems it writes into are already initialised.
 
+signal game_saved(day: int, gold: int)
+signal game_loaded(day: int, gold: int)
+
 const SAVE_PATH := "user://savegame.json"
 const VERSION := "0.1.0"
 
@@ -37,6 +40,7 @@ func save_game() -> void:
 	file.store_string(JSON.stringify(data, "\t"))
 	file.close()
 	print("SaveSystem: saved (day %d, gold %d)" % [DaySystem.get_day(), Inventory.get_gold()])
+	game_saved.emit(DaySystem.get_day(), Inventory.get_gold())
 
 func load_game() -> void:
 	if not has_save():
@@ -54,6 +58,7 @@ func load_game() -> void:
 	if _pending_scene_path != "":
 		call_deferred("_restore_saved_scene")
 	print("SaveSystem: loaded (day %d, gold %d)" % [DaySystem.get_day(), Inventory.get_gold()])
+	game_loaded.emit(DaySystem.get_day(), Inventory.get_gold())
 
 func apply_pending_player_position(player: Node2D) -> void:
 	if not _has_pending_player_position:

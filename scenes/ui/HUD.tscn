@@ -49,3 +49,15 @@ theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 16
+
+[node name="ToastLabel" type="Label" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 63.0
+offset_right = 160.0
+offset_bottom = 83.0
+text = "Game saved"
+theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 15

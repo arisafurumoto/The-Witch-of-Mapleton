@@ -13,7 +13,8 @@ characters (Marigold, Saffron, generic customer), the shop props (cauldron, bed,
 counter, sign), the forest props (moonleaf bush, water spring, spring tree), and the
 forest ground/path tiles. Action sound effects, styled DialogueBox/HUD, and a
 customer enters/leaves polish are also in. Recent polish replaced the shop floor/walls,
-added a first-pass forest ground detail overlay, and gave Saffron simple idle glances.
+added a first-pass forest ground detail overlay, gave Saffron simple idle glances, and
+added small save/load HUD notifications.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/world/ShopInterior.tscn`.
 
@@ -145,6 +146,9 @@ Rules:
 - [x] Restore player position/current scene on load — save data now includes
       `current_scene` and `player_position`; old saves still load with safe defaults.
       Done 2026-06-16.
+- [x] Save UX/debug polish — `SaveSystem` emits `game_saved` / `game_loaded` signals;
+      `HUD` shows a short "Game saved" or "Loaded Day X" toast while console debug
+      prints remain in place. Done 2026-06-16.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
       (lines are currently inline in `shop_requests.json`). Consider this when adding a
       second customer/NPC or more than one reusable dialogue, not for the one-request
