@@ -44,7 +44,9 @@ saves, gatherables refill. Save auto-loads on next launch.
 `ShopSystem`, `DialogueBox` (UI scene), `DaySystem`, `HUD` (UI scene),
 `InventoryPanel` (UI scene), `SaveSystem` (last, so it loads after the systems it writes
 into). `Inventory` holds items **and** gold and persists across scene changes.
-`DaySystem` holds the day + per-gatherable depletion state.
+`DaySystem` holds the day + per-gatherable depletion state. `SaveSystem` also stores
+the current scene path and player position, then restores them when the saved scene's
+player is ready.
 
 **Interaction pattern:** `scripts/core/Interactable.gd` (Area2D, has `interact()`,
 `show_prompt()`, optional inline `dialogue`). Subclasses: `Door`, `Gatherable`,
@@ -140,9 +142,13 @@ Rules:
 - [x] Polish: cat idle animation variety — Saffron now occasionally changes idle facing
       while waiting near Marigold, sometimes glancing toward her and sometimes looking
       around. No new art frames; follow behavior unchanged. Done 2026-06-16.
+- [x] Restore player position/current scene on load — save data now includes
+      `current_scene` and `player_position`; old saves still load with safe defaults.
+      Done 2026-06-16.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
-      (lines are currently inline in `shop_requests.json`); restoring player position on
-      load (save format reserves room for it).
+      (lines are currently inline in `shop_requests.json`). Consider this when adding a
+      second customer/NPC or more than one reusable dialogue, not for the one-request
+      vertical slice.
 
 ## Known quirks
 

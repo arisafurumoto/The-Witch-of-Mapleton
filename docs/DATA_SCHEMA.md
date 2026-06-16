@@ -418,26 +418,46 @@ Rules:
 
 ## 10. Save Game Schema
 
-Initial save file:
+Current vertical-slice save file:
 
 ```json
 {
   "version": "0.1.0",
   "day": 1,
-  "time_block": "morning",
-  "player": {
-    "scene": "res://scenes/world/shop_interior.tscn",
-    "position": {
-      "x": 160,
-      "y": 120
-    }
-  },
   "inventory": {
     "moonleaf": 0,
     "forest_water": 0,
     "calming_tea": 0
   },
   "gold": 0,
+  "gatherables_depleted": {},
+  "current_scene": "res://scenes/world/ShopInterior.tscn",
+  "player_position": {
+    "x": 480,
+    "y": 440
+  }
+}
+```
+
+Later save files may add time blocks, flags, relationships, and richer gatherable
+records when those systems exist:
+
+```json
+{
+  "version": "0.1.0",
+  "day": 1,
+  "time_block": "morning",
+  "inventory": {
+    "moonleaf": 0,
+    "forest_water": 0,
+    "calming_tea": 0
+  },
+  "gold": 0,
+  "current_scene": "res://scenes/world/ShopInterior.tscn",
+  "player_position": {
+    "x": 480,
+    "y": 440
+  },
   "flags": [],
   "relationships": {
     "camellia": 0,

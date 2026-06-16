@@ -18,6 +18,7 @@ var _interactables: Array[Area2D] = []
 
 func _ready() -> void:
 	add_to_group("player")
+	SaveSystem.apply_pending_player_position(self)
 	detector.area_entered.connect(_on_detector_area_entered)
 	detector.area_exited.connect(_on_detector_area_exited)
 
