@@ -9,9 +9,8 @@ size = Vector2(52, 52)
 script = ExtResource("1_gatherable")
 prompt = "Gather"
 
-[node name="Visual" type="Polygon2D" parent="."]
-color = Color(0.36, 0.6, 0.36, 1)
-polygon = PackedVector2Array(-18, -28, 18, -28, 20, -4, -20, -4)
+[node name="Visual" type="Sprite2D" parent="."]
+position = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -16)

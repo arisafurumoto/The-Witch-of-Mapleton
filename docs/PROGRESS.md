@@ -94,8 +94,20 @@ Rules:
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in
       `ShopInterior.tscn`; zones/scripts/collision unchanged. Done 2026-06-16.
+- [x] Forest gatherable sprites — `art/props/forest/{moonleaf_bush,forest_water_spring}.png`
+      replace the reusable gatherable `Visual`; zones/scripts/collision unchanged.
+      Done 2026-06-16.
+- [x] Generic customer sprite — `art/characters/npcs/generic_customer.png` replaces the
+      customer `Polygon2D`; sale request logic/collision unchanged. Done 2026-06-16.
+- [x] Shop sign sprite — `art/props/shop/shop_sign.png` replaces the sign `Polygon2D`;
+      sign dialogue/collision unchanged. Done 2026-06-16.
+- [x] Shop counter sprite — `art/props/shop/shop_counter.png` replaces the central
+      `ObstacleVisual`; obstacle collision unchanged. Done 2026-06-16.
+- [x] Spring forest tree sprite — `art/props/forest/tree_spring.png` replaces the forest
+      tree polygons; trunk collision unchanged. First season visual direction is spring.
+      Done 2026-06-16.
 - [ ] Item icons (Moonleaf / Forest Water / Calming Tea) once an inventory UI exists.
-- [ ] Replace remaining placeholders: shop/forest tilesets, sign, generic customer.
+- [ ] Replace remaining placeholders: shop/forest tilesets.
 - [ ] Polish: styled dialogue/HUD (currently default font); customer "enters/leaves"
       flow; cat idle animation variety.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database

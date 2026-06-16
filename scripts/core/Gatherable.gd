@@ -7,6 +7,7 @@ extends "res://scripts/core/Interactable.gd"
 @export var item_id: String = ""
 @export var item_quantity: int = 1
 @export var reset_daily: bool = true
+@export var visual_texture: Texture2D
 @export var visual_color: Color = Color(0.36, 0.6, 0.36)
 
 var depleted: bool = false
@@ -14,7 +15,15 @@ var depleted: bool = false
 func _ready() -> void:
 	super._ready()
 	add_to_group("gatherables")
-	if _visual is Polygon2D:
+	if _visual is Sprite2D:
+		var sprite: Sprite2D = _visual as Sprite2D
+		if visual_texture != null:
+			sprite.texture = visual_texture
+		if sprite.texture != null:
+			var texture_size: Vector2 = sprite.texture.get_size()
+			sprite.centered = false
+			sprite.position = Vector2(-texture_size.x * 0.5, -texture_size.y)
+	elif _visual is Polygon2D:
 		(_visual as Polygon2D).color = visual_color
 	# Restore depleted state if it was harvested earlier this day.
 	if DaySystem.is_gatherable_depleted(gatherable_id):
