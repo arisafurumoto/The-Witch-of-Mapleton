@@ -19,6 +19,7 @@ var _interactables: Array[Area2D] = []
 func _ready() -> void:
 	add_to_group("player")
 	SaveSystem.apply_pending_player_position(self)
+	_apply_transition_state()
 	detector.area_entered.connect(_on_detector_area_entered)
 	detector.area_exited.connect(_on_detector_area_exited)
 
@@ -82,3 +83,17 @@ func _update_prompts() -> void:
 	for it in _interactables:
 		if it.has_method("show_prompt"):
 			it.show_prompt(it == nearest)
+
+func _apply_transition_state() -> void:
+	var root := get_tree().root
+	if root.has_meta("target_player_position"):
+		var target_position: Variant = root.get_meta("target_player_position")
+		root.remove_meta("target_player_position")
+		if typeof(target_position) == TYPE_VECTOR2:
+			global_position = target_position
+	if root.has_meta("target_player_facing"):
+		var target_facing := String(root.get_meta("target_player_facing"))
+		root.remove_meta("target_player_facing")
+		if DIRECTIONS.has(target_facing):
+			facing = target_facing
+			sprite.play("idle_" + facing)

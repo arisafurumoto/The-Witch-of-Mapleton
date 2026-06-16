@@ -14,9 +14,10 @@ counter, sign), the forest props (moonleaf bush, water spring, spring tree), and
 forest ground/path tiles. Action sound effects, styled DialogueBox/HUD, and a
 customer enters/leaves polish are also in. Recent polish replaced the shop floor/walls,
 added a first-pass forest ground detail overlay, gave Saffron simple idle glances, and
-added small save/load HUD notifications.
+added small save/load HUD notifications. The project now boots to a simple title/start
+menu before entering the playable slice.
 
-Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/world/ShopInterior.tscn`.
+Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
 ## How to run & verify
 
@@ -149,6 +150,13 @@ Rules:
 - [x] Save UX/debug polish — `SaveSystem` emits `game_saved` / `game_loaded` signals;
       `HUD` shows a short "Game saved" or "Loaded Day X" toast while console debug
       prints remain in place. Done 2026-06-16.
+- [x] Title/start menu — `project.godot` now starts at `scenes/ui/TitleMenu.tscn`,
+      with Continue, New Game, and Quit buttons over a placeholder pixel title
+      background. Continue restores the saved scene/position; New Game clears the save
+      and starts in the shop. Done 2026-06-16.
+- [x] Door transition spawn positions — shop/forest doors now pass a one-shot target
+      player position, so returning from the forest places Marigold just inside the shop
+      door instead of at the scene default. Done 2026-06-17.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
       (lines are currently inline in `shop_requests.json`). Consider this when adding a
       second customer/NPC or more than one reusable dialogue, not for the one-request

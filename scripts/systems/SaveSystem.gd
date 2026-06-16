@@ -11,6 +11,7 @@ signal game_loaded(day: int, gold: int)
 
 const SAVE_PATH := "user://savegame.json"
 const VERSION := "0.1.0"
+const START_SCENE := "res://scenes/world/ShopInterior.tscn"
 
 var _pending_scene_path: String = ""
 var _pending_player_position: Vector2 = Vector2.ZERO
@@ -18,7 +19,7 @@ var _has_pending_player_position: bool = false
 
 func _ready() -> void:
 	if has_save():
-		load_game()
+		load_game(false, false)
 
 func has_save() -> bool:
 	return FileAccess.file_exists(SAVE_PATH)
@@ -42,7 +43,7 @@ func save_game() -> void:
 	print("SaveSystem: saved (day %d, gold %d)" % [DaySystem.get_day(), Inventory.get_gold()])
 	game_saved.emit(DaySystem.get_day(), Inventory.get_gold())
 
-func load_game() -> void:
+func load_game(restore_scene: bool = true, notify: bool = true) -> void:
 	if not has_save():
 		return
 	var text := FileAccess.get_file_as_string(SAVE_PATH)
@@ -55,10 +56,30 @@ func load_game() -> void:
 	DaySystem.apply_state(int(data.get("day", 1)), data.get("gatherables_depleted", {}))
 	_pending_scene_path = String(data.get("current_scene", ""))
 	_has_pending_player_position = _read_player_position(data.get("player_position", {}))
-	if _pending_scene_path != "":
+	if restore_scene and _pending_scene_path != "":
 		call_deferred("_restore_saved_scene")
 	print("SaveSystem: loaded (day %d, gold %d)" % [DaySystem.get_day(), Inventory.get_gold()])
-	game_loaded.emit(DaySystem.get_day(), Inventory.get_gold())
+	if notify:
+		game_loaded.emit(DaySystem.get_day(), Inventory.get_gold())
+
+func continue_game() -> void:
+	if has_save():
+		load_game(true, true)
+	else:
+		start_new_game()
+
+func start_new_game() -> void:
+	_pending_scene_path = ""
+	_pending_player_position = Vector2.ZERO
+	_has_pending_player_position = false
+	Inventory.load_from({}, 0)
+	DaySystem.apply_state(1, {})
+	if has_save():
+		var save_path := ProjectSettings.globalize_path(SAVE_PATH)
+		var error := DirAccess.remove_absolute(save_path)
+		if error != OK:
+			push_warning("SaveSystem: could not remove save file: " + save_path)
+	get_tree().change_scene_to_file(START_SCENE)
 
 func apply_pending_player_position(player: Node2D) -> void:
 	if not _has_pending_player_position:
