@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://f6jxa72f8372"]
+[gd_scene load_steps=22 format=3 uid="uid://f6jxa72f8372"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
@@ -12,6 +12,8 @@
 [ext_resource type="Texture2D" uid="uid://bvc3je42ac6cj" path="res://art/characters/npcs/generic_customer.png" id="10_customer_tex"]
 [ext_resource type="Texture2D" path="res://art/props/shop/shop_sign.png" id="11_sign_tex"]
 [ext_resource type="Texture2D" path="res://art/props/shop/shop_counter.png" id="12_counter_tex"]
+[ext_resource type="Texture2D" uid="uid://bblwvforxxws5" path="res://art/backgrounds/shop/shop_walls.png" id="13_shop_walls"]
+[ext_resource type="Texture2D" uid="uid://dio30h8bhoc6l" path="res://art/backgrounds/shop/shop_floor.png" id="14_shop_floor"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -37,13 +39,14 @@ size = Vector2(80, 64)
 [node name="ShopInterior" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Background" type="Polygon2D" parent="."]
-color = Color(0.18, 0.13, 0.16, 1)
-polygon = PackedVector2Array(0, 0, 960, 0, 960, 640, 0, 640)
+[node name="Background" type="Sprite2D" parent="."]
+texture = ExtResource("13_shop_walls")
+centered = false
 
-[node name="Floor" type="Polygon2D" parent="."]
-color = Color(0.42, 0.31, 0.26, 1)
-polygon = PackedVector2Array(16, 16, 944, 16, 944, 624, 16, 624)
+[node name="Floor" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("14_shop_floor")
+centered = false
 
 [node name="Walls" type="StaticBody2D" parent="."]
 

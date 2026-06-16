@@ -6,7 +6,7 @@ extends Node2D
 # direction she walks.
 
 @export var follow_speed: float = 95.0
-@export var stop_distance: float = 30.0
+@export var stop_distance: float = 46.0
 @export var snap_distance: float = 280.0
 
 # Clockwise from east, matching the SpriteFrames animation suffixes.

@@ -127,10 +127,13 @@ Rules:
       action), top-right, styled to match the HUD. Rebuilds on `inventory_changed`; each
       row shows the item icon if `art/items/<id>.png` exists, else a colored fallback
       swatch. Done 2026-06-16.
-- [ ] Item icons (Moonleaf / Forest Water / Calming Tea) — drop real `art/items/<id>.png`
-      (PixelLab pipeline). The inventory panel already displays them automatically (no
-      code change needed); they replace the placeholder swatches.
-- [ ] Replace remaining placeholders: shop floor/walls and broader forest tiles/details.
+- [x] Item icons (Moonleaf / Forest Water / Calming Tea) — native 16×16 pixel icons at
+      `art/items/<id>.png`. The inventory panel displays them automatically in place of
+      placeholder swatches. Done 2026-06-16.
+- [x] Shop floor/walls pass — `art/backgrounds/shop/{shop_walls,shop_floor}.png`
+      replace the large `Polygon2D` background/floor rectangles in `ShopInterior.tscn`;
+      collision, props, doors, and interaction zones unchanged. Done 2026-06-16.
+- [ ] Replace remaining placeholders: broader forest tiles/details.
 - [ ] Polish: cat idle animation variety.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
       (lines are currently inline in `shop_requests.json`); restoring player position on
