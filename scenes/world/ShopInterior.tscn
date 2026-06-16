@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3]
+[gd_scene load_steps=17 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://scripts/npc/CustomerNPC.gd" id="5_customer"]
 [ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="6_cat"]
 [ext_resource type="Script" path="res://scripts/core/Bed.gd" id="7_bed"]
+[ext_resource type="Texture2D" path="res://art/props/shop/cauldron.png" id="8_cauldron_tex"]
+[ext_resource type="Texture2D" path="res://art/props/shop/bed.png" id="9_bed_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -95,9 +97,9 @@ position = Vector2(680, 300)
 script = ExtResource("4_crafting")
 prompt = "Craft Tea"
 
-[node name="Visual" type="Polygon2D" parent="Cauldron"]
-color = Color(0.24, 0.3, 0.36, 1)
-polygon = PackedVector2Array(-22, -34, 22, -34, 26, -6, -26, -6)
+[node name="Visual" type="Sprite2D" parent="Cauldron"]
+texture = ExtResource("8_cauldron_tex")
+offset = Vector2(0, -28)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cauldron"]
 position = Vector2(0, -18)
@@ -143,13 +145,9 @@ position = Vector2(820, 200)
 script = ExtResource("7_bed")
 prompt = "Sleep"
 
-[node name="Visual" type="Polygon2D" parent="Bed"]
-color = Color(0.6, 0.32, 0.36, 1)
-polygon = PackedVector2Array(-34, -52, 34, -52, 34, 0, -34, 0)
-
-[node name="Pillow" type="Polygon2D" parent="Bed"]
-color = Color(0.9, 0.88, 0.82, 1)
-polygon = PackedVector2Array(-30, -48, 30, -48, 30, -34, -30, -34)
+[node name="Visual" type="Sprite2D" parent="Bed"]
+texture = ExtResource("9_bed_tex")
+offset = Vector2(0, -22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
 position = Vector2(0, -26)

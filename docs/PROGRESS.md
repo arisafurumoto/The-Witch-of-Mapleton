@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-15.
+> Last updated: 2026-06-16.
 
 ## Status
 
@@ -91,8 +91,9 @@ Rules:
 ## Next steps / backlog
 
 - [ ] **Make the initial git commit** (everything is untracked).
-- [ ] Cauldron & bed sprites (target ~44×40 and ~72×44 on-screen) — swap the `Polygon2D`
-      "Visual" nodes in `ShopInterior.tscn` for `Sprite2D`, keep zones/scripts.
+- [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
+      (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in
+      `ShopInterior.tscn`; zones/scripts/collision unchanged. Done 2026-06-16.
 - [ ] Item icons (Moonleaf / Forest Water / Calming Tea) once an inventory UI exists.
 - [ ] Replace remaining placeholders: shop/forest tilesets, sign, generic customer.
 - [ ] Polish: styled dialogue/HUD (currently default font); customer "enters/leaves"

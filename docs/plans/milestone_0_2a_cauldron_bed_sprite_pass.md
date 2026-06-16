@@ -1,5 +1,10 @@
 # Milestone 0.2a: Cauldron And Bed Sprite Pass
 
+> **Status: DONE (2026-06-16).** `art/props/shop/{cauldron,bed}.png` added (native
+> 72×56 / 72×44, scale 1.0); `ShopInterior.tscn` `Visual` polygons swapped for
+> `Sprite2D` nodes with base aligned to origin; zones/scripts/collision unchanged.
+> Import + headless parse passed clean.
+
 ## Summary
 
 Replace the two most important shop placeholders, the cauldron and bed, with simple pixel-art sprites while preserving all existing interaction, collision, crafting, sleep, save, and day-advance behavior.
@@ -7,7 +12,7 @@ Replace the two most important shop placeholders, the cauldron and bed, with sim
 ## Implementation Changes
 
 - Add two new shop prop assets:
-  - `art/props/shop/cauldron.png`, target about `44x40` on-screen.
+  - `art/props/shop/cauldron.png`, target about `72x56` on-screen so it reads as a large witch's cauldron.
   - `art/props/shop/bed.png`, target about `72x44` on-screen.
   - Use simple readable pixel art, not a full environment polish pass.
 - Update `scenes/world/ShopInterior.tscn`:
