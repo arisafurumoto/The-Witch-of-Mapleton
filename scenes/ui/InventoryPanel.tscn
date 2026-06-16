@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/InventoryPanel.gd" id="1_inv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_inv_panel"]
+bg_color = Color(0.12, 0.075, 0.055, 0.94)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.4, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[node name="InventoryPanel" type="CanvasLayer"]
+script = ExtResource("1_inv")
+
+[node name="Panel" type="PanelContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = 58.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_inv_panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 7
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 5
+
+[node name="TitleLabel" type="Label" parent="Panel/Margin/VBox"]
+text = "Inventory"
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 16
+
+[node name="Rows" type="VBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 4

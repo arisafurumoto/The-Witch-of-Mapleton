@@ -8,9 +8,12 @@
 **Vertical Slice 0.1 — "First Potion Sale" is complete and playable.** All 14 systems
 from the implementation order are built (player movement → camera → collision →
 interaction → scene transition → item db → inventory → gathering → crafting → shop
-sale → dialogue → cat companion → save/load → day cycle). Real character art is in
-for Marigold and the cat (Saffron); most props/tiles are still coloured-rectangle
-placeholders.
+sale → dialogue → cat companion → save/load → day cycle). Real art is now in for the
+characters (Marigold, Saffron, generic customer), the shop props (cauldron, bed,
+counter, sign), the forest props (moonleaf bush, water spring, spring tree), and the
+forest ground/path tiles. Action sound effects, styled DialogueBox/HUD, and a
+customer enters/leaves polish are also in. The main remaining placeholders are the
+shop floor/walls and broader forest detail.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/world/ShopInterior.tscn`.
 
@@ -38,9 +41,10 @@ saves, gatherables refill. Save auto-loads on next launch.
 
 **Autoload singletons** (order matters — defined in `project.godot`):
 `ItemDatabase`, `Inventory`, `RecipeDatabase`, `CraftingSystem`, `ShopRequestDatabase`,
-`ShopSystem`, `DialogueBox` (UI scene), `DaySystem`, `HUD` (UI scene), `SaveSystem` (last,
-so it loads after the systems it writes into). `Inventory` holds items **and** gold and
-persists across scene changes. `DaySystem` holds the day + per-gatherable depletion state.
+`ShopSystem`, `DialogueBox` (UI scene), `DaySystem`, `HUD` (UI scene),
+`InventoryPanel` (UI scene), `SaveSystem` (last, so it loads after the systems it writes
+into). `Inventory` holds items **and** gold and persists across scene changes.
+`DaySystem` holds the day + per-gatherable depletion state.
 
 **Interaction pattern:** `scripts/core/Interactable.gd` (Area2D, has `interact()`,
 `show_prompt()`, optional inline `dialogue`). Subclasses: `Door`, `Gatherable`,
@@ -53,7 +57,7 @@ calls `interact()` on the nearest; movement/interaction freeze while a dialogue 
 
 **Scenes:** `scenes/world/{ShopInterior,ForestClearing}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
-`scenes/player/Player.tscn`, `scenes/ui/{DialogueBox,HUD}.tscn`.
+`scenes/player/Player.tscn`, `scenes/ui/{DialogueBox,HUD,InventoryPanel}.tscn`.
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
@@ -84,9 +88,11 @@ Rules:
 
 - `backups/` holds local art snapshots; it has a `.gdignore` (Godot skips it) and is
   git-ignored. See `backups/README.md`. Snapshots are taken before destructive art ops.
-- **The repo is NOT committed to git yet.** This is the biggest gap — committing is the
-  real safety net (would have prevented an earlier loss of crisp Marigold frames).
-  `.gitignore` already excludes `.godot/`, `backups/`, and keeps `*.import` files.
+- **The repo is committed to git** (baseline + focused art/system batches). Keep
+  committing after each focused batch — it's the real safety net (an early loss of crisp
+  Marigold frames predates the baseline). `.gitignore` excludes `.godot/`, `backups/`,
+  and keeps `*.import` files. Note: the customer enters/leaves polish
+  (`scripts/npc/CustomerNPC.gd`) is currently uncommitted.
 
 ## Next steps / backlog
 
@@ -113,9 +119,19 @@ Rules:
       readable text; signals/data flow unchanged. Done 2026-06-16.
 - [x] Basic audio feedback — `AudioSystem` autoload plays short gather, craft, sale, and
       sleep cues from existing success points. No music/settings menu yet. Done 2026-06-16.
-- [ ] Item icons (Moonleaf / Forest Water / Calming Tea) once an inventory UI exists.
+- [x] Customer enters/leaves polish — the first customer stays hidden until Calming Tea
+      is crafted, then fades/slides in; after a successful sale they leave. One customer
+      only; no schedules/queues. Done 2026-06-16.
+- [x] Inventory panel — `scenes/ui/InventoryPanel.tscn` + `scripts/ui/InventoryPanel.gd`
+      (autoload UI scene). Non-modal panel toggled with the **I** key (`toggle_inventory`
+      action), top-right, styled to match the HUD. Rebuilds on `inventory_changed`; each
+      row shows the item icon if `art/items/<id>.png` exists, else a colored fallback
+      swatch. Done 2026-06-16.
+- [ ] Item icons (Moonleaf / Forest Water / Calming Tea) — drop real `art/items/<id>.png`
+      (PixelLab pipeline). The inventory panel already displays them automatically (no
+      code change needed); they replace the placeholder swatches.
 - [ ] Replace remaining placeholders: shop floor/walls and broader forest tiles/details.
-- [ ] Polish: customer "enters/leaves" flow; cat idle animation variety.
+- [ ] Polish: cat idle animation variety.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
       (lines are currently inline in `shop_requests.json`); restoring player position on
       load (save format reserves room for it).
