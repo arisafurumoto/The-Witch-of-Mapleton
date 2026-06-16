@@ -2,9 +2,11 @@
 
 ## 1. Game Summary
 
-**The Witch of Mapleton** is a cosy 2D pixel-art life sim about a young witch named **Marigold** who moves to the overgrown village of Mapleton and opens a small magical shop. With the help of her black cat companion, she gathers ingredients, crafts potions and charms, serves villagers, builds relationships, uncovers local mysteries, and gradually restores magic to the village.
+**The Witch of Mapleton** is a cosy 2D pixel-art life sim about a young witch named **Marigold** who moves to the overgrown village of Mapleton and opens a small magical shop. With the help of her black cat companion, she gathers ingredients, crafts potions and charms, fulfills requests, serves villagers, builds relationships, uncovers local mysteries, and gradually restores magic to the village.
 
 The game should feel warm, magical, intimate, and gently mysterious. The player fantasy is not “become powerful and defeat evil.” The fantasy is “build a meaningful magical life, become part of a village, and make small beautiful things that help people.”
+
+The long-term design direction is **Atelier series meets cosy life sim**. The main progression should lean more Atelier than farm sim: gather ingredients, craft useful or magical items, complete quests, unlock new maps, learn recipes, discover better materials, and improve the village, shop, cafe, or other facilities over time.
 
 ## 2. Core Player Fantasy
 
@@ -21,7 +23,7 @@ The player should feel:
 
 The strongest reference feeling is:
 
-> A cosy witch shop version of Stardew Valley, with stronger atmosphere, softer stakes, and a more intimate shopkeeping loop.
+> Atelier-style gathering, alchemy, item quality, and quest progression inside a cosy witch life sim, with shop management as an optional but meaningful way to earn money and connect with Mapleton.
 
 ## 3. Game Pillars
 
@@ -36,6 +38,8 @@ The player should always have small meaningful tasks to do, but the game should 
 The shop is the emotional and mechanical centre of the game. The player crafts potions, teas, charms, remedies, and magical objects, then sells them to villagers.
 
 Customers should feel like people, not vending-machine transactions. They have preferences, problems, moods, and relationship history.
+
+Opening the shop should be a choice, not a daily obligation. The player can stock displays, set prices, open the shop, and let customers browse. Shop management should be closer to Moonlighter than a manual serving game: customers enter, inspect items, decide whether to buy or leave, then bring chosen items to the counter for Marigold to complete the sale.
 
 ### Pillar 3: Nature, Magic, and Gathering
 
@@ -125,17 +129,79 @@ The cat should not be a tutorial machine. It should feel like a companion.
 
 The main loop:
 
-1. Wake up in the witch shop.
+1. Wake up in Marigold's room.
 2. Check tasks, inventory, and requests.
 3. Gather ingredients from nearby areas.
-4. Craft magical goods.
-5. Open or operate the shop.
-6. Serve customers.
-7. Talk to villagers.
-8. Upgrade relationships, recipes, tools, or shop features.
-9. Sleep to save and start the next day.
+4. Craft magical goods, tools, quest items, or stock for the shop.
+5. Optionally open the shop by stocking displays and setting prices.
+6. Serve customers at the counter if they choose to buy.
+7. Talk to villagers and accept quests.
+8. Unlock or upgrade maps, recipes, tools, village facilities, shop features, or cafe systems.
+9. Return to Marigold's room, sleep to save, and start the next day.
 
 The loop should be short enough that one day can be played in 10 to 15 minutes.
+
+## 5.1 Long-Term Gameplay Direction
+
+These systems describe the intended full game direction. They are not requirements for Vertical Slice 0.1 and should be implemented only when the current milestone calls for them.
+
+### Gathering, Crafting, and Quests
+
+The main gameplay is gathering ingredients, crafting items, and completing quests. Quests should push progression by unlocking new maps, recipes, items, facilities, village upgrades, or shop/cafe features.
+
+The inventory should eventually feel large like an Atelier game. Items can have quality and traits, and those properties can affect the final crafted product. The first implementation can use plain item IDs and quantities; item quality and traits should come later when the basic crafting loop needs depth.
+
+### Shop Management
+
+Marigold owns a shop, but the player does not need to open it every day. The shop loop is:
+
+1. Place sellable items on displays around the shop.
+2. Set item prices with an easy bulk or guided pricing tool so pricing many items does not become busywork.
+3. Open the shop.
+4. Customers enter, browse displays, choose an item, or leave without buying.
+5. Buying customers bring the item to the counter.
+6. Marigold confirms payment and earns gold.
+
+Customers should have types and item preferences. Season, item type, quality, traits, price, reputation, and customer preference can eventually affect purchase chance and satisfaction.
+
+Quest NPCs can visit the shop while it is closed, but not while the shop is open. A quest visit should feel like someone coming to Marigold for help, not like a normal browsing customer.
+
+### Calendar and Seasons
+
+The game uses a calendar system like Harvest Moon. The game starts on **Spring 1**. One year has four months:
+
+* Spring
+* Summer
+* Autumn
+* Winter
+
+Season should affect gathering, wild seeds, plant availability, customer demand, and item popularity. Some items should be more popular in specific seasons.
+
+### Farming
+
+Farming should be useful but intentionally limited so it does not become the main game. The farming area should be small, possibly a greenhouse or compact garden.
+
+Seeds can be bought from a plant shop or gathered in the wild. Wild plants and wild seeds are seasonal. The plant shop can sell every seed type all year so the player is not locked out of important progression by the calendar.
+
+### Shop, Room, Cooking, and Cafe
+
+Marigold's shop and room are separate scenes.
+
+The shop is where Marigold crafts, sells items, talks to customers, and receives shop-related visits. Marigold's room is in the back and is where she sleeps. With a kitchen extension, her room also becomes where she cooks.
+
+Crafting and cooking are separate systems:
+
+* Crafting creates non-edible items, magical items, tools, remedies, charms, and shop goods.
+* Cooking creates normal food.
+* Both systems require known recipes and required ingredients.
+
+Once the cafe is unlocked, only recipes Marigold has cooked before can be served there. Marigold can also eat at her own cafe and be served like a customer. Food eaten at the cafe restores HP and stamina just like food eaten from inventory.
+
+### Combat, HP, and Stamina
+
+Combat should stay simple and supportive, closer to Stardew Valley than an action RPG. Marigold attacks monsters directly; if a monster touches her, she takes damage. Different weapons can make her stronger.
+
+Marigold has HP, stamina, and a combat level. Stamina decreases when she performs tool actions, from using a watering can to swinging a magic staff. Combat and monster drops should support gathering and crafting rather than becoming the main focus.
 
 ## 6. First Playable Vertical Slice
 
@@ -151,7 +217,7 @@ This is the smallest version of the game that proves the core concept.
 2. Player can move around.
 3. Black cat follows the player.
 4. Player exits the shop into a small forest clearing.
-5. Player gathers Moonleaf from a plant.
+5. Player gathers Moonleaf and Forest Water.
 6. Player returns to the shop.
 7. Player uses a crafting station.
 8. Player crafts Calming Tea.
@@ -615,22 +681,14 @@ Use these rules for AI-assisted development:
 
 ## 15. Current Priority
 
-The next practical milestone is:
+Vertical Slice 0.1, **First Potion Sale**, is complete and playable. The current priority is to preserve that tiny working loop while planning future systems in small, focused milestones.
 
-# Milestone 0 - Project Foundation
+Do not expand directly into the full long-term feature set. Choose one next system or polish pass at a time, and keep each milestone testable inside the existing loop.
 
-Deliverables:
+Near-term milestone candidates:
 
-* Godot project created
-* Git repository created
-* Folder structure created
-* `docs/GDD.md` added
-* `docs/STYLE_GUIDE.md` added
-* `docs/AI_WORKFLOW.md` added
-* `data/items.json` added
-* `data/recipes.json` added
-* `data/npcs.json` added
-* Empty placeholder scenes created
-* `CLAUDE.md` added for Claude Code project instructions
-
-After Milestone 0, begin implementing player movement.
+* Keep polishing the First Potion Sale slice.
+* Add a small second recipe/request only when the first loop feels stable.
+* Add data-driven NPC/dialogue loaders when more than one reusable NPC or dialogue is needed.
+* Split Marigold's room from the shop when sleeping/cooking needs a dedicated scene.
+* Add calendar seasons only when a seasonal item or gatherable needs them.

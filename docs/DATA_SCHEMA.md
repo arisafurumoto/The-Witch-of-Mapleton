@@ -56,9 +56,14 @@ data/locations.json
 data/calendar.json
 data/seasons.json
 data/festivals.json
+data/item_traits.json
+data/customer_types.json
+data/shop_layouts.json
+data/facilities.json
+data/player_stats.json
 ```
 
-Do not add the later files until the vertical slice works.
+Do not add the later files until a focused milestone actually needs them.
 
 ## 3. Item Schema
 
@@ -97,9 +102,37 @@ tags
 ```text
 ingredient
 crafted_good
+food
 quest_item
 tool
 currency
+weapon
+seed
+```
+
+For the vertical slice, keep runtime inventory as item IDs and quantities. Later Atelier-style systems can add per-stack or per-instance item quality and traits. Do not add these fields until crafting needs them.
+
+Possible later item instance shape:
+
+```json
+{
+  "instance_id": "moonleaf_0001",
+  "item_id": "moonleaf",
+  "quantity": 3,
+  "quality": 42,
+  "traits": ["fragrant", "moon_touched"]
+}
+```
+
+Possible later trait definition:
+
+```json
+{
+  "id": "moon_touched",
+  "name": "Moon-touched",
+  "description": "Improves calming and sleep-related recipes.",
+  "tags": ["calming", "night", "magic"]
+}
 ```
 
 ### Initial Items
@@ -183,9 +216,17 @@ workbench
 drying_rack
 stove
 mortar
+kitchen
 ```
 
 For vertical slice 0.1, only `cauldron` is needed.
+
+Later, separate crafting and cooking by station and output category:
+
+* Crafting creates non-edible items, magical items, tools, charms, remedies, and shop goods.
+* Cooking creates normal food.
+* Both systems require known recipes and required ingredients.
+* Cafe menus can only use food recipes the player has cooked before.
 
 ### Initial Recipes
 
@@ -390,6 +431,132 @@ Initial shop requests:
   }
 ]
 ```
+
+## 8.1 Future Shop Session Data
+
+The vertical slice uses one deterministic customer request. Later shop management should track display stock, price, customer type, preferences, and shop open/closed state.
+
+Possible display listing:
+
+```json
+{
+  "display_id": "front_table_left",
+  "item_instance_id": "calming_tea_0004",
+  "item_id": "calming_tea",
+  "quantity": 1,
+  "price": 18
+}
+```
+
+Possible customer type:
+
+```json
+{
+  "id": "tired_worker",
+  "name": "Tired Worker",
+  "preferred_tags": ["food", "calming", "stamina"],
+  "disliked_tags": ["expensive", "dangerous"],
+  "seasonal_interest": {
+    "spring": ["plant", "tea"],
+    "summer": ["cooling", "water"],
+    "autumn": ["warm", "mushroom"],
+    "winter": ["hearty", "fire"]
+  }
+}
+```
+
+Possible shop state:
+
+```json
+{
+  "is_open": false,
+  "displays": [],
+  "active_customers": [],
+  "price_presets": {
+    "default_markup_percent": 20
+  }
+}
+```
+
+Quest NPCs should only visit while the shop is closed. Browsing customers should only enter while the shop is open.
+
+## 8.2 Calendar and Season Data
+
+The full game starts on `Spring 1`. One year has four months: `spring`, `summer`, `autumn`, and `winter`.
+
+Possible calendar save data:
+
+```json
+{
+  "year": 1,
+  "season": "spring",
+  "day": 1
+}
+```
+
+Possible seasonal item popularity:
+
+```json
+{
+  "item_id": "calming_tea",
+  "season_popularity": {
+    "spring": 1.0,
+    "summer": 0.9,
+    "autumn": 1.2,
+    "winter": 1.3
+  }
+}
+```
+
+Possible seed availability:
+
+```json
+{
+  "seed_item_id": "moonleaf_seed",
+  "wild_seasons": ["spring", "autumn"],
+  "plant_shop_available_all_year": true
+}
+```
+
+## 8.3 Facilities, Cafe, and Player Stats
+
+Facility unlocks can eventually track the shop, Marigold's room, kitchen extension, greenhouse, cafe, and village upgrades.
+
+Possible facility record:
+
+```json
+{
+  "id": "kitchen_extension",
+  "name": "Kitchen Extension",
+  "unlocked": false,
+  "upgrade_level": 0
+}
+```
+
+Possible cafe menu record:
+
+```json
+{
+  "recipe_id": "berry_toast",
+  "has_cooked_before": true,
+  "can_serve_at_cafe": true
+}
+```
+
+Possible player stats:
+
+```json
+{
+  "hp": 40,
+  "max_hp": 40,
+  "stamina": 60,
+  "max_stamina": 60,
+  "combat_level": 1,
+  "equipped_weapon_id": "training_staff"
+}
+```
+
+Stamina should decrease when the player performs tool actions, including farming tools and magic staff attacks. HP should decrease when monsters touch or damage Marigold.
 
 ## 9. Gatherable Node Schema
 

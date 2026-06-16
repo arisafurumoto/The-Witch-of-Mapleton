@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-16.
+> Last updated: 2026-06-17.
 
 ## Status
 
@@ -18,6 +18,12 @@ added small save/load HUD notifications. The project now boots to a simple title
 menu before entering the playable slice.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
+
+Long-term vision notes now live in `docs/GDD.md`: **Atelier series meets cosy life
+sim**, with Atelier-style gathering/crafting/quests as the main progression, optional
+Moonlighter-style shop management, calendar seasons, limited farming, separate
+shop/room scenes, cooking/cafe progression, and simple supportive combat. These are
+future design directions and should not expand the current vertical-slice scope.
 
 ## How to run & verify
 
