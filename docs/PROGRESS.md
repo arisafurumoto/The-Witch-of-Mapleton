@@ -12,8 +12,8 @@ sale → dialogue → cat companion → save/load → day cycle). Real art is no
 characters (Marigold, Saffron, generic customer), the shop props (cauldron, bed,
 counter, sign), the forest props (moonleaf bush, water spring, spring tree), and the
 forest ground/path tiles. Action sound effects, styled DialogueBox/HUD, and a
-customer enters/leaves polish are also in. The main remaining placeholders are the
-shop floor/walls and broader forest detail.
+customer enters/leaves polish are also in. Recent polish replaced the shop floor/walls,
+added a first-pass forest ground detail overlay, and gave Saffron simple idle glances.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/world/ShopInterior.tscn`.
 
@@ -133,8 +133,13 @@ Rules:
 - [x] Shop floor/walls pass — `art/backgrounds/shop/{shop_walls,shop_floor}.png`
       replace the large `Polygon2D` background/floor rectangles in `ShopInterior.tscn`;
       collision, props, doors, and interaction zones unchanged. Done 2026-06-16.
-- [ ] Replace remaining placeholders: broader forest tiles/details.
-- [ ] Polish: cat idle animation variety.
+- [x] Broader forest detail pass — `art/backgrounds/forest/forest_detail_spring.png`
+      adds non-colliding ground detail over the grass/path layer in `ForestClearing.tscn`
+      (tufts, flowers, stones, mushrooms, leaf clusters); gameplay zones unchanged.
+      Done 2026-06-16.
+- [x] Polish: cat idle animation variety — Saffron now occasionally changes idle facing
+      while waiting near Marigold, sometimes glancing toward her and sometimes looking
+      around. No new art frames; follow behavior unchanged. Done 2026-06-16.
 - [ ] Deferred from the slice: `npcs.json` + NPC database; a dialogue-id database
       (lines are currently inline in `shop_requests.json`); restoring player position on
       load (save format reserves room for it).

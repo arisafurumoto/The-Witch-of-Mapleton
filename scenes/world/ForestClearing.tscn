@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=14 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_edge_spring.png" id="8_edge"]
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_grass_spring.png" id="9_grass"]
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_path_spring.png" id="10_path"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_detail_spring.png" id="11_detail"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(900, 16)
@@ -35,6 +36,11 @@ centered = false
 [node name="Path" type="Sprite2D" parent="."]
 position = Vector2(16, 16)
 texture = ExtResource("10_path")
+centered = false
+
+[node name="GroundDetails" type="Sprite2D" parent="."]
+position = Vector2(16, 16)
+texture = ExtResource("11_detail")
 centered = false
 
 [node name="Walls" type="StaticBody2D" parent="."]
