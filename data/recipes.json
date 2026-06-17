@@ -20,8 +20,8 @@
     "station": "cauldron",
     "quest_id": "sage_first_request",
     "ingredients": {
-      "moonleaf": 2,
-      "forest_water": 1
+      "dewcap_mushroom": 1,
+      "glowberry": 2
     },
     "output": {
       "item_id": "root_wake_tonic",

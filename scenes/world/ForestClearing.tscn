@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -6,11 +6,15 @@
 [ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="4_cat"]
 [ext_resource type="Texture2D" path="res://art/props/forest/moonleaf_bush.png" id="5_moonleaf"]
 [ext_resource type="Texture2D" path="res://art/props/forest/forest_water_spring.png" id="6_spring"]
-[ext_resource type="Texture2D" path="res://art/props/forest/tree_spring.png" id="7_tree"]
+[ext_resource type="Texture2D" path="res://art/props/forest/tree_spring_1.png" id="7_tree"]
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_edge_spring.png" id="8_edge"]
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_grass_spring.png" id="9_grass"]
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_path_spring.png" id="10_path"]
 [ext_resource type="Texture2D" path="res://art/backgrounds/forest/forest_detail_spring.png" id="11_detail"]
+[ext_resource type="Texture2D" path="res://art/props/forest/dewcap_mushroom.png" id="12_dewcap"]
+[ext_resource type="Texture2D" path="res://art/props/forest/glowberry_bush.png" id="13_glowberry"]
+[ext_resource type="Texture2D" path="res://art/props/forest/moonleaf_bush_harvested.png" id="14_moonleaf_harvested"]
+[ext_resource type="Texture2D" path="res://art/props/forest/glowberry_bush_harvested.png" id="15_glowberry_harvested"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(900, 16)
@@ -80,6 +84,7 @@ gatherable_id = "moonleaf_bush_001"
 item_id = "moonleaf"
 item_quantity = 2
 visual_texture = ExtResource("5_moonleaf")
+depleted_visual_texture = ExtResource("14_moonleaf_harvested")
 visual_color = Color(0.55, 0.7, 0.45, 1)
 
 [node name="ForestWaterSpring" parent="." instance=ExtResource("3_gatherable")]
@@ -90,6 +95,25 @@ item_id = "forest_water"
 item_quantity = 1
 visual_texture = ExtResource("6_spring")
 visual_color = Color(0.4, 0.6, 0.8, 1)
+
+[node name="DewcapMushrooms" parent="." instance=ExtResource("3_gatherable")]
+position = Vector2(610, 335)
+prompt = "Gather Dewcap"
+gatherable_id = "dewcap_mushrooms_001"
+item_id = "dewcap_mushroom"
+item_quantity = 1
+visual_texture = ExtResource("12_dewcap")
+visual_color = Color(0.45, 0.7, 0.82, 1)
+
+[node name="GlowberryBush" parent="." instance=ExtResource("3_gatherable")]
+position = Vector2(120, 235)
+prompt = "Gather Glowberry"
+gatherable_id = "glowberry_bush_001"
+item_id = "glowberry"
+item_quantity = 2
+visual_texture = ExtResource("13_glowberry")
+depleted_visual_texture = ExtResource("15_glowberry_harvested")
+visual_color = Color(0.95, 0.65, 0.28, 1)
 
 [node name="Door" parent="." instance=ExtResource("2_door")]
 position = Vector2(450, 540)

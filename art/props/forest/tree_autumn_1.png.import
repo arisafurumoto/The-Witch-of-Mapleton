@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chxly6xvlckq8"
-path="res://.godot/imported/tree_spring.png-b798ed75dff1f548f2e28d8119bf51d0.ctex"
+uid="uid://cx1lyr16xurhi"
+path="res://.godot/imported/tree_autumn_1.png-fa3d7f370ed1f585ece06616e359cdca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/props/forest/tree_spring.png"
-dest_files=["res://.godot/imported/tree_spring.png-b798ed75dff1f548f2e28d8119bf51d0.ctex"]
+source_file="res://art/props/forest/tree_autumn_1.png"
+dest_files=["res://.godot/imported/tree_autumn_1.png-fa3d7f370ed1f585ece06616e359cdca.ctex"]
 
 [params]
 

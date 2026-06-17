@@ -20,6 +20,24 @@
     "tags": ["water", "forest", "spring"]
   },
   {
+    "id": "dewcap_mushroom",
+    "name": "Dewcap Mushroom",
+    "category": "ingredient",
+    "description": "A small blue mushroom that drinks morning mist through its cap.",
+    "stack_limit": 99,
+    "sell_price": 3,
+    "tags": ["mushroom", "forest", "dew"]
+  },
+  {
+    "id": "glowberry",
+    "name": "Glowberry",
+    "category": "ingredient",
+    "description": "A warm little berry with a pulse of gentle plant magic.",
+    "stack_limit": 99,
+    "sell_price": 5,
+    "tags": ["berry", "forest", "glow"]
+  },
+  {
     "id": "calming_tea",
     "name": "Calming Tea",
     "category": "crafted_good",

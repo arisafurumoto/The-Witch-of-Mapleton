@@ -30,6 +30,7 @@ DialogueBox="*res://scenes/ui/DialogueBox.tscn"
 DaySystem="*res://scripts/systems/DaySystem.gd"
 HUD="*res://scenes/ui/HUD.tscn"
 InventoryPanel="*res://scenes/ui/InventoryPanel.tscn"
+CauldronCraftingPanel="*res://scenes/ui/CauldronCraftingPanel.tscn"
 SaveSystem="*res://scripts/systems/SaveSystem.gd"
 
 [display]

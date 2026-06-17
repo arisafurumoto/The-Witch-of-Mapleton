@@ -20,9 +20,20 @@ menu before entering the playable slice.
 **Vertical Slice 0.2 — "Sage's First Village Request" is complete and playable.** A
 minimal quest database/system now tracks `sage_first_request`, Sage appears in the shop
 on day 1, Root-Wake Tonic is brewed at the cauldron, Sage accepts the tonic, rewards
-25 gold + a Moonleaf Seed Packet, leaves the shop, and quest state is saved. The HUD
-shows quest start/complete toasts and a small current-objective tracker. The tonic and
-seed-packet inventory icons are in, and Sage has an updated sprite draft.
+25 gold + a Moonleaf Seed Packet, walks out of the shop, and quest state is saved. The
+HUD shows quest start/complete toasts and a small current-objective tracker. The tonic
+and seed-packet inventory icons are in, and Sage has an updated sprite draft with walk
+frames used for entering and leaving the shop.
+
+**Vertical Slice 0.3.1 — "Known Recipe Cauldron UI" is complete and playable.**
+Interacting with the cauldron now opens a compact known-recipe panel instead of
+instantly crafting. Recipes are shown from `data/recipes.json`; recipes that cannot be
+made with the current inventory remain selectable for preview, but Brew is disabled
+until the ingredients are held. Selecting a recipe shows its ingredients/output and lets
+the player choose how many batches to brew. Batch brewing uses
+`CraftingSystem.craft_quantity()`. Root-Wake Tonic remains quest-gated and is capped to
+one brew while Sage's request is active/ready. It now uses Dewcap Mushroom and Glowberry
+so it no longer shares Calming Tea's ingredients.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -64,12 +75,13 @@ and an olive collar with a gold-framed amber crystal pendant.
 
 ## The playable loop
 
-0.2 quest loop: start in the shop → talk to Sage → go through the top door to the
-forest → gather Moonleaf (×2) and Forest Water (×1) → return → brew Root-Wake Tonic
-at the cauldron → talk to Sage → receive 25 gold + Moonleaf Seed Packet → sleep in
-the bed → day advances, game saves, quest completion persists.
+0.2/0.3.1 quest loop: start in the shop → talk to Sage → go through the top door to the
+forest → gather Dewcap Mushroom (×1) and Glowberry (×2) → return → brew Root-Wake Tonic
+at the cauldron by selecting the known recipe in the panel → talk to Sage → receive
+25 gold + Moonleaf Seed Packet → sleep in the bed → day advances, game saves, quest
+completion persists.
 
-0.1 shop-sale loop: start in the shop → go through the top door to the forest → gather
+0.1/0.3.1 shop-sale loop: start in the shop → go through the top door to the forest → gather
 Moonleaf (×2) and Forest Water (×1) → return → craft Calming Tea at the cauldron →
 talk to the Customer (they buy it for 18 gold, shown in the HUD) → sleep in the bed →
 day advances, game saves, gatherables refill. Save auto-loads on next launch.
@@ -79,9 +91,9 @@ day advances, game saves, gatherables refill. Save auto-loads on next launch.
 **Autoload singletons** (order matters — defined in `project.godot`):
 `ItemDatabase`, `Inventory`, `RecipeDatabase`, `CraftingSystem`, `ShopRequestDatabase`,
 `ShopSystem`, `AudioSystem`, `QuestDatabase`, `QuestSystem`, `DialogueBox` (UI scene),
-`DaySystem`, `HUD` (UI scene), `InventoryPanel` (UI scene), `SaveSystem` (last, so it
-loads after the systems it writes into). `Inventory` holds items **and** gold and
-persists across scene changes.
+`DaySystem`, `HUD` (UI scene), `InventoryPanel` (UI scene), `CauldronCraftingPanel`
+(UI scene), `SaveSystem` (last, so it loads after the systems it writes into).
+`Inventory` holds items **and** gold and persists across scene changes.
 `DaySystem` holds the day + per-gatherable depletion state. `QuestSystem` stores quest
 states (`not_started`, `active`, `ready_to_turn_in`, `completed`). `SaveSystem` stores
 inventory, gold, day/gatherable state, quests, current scene path, and player position,
@@ -91,7 +103,8 @@ then restores the player position when the saved scene's player is ready.
 `show_prompt()`, optional inline `dialogue`). Subclasses: `Door`, `Gatherable`,
 `CraftingStation`, `Bed`, `scripts/npc/CustomerNPC.gd`, and `scripts/npc/SageNPC.gd`. The player
 (`scripts/player/PlayerController.gd`) detects nearby interactables via an Area2D and
-calls `interact()` on the nearest; movement/interaction freeze while a dialogue is open.
+calls `interact()` on the nearest; movement/interaction freeze while a dialogue or the
+cauldron crafting panel is open.
 
 **Data-driven content** (JSON loaders validate on load): `data/items.json`,
 `data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
@@ -99,7 +112,8 @@ and `data/quests.json` (Sage quest turn-in/reward/dialogue).
 
 **Scenes:** `scenes/world/{ShopInterior,ForestClearing}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
-`scenes/player/Player.tscn`, `scenes/ui/{DialogueBox,HUD,InventoryPanel}.tscn`.
+`scenes/player/Player.tscn`,
+`scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
@@ -145,10 +159,16 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.3 — Cauldron Crafting UI / Ingredient Selection v1 is next.
-      See `docs/plans/vertical_slice_0_3_cauldron_crafting_ui.md`. Keep it focused:
-      choose ingredients from inventory at the cauldron, brew, match an exact recipe,
-      and avoid quality/traits/discovery systems until the simple interaction works.
+- [x] Vertical Slice 0.3.1 — Known Recipe Cauldron UI. The cauldron panel now lists
+      known recipes, lets unavailable known recipes be selected for missing-ingredient
+      preview, disables only Brew until ingredients are held, and supports capped batch
+      brewing with `-` / `+`. Follow-up content pass added Dewcap Mushroom and
+      Glowberry gatherables and moved Root-Wake Tonic onto those ingredients. Done
+      2026-06-17.
+- [x] Vertical Slice 0.3 — Cauldron Crafting UI / Ingredient Selection v1. The
+      cauldron opens `CauldronCraftingPanel`, inventory items can be added/removed from
+      a selected tray, Brew exact-matches cauldron recipes, failed mixes preserve
+      ingredients, and player movement pauses while the panel is open. Done 2026-06-17.
 - [x] Vertical Slice 0.2 — Sage's First Village Request. Minimal quest state, Sage's
       authored interaction, Root-Wake Tonic, rewards, save/load support, quest HUD
       feedback, Sage exit polish, and Sage art are in. Sage appears on day 1, and
@@ -163,8 +183,9 @@ Rules:
 - [x] Compact UI scale pass — reduced gameplay HUD, quest tracker, dialogue box,
       inventory panel, and title menu type/padding/panel sizes so the UI takes up less
       of the 640×360 view. Follow-up trimmed the HUD/tracker further. Done 2026-06-17.
-- [x] Sage turn-in exit polish — after Root-Wake Tonic is delivered, Sage now fades and
-      walks upward out of the shop instead of disappearing instantly. Done 2026-06-17.
+- [x] Sage turn-in exit polish — Sage now uses his walking frames to enter the shop and
+      walk upward out after Root-Wake Tonic is delivered instead of disappearing
+      instantly. Done 2026-06-17.
 - [x] Sage PixelLab Pro sprite draft — `tools/generate_sage_pixellab_pro.py` submits
       a `create-character-pro` job with the Sage concept image plus a Mapleton style
       reference, then downloads the 8-direction export. Cleaned rotations live in
@@ -184,9 +205,9 @@ Rules:
       sign dialogue/collision unchanged. Done 2026-06-16.
 - [x] Shop counter sprite — `art/props/shop/shop_counter.png` replaces the central
       `ObstacleVisual`; obstacle collision unchanged. Done 2026-06-16.
-- [x] Spring forest tree sprite — `art/props/forest/tree_spring.png` replaces the forest
-      tree polygons; trunk collision unchanged. First season visual direction is spring.
-      Done 2026-06-16.
+- [x] Spring forest tree sprite — `art/props/forest/tree_spring_1.png` replaces the
+      forest tree polygons; trunk collision unchanged. First season visual direction is
+      spring. Done 2026-06-16.
 - [x] Forest spring ground tile pass — `art/tilesets/forest/*spring*` source tiles build
       repeated `art/backgrounds/forest/*spring*.png` ground/path layers for
       `ForestClearing.tscn`; collisions unchanged. Done 2026-06-16.

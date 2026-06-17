@@ -1,0 +1,168 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/CauldronCraftingPanel.gd" id="1_cauldron"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.12, 0.075, 0.055, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.4, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.28, 0.16, 0.09, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.5, 0.22, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="CauldronCraftingPanel" type="CanvasLayer"]
+script = ExtResource("1_cauldron")
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_left = 112.0
+offset_top = 57.0
+offset_right = 528.0
+offset_bottom = 303.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 8
+
+[node name="Header" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Panel/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Cauldron"
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 15
+
+[node name="CloseButton" type="Button" parent="Panel/Margin/VBox/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(28, 22)
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "x"
+
+[node name="Body" type="HBoxContainer" parent="Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="RecipeSection" type="VBoxContainer" parent="Panel/Margin/VBox/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="RecipeLabel" type="Label" parent="Panel/Margin/VBox/Body/RecipeSection"]
+layout_mode = 2
+text = "Known Recipes"
+theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 12
+
+[node name="RecipeScroll" type="ScrollContainer" parent="Panel/Margin/VBox/Body/RecipeSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(188, 160)
+horizontal_scroll_mode = 0
+
+[node name="RecipeRows" type="VBoxContainer" parent="Panel/Margin/VBox/Body/RecipeSection/RecipeScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DetailSection" type="VBoxContainer" parent="Panel/Margin/VBox/Body"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="SelectedTitleLabel" type="Label" parent="Panel/Margin/VBox/Body/DetailSection"]
+layout_mode = 2
+text = "Choose a recipe"
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 13
+
+[node name="OutputLabel" type="Label" parent="Panel/Margin/VBox/Body/DetailSection"]
+layout_mode = 2
+text = "Gather ingredients to brew."
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 11
+
+[node name="IngredientRows" type="VBoxContainer" parent="Panel/Margin/VBox/Body/DetailSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(184, 72)
+theme_override_constants/separation = 4
+
+[node name="QuantityRow" type="HBoxContainer" parent="Panel/Margin/VBox/Body/DetailSection"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="MinusButton" type="Button" parent="Panel/Margin/VBox/Body/DetailSection/QuantityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(28, 22)
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "-"
+
+[node name="QuantityLabel" type="Label" parent="Panel/Margin/VBox/Body/DetailSection/QuantityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(34, 22)
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 12
+
+[node name="PlusButton" type="Button" parent="Panel/Margin/VBox/Body/DetailSection/QuantityRow"]
+layout_mode = 2
+custom_minimum_size = Vector2(28, 22)
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "+"
+
+[node name="ResultLabel" type="Label" parent="Panel/Margin/VBox/Body/DetailSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(184, 28)
+text = ""
+autowrap_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 11
+
+[node name="BrewButton" type="Button" parent="Panel/Margin/VBox/Body/DetailSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(96, 24)
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "Brew"

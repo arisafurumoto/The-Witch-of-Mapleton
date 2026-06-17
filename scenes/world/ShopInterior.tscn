@@ -203,7 +203,7 @@ text = "Sleep"
 horizontal_alignment = 1
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
-position = Vector2(480, 440)
+position = Vector2(480, 250)
 
 [node name="Cat" parent="." instance=ExtResource("6_cat")]
-position = Vector2(430, 450)
+position = Vector2(430, 260)

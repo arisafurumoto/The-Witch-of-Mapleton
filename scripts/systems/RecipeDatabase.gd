@@ -59,5 +59,39 @@ func get_recipe(id: String) -> Dictionary:
 		return {}
 	return _recipes[id]
 
+func get_recipes_for_station(station: String) -> Array[Dictionary]:
+	var results: Array[Dictionary] = []
+	for id in _recipes:
+		var recipe: Dictionary = _recipes[id]
+		if String(recipe.get("station", "")) == station:
+			results.append(recipe)
+	return results
+
+func find_matching_recipe(station: String, ingredients: Dictionary, preferred_ids: PackedStringArray = PackedStringArray()) -> Dictionary:
+	for id in preferred_ids:
+		var recipe_id := String(id)
+		if not _recipes.has(recipe_id):
+			continue
+		var recipe: Dictionary = _recipes[recipe_id]
+		if String(recipe.get("station", "")) == station and ingredients_match(recipe.get("ingredients", {}), ingredients):
+			return recipe
+
+	for recipe in get_recipes_for_station(station):
+		var recipe_id := String(recipe.get("id", ""))
+		if preferred_ids.has(recipe_id):
+			continue
+		if ingredients_match(recipe.get("ingredients", {}), ingredients):
+			return recipe
+	return {}
+
+func ingredients_match(expected: Dictionary, actual: Dictionary) -> bool:
+	if expected.size() != actual.size():
+		return false
+	for id in expected:
+		var item_id := String(id)
+		if int(expected[item_id]) != int(actual.get(item_id, 0)):
+			return false
+	return true
+
 func get_all_ids() -> Array:
 	return _recipes.keys()

@@ -1,8 +1,7 @@
 # Vertical Slice 0.3 - Cauldron Crafting UI
 
-> Status: PLANNED.
-> Start here after vertical slice 0.2. Keep this small: ingredient selection first,
-> deeper alchemy later.
+> Status: DONE (2026-06-17), then superseded by Vertical Slice 0.3.1.
+> 0.3 proved the cauldron UI path; 0.3.1 changed the player-facing UI to known recipes.
 
 ## Goal
 
@@ -131,7 +130,13 @@ Do not add:
 
 ## Notes
 
-- The current 0.2 cauldron still supports a tiny ordered recipe list so the finished
-  loops keep working before the 0.3 UI exists.
-- Once the 0.3 UI is in, remove any temporary automatic recipe priority behavior that
-  is no longer needed.
+- `CraftingStation` now opens `CauldronCraftingPanel`; the old one-button auto-craft
+  behavior is removed.
+- `RecipeDatabase` has station and exact ingredient-match helpers for future small
+  crafting UI work.
+- The shop cauldron still passes its tiny ordered recipe list into the panel so the
+  duplicate Moonleaf + Forest Water recipes remain playable: Root-Wake Tonic is chosen
+  first only while Sage's quest is active/ready and the tonic is not already held.
+- No new ingredients, recipe discovery, quality, traits, or recipe book UI were added.
+- Follow-up `docs/plans/vertical_slice_0_3_1_known_recipe_cauldron_ui.md` replaced the
+  raw ingredient-selection panel with a known-recipe list and quantity selector.

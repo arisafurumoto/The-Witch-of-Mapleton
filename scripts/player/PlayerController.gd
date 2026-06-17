@@ -24,9 +24,9 @@ func _ready() -> void:
 	detector.area_exited.connect(_on_detector_area_exited)
 
 func _physics_process(delta: float) -> void:
-	# Freeze movement while a dialogue is open.
+	# Freeze movement while a dialogue or modal crafting panel is open.
 	var input_dir := Vector2.ZERO
-	if not DialogueBox.is_active():
+	if not DialogueBox.is_active() and not CauldronCraftingPanel.is_active():
 		input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if input_dir != Vector2.ZERO:
 		velocity = velocity.move_toward(input_dir * max_speed, acceleration * delta)
@@ -37,8 +37,8 @@ func _physics_process(delta: float) -> void:
 	_update_prompts()
 
 func _unhandled_input(event: InputEvent) -> void:
-	# While dialogue is open, the interact press is handled by the DialogueBox.
-	if DialogueBox.is_active():
+	# While UI is open, interact is handled by that UI.
+	if DialogueBox.is_active() or CauldronCraftingPanel.is_active():
 		return
 	if event.is_action_pressed("interact"):
 		var target := _nearest_interactable()
