@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=3 uid="uid://f6jxa72f8372"]
+[gd_scene load_steps=26 format=3 uid="uid://f6jxa72f8372"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" uid="uid://bblwvforxxws5" path="res://art/backgrounds/shop/shop_walls.png" id="13_shop_walls"]
 [ext_resource type="Texture2D" uid="uid://dio30h8bhoc6l" path="res://art/backgrounds/shop/shop_floor.png" id="14_shop_floor"]
 [ext_resource type="Script" path="res://scripts/npc/SageNPC.gd" id="15_sage"]
+[ext_resource type="Texture2D" uid="uid://cddvg45mvkrer" path="res://art/characters/npcs/sage/rotations/south.png" id="16_sage_tex"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -193,20 +194,10 @@ position = Vector2(360, 205)
 script = ExtResource("15_sage")
 prompt = "Talk"
 
-[node name="Visual" type="Polygon2D" parent="Sage"]
-position = Vector2(0, -34)
-color = Color(0.64, 0.68, 0.6, 1)
-polygon = PackedVector2Array(-15, -18, 15, -18, 19, 20, -19, 20, -15, -18)
-
-[node name="HairVisual" type="Polygon2D" parent="Sage"]
-position = Vector2(0, -55)
-color = Color(0.82, 0.82, 0.78, 1)
-polygon = PackedVector2Array(-13, -12, 13, -12, 17, 11, 8, 19, -8, 19, -17, 11, -13, -12)
-
-[node name="ApronVisual" type="Polygon2D" parent="Sage"]
-position = Vector2(0, -22)
-color = Color(0.36, 0.31, 0.2, 1)
-polygon = PackedVector2Array(-10, -18, 10, -18, 13, 14, -13, 14, -10, -18)
+[node name="Visual" type="Sprite2D" parent="Sage"]
+position = Vector2(0, -30)
+scale = Vector2(0.66, 0.66)
+texture = ExtResource("16_sage_tex")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sage"]
 position = Vector2(0, -26)

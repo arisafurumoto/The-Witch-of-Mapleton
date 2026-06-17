@@ -39,7 +39,7 @@ func _make_empty_label() -> Label:
 	label.add_theme_color_override("font_color", Color(0.78, 0.68, 0.55, 1))
 	label.add_theme_color_override("font_outline_color", Color(0.08, 0.04, 0.03, 1))
 	label.add_theme_constant_override("outline_size", 2)
-	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_font_size_override("font_size", 13)
 	return label
 
 func _make_row(item_id: String, quantity: int) -> HBoxContainer:
@@ -70,7 +70,7 @@ func _make_label(item_id: String, quantity: int) -> Label:
 	label.add_theme_color_override("font_color", Color(0.98, 0.86, 0.6, 1))
 	label.add_theme_color_override("font_outline_color", Color(0.08, 0.04, 0.03, 1))
 	label.add_theme_constant_override("outline_size", 2)
-	label.add_theme_font_size_override("font_size", 15)
+	label.add_theme_font_size_override("font_size", 13)
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	return label
 

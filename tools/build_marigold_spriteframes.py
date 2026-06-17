@@ -4,7 +4,7 @@ import os
 PROJECT = "/Users/arisafurumoto/Projects/claude/The-Witch-of-Mapleton"
 BASE_RES = "res://art/characters/marigold"
 BASE_FS = os.path.join(PROJECT, "art/characters/marigold")
-WALK_SUBDIR = "animations/Walking_with_a_staff_in_her_right_hand._Her_staff"
+WALK_SUBDIR = "animations/walking_with_staff"
 OUT = os.path.join(BASE_FS, "Marigold.tres")
 WALK_FRAMES = 9
 

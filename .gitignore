@@ -20,3 +20,6 @@ mono_crash.*.json
 
 # Local art backups (snapshots; git history is the real version control)
 backups/
+
+# Local API/export scratch files
+tmp/

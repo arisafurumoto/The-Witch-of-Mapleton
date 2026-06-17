@@ -36,74 +36,74 @@ shadow_offset = Vector2(0, 2)
 script = ExtResource("1_hud")
 
 [node name="Panel" type="PanelContainer" parent="."]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 132.0
-offset_bottom = 58.0
+offset_left = 5.0
+offset_top = 5.0
+offset_right = 88.0
+offset_bottom = 38.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_hud_panel")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 3
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
-theme_override_constants/separation = 2
+theme_override_constants/separation = 1
 
 [node name="DayLabel" type="Label" parent="Panel/Margin/VBox"]
 text = "Day 1"
 theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 16
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 11
 
 [node name="GoldLabel" type="Label" parent="Panel/Margin/VBox"]
 text = "Gold: 0"
 theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 16
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 11
 
 [node name="QuestPanel" type="PanelContainer" parent="."]
 visible = false
-offset_left = 8.0
-offset_top = 88.0
-offset_right = 246.0
-offset_bottom = 142.0
+offset_left = 5.0
+offset_top = 56.0
+offset_right = 176.0
+offset_bottom = 94.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_quest_panel")
 
 [node name="Margin" type="MarginContainer" parent="QuestPanel"]
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 3
 
 [node name="VBox" type="VBoxContainer" parent="QuestPanel/Margin"]
-theme_override_constants/separation = 3
+theme_override_constants/separation = 2
 
 [node name="TitleLabel" type="Label" parent="QuestPanel/Margin/VBox"]
 text = "A Little Root Trouble"
 theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 15
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 11
 
 [node name="ObjectiveLabel" type="Label" parent="QuestPanel/Margin/VBox"]
 text = "Craft Root-Wake Tonic"
 theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 14
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 10
 
 [node name="ToastLabel" type="Label" parent="."]
 visible = false
-offset_left = 8.0
-offset_top = 63.0
-offset_right = 160.0
-offset_bottom = 83.0
+offset_left = 5.0
+offset_top = 40.0
+offset_right = 164.0
+offset_bottom = 55.0
 text = "Game saved"
 theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 15
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 11

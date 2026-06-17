@@ -44,16 +44,16 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -242.0
-offset_top = 44.0
+offset_top = 48.0
 offset_right = 242.0
-offset_bottom = 96.0
+offset_bottom = 88.0
 grow_horizontal = 2
 text = "The Witch of Mapleton"
 horizontal_alignment = 1
 theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 5
-theme_override_font_sizes/font_size = 34
+theme_override_constants/outline_size = 4
+theme_override_font_sizes/font_size = 28
 
 [node name="SubtitleLabel" type="Label" parent="."]
 layout_mode = 1
@@ -61,16 +61,16 @@ anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -180.0
-offset_top = 96.0
+offset_top = 88.0
 offset_right = 180.0
-offset_bottom = 124.0
+offset_bottom = 112.0
 grow_horizontal = 2
 text = "First Potion Sale"
 horizontal_alignment = 1
 theme_override_colors/font_color = Color(0.98, 0.9, 0.76, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 19
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 16
 
 [node name="MenuPanel" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -79,8 +79,8 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -190.0
-offset_top = -166.0
+offset_left = -174.0
+offset_top = -148.0
 offset_right = -24.0
 offset_bottom = -24.0
 grow_horizontal = 0
@@ -89,14 +89,14 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_menu_panel")
 
 [node name="Margin" type="MarginContainer" parent="MenuPanel"]
 layout_mode = 2
-theme_override_constants/margin_left = 12
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 12
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
 
 [node name="VBox" type="VBoxContainer" parent="MenuPanel/Margin"]
 layout_mode = 2
-theme_override_constants/separation = 7
+theme_override_constants/separation = 5
 
 [node name="StatusLabel" type="Label" parent="MenuPanel/Margin/VBox"]
 layout_mode = 2
@@ -105,7 +105,7 @@ horizontal_alignment = 1
 theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 12
 
 [node name="ContinueButton" type="Button" parent="MenuPanel/Margin/VBox"]
 layout_mode = 2

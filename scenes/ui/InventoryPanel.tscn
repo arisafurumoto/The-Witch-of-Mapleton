@@ -26,25 +26,25 @@ anchor_right = 1.0
 offset_left = -160.0
 offset_top = 8.0
 offset_right = -8.0
-offset_bottom = 58.0
+offset_bottom = 52.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_inv_panel")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
-theme_override_constants/margin_left = 10
-theme_override_constants/margin_top = 7
-theme_override_constants/margin_right = 10
-theme_override_constants/margin_bottom = 7
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 5
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
-theme_override_constants/separation = 5
+theme_override_constants/separation = 4
 
 [node name="TitleLabel" type="Label" parent="Panel/Margin/VBox"]
 text = "Inventory"
 theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 16
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
 
 [node name="Rows" type="VBoxContainer" parent="Panel/Margin/VBox"]
-theme_override_constants/separation = 4
+theme_override_constants/separation = 3

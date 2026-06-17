@@ -26,7 +26,7 @@ anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = 8.0
-offset_top = -104.0
+offset_top = -88.0
 offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 2
@@ -34,20 +34,20 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue_panel")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
-theme_override_constants/margin_left = 14
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 14
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 11
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 11
+theme_override_constants/margin_bottom = 8
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
-theme_override_constants/separation = 7
+theme_override_constants/separation = 5
 
 [node name="NameLabel" type="Label" parent="Panel/Margin/VBox"]
 text = "Name"
 theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
-theme_override_constants/outline_size = 3
-theme_override_font_sizes/font_size = 18
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 15
 
 [node name="LineLabel" type="Label" parent="Panel/Margin/VBox"]
 text = "Line"
@@ -55,4 +55,4 @@ autowrap_mode = 2
 theme_override_colors/font_color = Color(0.98, 0.9, 0.76, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 17
+theme_override_font_sizes/font_size = 14

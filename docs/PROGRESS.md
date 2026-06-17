@@ -22,8 +22,8 @@ database/system now tracks `sage_first_request`, Sage appears in the shop on day
 new Root-Wake Tonic recipe can be crafted at a placeholder potting bench, Sage can
 accept the tonic, reward 25 gold + a Moonleaf Seed Packet, and quest state is saved.
 The HUD now shows quest start/complete toasts and a small current-objective tracker.
-The new tonic and seed-packet inventory icons are in. Sage and the bench are placeholder
-scene art for now.
+The new tonic and seed-packet inventory icons are in. Sage now has a first PixelLab Pro
+sprite draft; the potting bench is still placeholder scene art for now.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -109,6 +109,7 @@ PixelLab exports a folder per character: `animations/<long-name>/<dir>/frame_NNN
 generator turns these into a `SpriteFrames` `.tres` with `walk_<dir>` / `idle_<dir>`
 animations. Generators live in `tools/` (`build_marigold_spriteframes.py`,
 `build_saffron_spriteframes.py`) — run them to regenerate a `.tres` after re-export.
+Marigold's current walking frames are under `art/characters/marigold/animations/walking_with_staff/`.
 
 Rules:
 1. **Never overwrite/resample source art in place.** Baking a downscale into the PNGs
@@ -126,6 +127,12 @@ Rules:
 3. **Feet/base at bottom-centre of the canvas**; set the sprite offset so the feet sit at
    the node origin. Y-sort uses node position, so this keeps depth + collision aligned.
 4. Project setting `textures/canvas_textures/default_texture_filter = 0` (Nearest) — keep it.
+5. **Before sending any paid/external art-generation API request, show the user the
+   redacted request first and wait for explicit approval.** This especially applies to
+   PixelLab Pro jobs, because they spend subscription credits. Include endpoint,
+   method, estimated cost if known, dimensions, prompt/style fields, and which local
+   reference images will be encoded. Never display or store API secrets; use
+   `<base64 redacted>` / `<token redacted>` placeholders for request previews.
 
 ## Backups & safety
 
@@ -151,6 +158,17 @@ Rules:
 - [x] Quest UX feedback — HUD toast on quest start/completion plus a small active quest
       tracker showing the current Sage objective (`Craft Root-Wake Tonic` or
       `Bring Root-Wake Tonic to Sage`). No full quest journal yet. Done 2026-06-17.
+- [x] Compact UI scale pass — reduced gameplay HUD, quest tracker, dialogue box,
+      inventory panel, and title menu type/padding/panel sizes so the UI takes up less
+      of the 640×360 view. Follow-up trimmed the HUD/tracker further. Done 2026-06-17.
+- [x] Sage turn-in exit polish — after Root-Wake Tonic is delivered, Sage now fades and
+      walks upward out of the shop instead of disappearing instantly. Done 2026-06-17.
+- [x] Sage PixelLab Pro sprite draft — `tools/generate_sage_pixellab_pro.py` submits
+      a `create-character-pro` job with the Sage concept image plus a Mapleton style
+      reference, then downloads the 8-direction export. Cleaned rotations live in
+      `art/characters/npcs/sage/rotations/`; `art/characters/npcs/sage.png` uses the
+      cleaned south-facing frame on the shared 180×180 sprite canvas. Earlier attempts
+      are backed up in `backups/sage_sprite_iterations/`. Done 2026-06-17.
 - [x] Initial git baseline exists; continue committing after focused art/system batches.
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in
