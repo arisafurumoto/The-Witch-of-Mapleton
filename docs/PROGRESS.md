@@ -24,6 +24,23 @@ sim**, with Atelier-style gathering/crafting/quests as the main progression, opt
 Moonlighter-style shop management, calendar seasons, limited farming, separate
 shop/room scenes, cooking/cafe progression, and simple supportive combat. These are
 future design directions and should not expand the current vertical-slice scope.
+Additional locked design direction: progression is driven mainly by quest chains;
+alchemy quality/traits should have readable depth; daily time/stamina should be gentle;
+the world is a compact hub with unlocked authored regions; the cast should be roughly
+Stardew Valley-sized; romance is a major optional layer; Homunculi are mid-game
+automation; the cafe is an optional expansion; the mystery tone is gentle wonder; the
+long-term completion fantasy is a thriving Mapleton. Saffron is a home-property
+companion in the full design: he speaks early, later mostly meows, stays around the
+shop/room/farm/cafe, eventually meets a white village cat, and may have kittens. If
+Marigold loses all HP, she wakes at home the next day with the doctor nearby, loses a
+small amount of money, and starts later than usual.
+Marigold's updated default visual direction is now an autumn village-witch design:
+long copper-orange hair, olive hat, moss-green layered dress, cream puff sleeves,
+rust-orange shawl, brown boots, and an amber-crystal staff. Future outfit changing is
+planned, but not part of the current slice.
+Saffron's concept direction is a small black cat with large golden-amber eyes,
+oversized triangular ears, warm dark-brown fur highlights, an expressive curled tail,
+and an olive collar with a gold-framed amber crystal pendant.
 
 ## How to run & verify
 
@@ -106,6 +123,11 @@ Rules:
 
 ## Next steps / backlog
 
+- [ ] Vertical Slice 0.2 — Sage's First Village Request is planned, not started.
+      See `docs/plans/vertical_slice_0_2_sage_first_request.md`. This slice should
+      prove quest-driven crafting progression by having Sage, the plant shop owner,
+      visit Marigold with a small plant-tonic request. Documentation only so far; do
+      not implement quest systems, data, scenes, or art until explicitly requested.
 - [x] Initial git baseline exists; continue committing after focused art/system batches.
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in

@@ -61,6 +61,9 @@ data/customer_types.json
 data/shop_layouts.json
 data/facilities.json
 data/player_stats.json
+data/companion_arcs.json
+data/combat_rescue.json
+data/outfits.json
 ```
 
 Do not add the later files until a focused milestone actually needs them.
@@ -340,19 +343,26 @@ tags
   },
   {
     "id": "cat",
-    "name": "Cat",
+    "name": "Saffron",
     "role": "companion",
-    "portrait": "res://art/characters/portraits/cat.png",
-    "sprite": "res://art/characters/companions/black_cat.png",
+    "portrait": "res://art/characters/portraits/saffron.png",
+    "sprite": "res://art/characters/saffron/Saffron.tres",
     "relationship": 0,
-    "default_dialogue": "cat_default",
+    "default_dialogue": "saffron_default",
     "likes": [],
     "dislikes": [],
     "shop_request_pool": [],
-    "tags": ["companion", "mascot", "cat"]
+    "tags": ["companion", "mascot", "cat", "home_property"]
   }
 ]
 ```
+
+Long-term Saffron rules:
+
+* Saffron stays on Marigold's home property: shop, room, farm, and cafe.
+* He may speak early in the game, then gradually transitions to normal cat meows.
+* He should not follow Marigold into town, gathering maps, caves, ancient-region maps, or combat areas.
+* His later arc can track meeting a white village cat and eventually having kittens.
 
 ## 7. Dialogue Schema
 
@@ -480,6 +490,8 @@ Possible shop state:
 
 Quest NPCs should only visit while the shop is closed. Browsing customers should only enter while the shop is open.
 
+The shop should remain optional income and village flavor. Do not make daily shop operation a required progression gate unless a specific quest asks for it.
+
 ## 8.2 Calendar and Season Data
 
 The full game starts on `Spring 1`. One year has four months: `spring`, `summer`, `autumn`, and `winter`.
@@ -557,6 +569,97 @@ Possible player stats:
 ```
 
 Stamina should decrease when the player performs tool actions, including farming tools and magic staff attacks. HP should decrease when monsters touch or damage Marigold.
+
+Possible combat rescue state:
+
+```json
+{
+  "doctor_npc_id": "doctor",
+  "gold_loss_percent": 10,
+  "wake_time_block": "late_morning",
+  "wake_location": "home_room",
+  "dialogue_id": "doctor_after_rescue"
+}
+```
+
+When Marigold loses all HP, she should wake at home the next day with the doctor nearby, lose a small amount of money, and start later than usual.
+
+## 8.4 Future Quest and Progression Data
+
+Quest chains should be the main unlock structure for the full game. Craft milestones, reputation, and money can support progression, but quests should be the clearest source of new areas, recipes, facilities, village upgrades, and larger systems.
+
+Possible quest record:
+
+```json
+{
+  "id": "restore_forest_path",
+  "name": "Restore the Forest Path",
+  "giver_npc_id": "camellia",
+  "objectives": [
+    {
+      "type": "deliver_item",
+      "item_id": "calming_tea",
+      "quantity": 1
+    }
+  ],
+  "unlocks": {
+    "locations": ["deeper_forest"],
+    "recipes": ["embercap_tonic"],
+    "facilities": []
+  }
+}
+```
+
+Possible companion arc record:
+
+```json
+{
+  "id": "saffron_home_arc",
+  "companion_id": "cat",
+  "stage": "speaks",
+  "allowed_location_tags": ["home_property"],
+  "flags": {
+    "met_white_cat": false,
+    "has_kittens": false
+  }
+}
+```
+
+Possible location unlock record:
+
+```json
+{
+  "id": "deeper_forest",
+  "name": "Deeper Forest",
+  "region_type": "gathering",
+  "unlocked": false,
+  "unlock_quest_id": "restore_forest_path"
+}
+```
+
+## 8.5 Future Outfit Data
+
+Marigold should eventually be able to change outfits. Do not add outfit systems until a focused milestone needs character customization, seasonal clothing, festival outfits, or region-specific clothes.
+
+Possible outfit record:
+
+```json
+{
+  "id": "default_autumn_witch",
+  "name": "Autumn Witch Dress",
+  "description": "Marigold's default moss-green dress, rust shawl, olive hat, and brown boots.",
+  "sprite_frames": "res://art/characters/marigold/outfits/default_autumn_witch.tres",
+  "portrait": "res://art/characters/portraits/marigold_default_autumn_witch.png",
+  "unlocked_by_default": true,
+  "tags": ["default", "autumn", "witch", "shop", "gathering"]
+}
+```
+
+Outfit rules:
+
+* The default outfit is the recognizable autumn witch design.
+* Alternate outfits can support seasons, festivals, shop work, gathering, cafe work, romance events, or regional styles.
+* Alternate outfits should preserve Marigold's readable silhouette and warm handcrafted witch identity.
 
 ## 9. Gatherable Node Schema
 

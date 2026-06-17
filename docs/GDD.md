@@ -8,6 +8,8 @@ The game should feel warm, magical, intimate, and gently mysterious. The player 
 
 The long-term design direction is **Atelier series meets cosy life sim**. The main progression should lean more Atelier than farm sim: gather ingredients, craft useful or magical items, complete quests, unlock new maps, learn recipes, discover better materials, and improve the village, shop, cafe, or other facilities over time.
 
+The main long-term spine is **crafting and quest unlocks**. Shopkeeping, farming, relationships, cafe management, combat, and Homunculi support that spine instead of replacing it.
+
 ## 2. Core Player Fantasy
 
 The player is a small-town witch running a magical shop.
@@ -104,26 +106,46 @@ Name: **Marigold**
 Description:
 
 * Young witch
-* Wavy purple shoulder-length hair
-* Dark, simple outfit
-* Practical rather than flashy
-* Soft gothic/cottage witch feel
+* Long wavy copper-orange hair, with loose curls and occasional braid details
+* Soft golden-brown eyes and a gentle, friendly expression
+* Autumn village-witch outfit built around moss green, rust orange, cream, warm brown, amber, and gold
+* Wide-brimmed olive-green witch hat with autumn flowers, leaves, and natural details
+* Moss-green layered dress with fitted bodice, lace-up front, full skirt, and subtle gold floral embroidery
+* Cream blouse or underdress with soft puffed sleeves and ruffled cuffs
+* Rust-orange patterned shawl or capelet with tasselled edges
+* Brown belt, tied rust sash, sturdy brown lace-up ankle boots, and a twisted wooden staff with a warm amber crystal or lantern-like gem
+* Practical and handcrafted rather than flashy
+* Cosy autumn cottage-witch feel
 * Expressive but not overly cute
 * Should read clearly at small pixel scale
 
+Future customization direction: Marigold should eventually be able to change outfits. Her default design should remain the recognizable autumn witch look, while alternate outfits can support seasons, festivals, shop work, gathering, cafe work, romance events, or regional styles.
+
 ### Mascot
 
-Black cat companion.
+Black cat companion: **Saffron**.
+
+Visual direction:
+
+* Small black cat with warm dark-brown highlights in the fur
+* Large golden-amber eyes that read clearly at small scale
+* Oversized triangular ears with warm brown inner ear colour
+* Olive-green collar with a gold-framed amber crystal pendant
+* Soft rounded face, neat little paws, and a curled expressive tail
+* Magical but understated; cute and observant without looking like a cartoon mascot
 
 Role:
 
-* Follows the player
-* Reacts to events
-* Gives small comments
+* Stays on Marigold's home property: shop, room, farm, and cafe
+* Speaks early in the game, then gradually stops speaking and communicates with meows
+* Reacts to events at home
+* Gives small comments while he is still speaking
 * Adds humour and emotional warmth
-* May later help find magical traces or hidden ingredients
+* Eventually meets a white cat from the village and later has kittens
 
 The cat should not be a tutorial machine. It should feel like a companion.
+
+Long-term, Saffron should not follow Marigold into the town, forest, caves, ancient region, or combat areas. The current vertical slice has him follow Marigold as an early proof-of-companion behavior; future design should treat that as slice-specific or tutorial-era behavior, not the full-game rule.
 
 ## 5. Core Gameplay Loop
 
@@ -151,6 +173,10 @@ The main gameplay is gathering ingredients, crafting items, and completing quest
 
 The inventory should eventually feel large like an Atelier game. Items can have quality and traits, and those properties can affect the final crafted product. The first implementation can use plain item IDs and quantities; item quality and traits should come later when the basic crafting loop needs depth.
 
+Item quality and traits should have **readable depth**. They should matter for crafting results, sale value, customer requests, and special quest requirements, but should stay approachable enough that players do not need spreadsheets to make useful items.
+
+Progression should primarily come from authored quest chains. Crafting milestones, reputation, and money can support unlocks, but the clearest gates for new maps, recipes, facilities, village improvements, and larger systems should be quests.
+
 ### Shop Management
 
 Marigold owns a shop, but the player does not need to open it every day. The shop loop is:
@@ -165,6 +191,8 @@ Marigold owns a shop, but the player does not need to open it every day. The sho
 Customers should have types and item preferences. Season, item type, quality, traits, price, reputation, and customer preference can eventually affect purchase chance and satisfaction.
 
 Quest NPCs can visit the shop while it is closed, but not while the shop is open. A quest visit should feel like someone coming to Marigold for help, not like a normal browsing customer.
+
+The shop is optional income and village flavor in normal play. Players should be able to spend several days gathering, crafting, questing, or socializing without being punished for not opening the shop.
 
 ### Calendar and Seasons
 
@@ -202,6 +230,28 @@ Once the cafe is unlocked, only recipes Marigold has cooked before can be served
 Combat should stay simple and supportive, closer to Stardew Valley than an action RPG. Marigold attacks monsters directly; if a monster touches her, she takes damage. Different weapons can make her stronger.
 
 Marigold has HP, stamina, and a combat level. Stamina decreases when she performs tool actions, from using a watering can to swinging a magic staff. Combat and monster drops should support gathering and crafting rather than becoming the main focus.
+
+Daily time and stamina should create gentle limits, not harsh pressure. They should help players choose what to do each day while still leaving room to wander, experiment, and enjoy the world.
+
+If Marigold loses all HP, use a soft rescue instead of a hard fail state. She wakes up at home the next day with the village doctor nearby, loses a small amount of money, and starts later than usual. This should feel like Mapleton taking care of her, not like a punishment screen.
+
+### World, Regions, and Long-Term Completion
+
+Mapleton should be a compact village hub connected to authored regions. Exploration should expand by unlocking areas such as forest paths, caves, river areas, ruins, monster zones, and the ancient region through quest chains.
+
+The deeper magical mystery should have a tone of gentle wonder. It can be ancient, strange, and emotional, but it should rarely feel dark or threatening.
+
+The main long-term completion fantasy is **Thriving Mapleton**: Marigold becomes the reliable experienced witch of the village, restores or improves important facilities, unlocks regions, deepens relationships, and turns her shop into a beloved magical hub.
+
+### Relationships, Romance, Homunculi, and Cafe
+
+The core village cast should be roughly Stardew Valley-sized: large enough to feel like a community, but focused enough that important villagers can have portraits, routines, preferences, personal quests, and relationship arcs.
+
+Romance is a major optional layer. It should have meaningful scenes and rewards, but the main game remains crafting, quests, and village restoration.
+
+Homunculi are a mid-game automation system. They should unlock after the shop is established and help with shop, cafe, farm, storage, and repeat tasks. They are important to long-term progression, but should not appear before the core craft/quest/shop loop is stable.
+
+The cafe is an optional expansion. It should arrive later as a second business path using cooked recipes, but the magic shop remains Marigold's primary business.
 
 ## 6. First Playable Vertical Slice
 
@@ -557,6 +607,14 @@ For MVP, include only:
 * Camellia, restaurant owner
 * One generic customer
 * Black cat companion
+
+### Preferred First Village Request NPC
+
+Vertical Slice 0.2 should use **Sage**, the plant shop owner, as the first non-shop
+quest NPC. Sage is warm, kind, gentle, quietly observant, knowledgeable about plants,
+and a natural bridge from gathering/crafting into future seeds and farming advice.
+For 0.2, use him only for a small authored plant-tonic request; do not add his romance
+route, full plant shop, farming system, or NPC schedule yet.
 
 ## 11. Initial Art Asset List
 

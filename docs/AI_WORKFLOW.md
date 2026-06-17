@@ -250,7 +250,7 @@ Use this content:
 
 This is a Godot 4.6 GDScript project.
 
-The game is a cosy top-down 3/4 pixel-art witch life sim about Marigold, a young witch with wavy purple shoulder-length hair, who runs a magical shop in the village of Mapleton with her black cat companion.
+The game is a cosy top-down 3/4 pixel-art witch life sim about Marigold, a young witch with long wavy copper-orange hair and a cosy autumn village-witch outfit, who runs a magical shop in the village of Mapleton with her black cat companion.
 
 ## Development Rules
 
@@ -384,7 +384,7 @@ Use this format:
 Example:
 
 ```text
-32×48 px character sprite, modern top-down 3/4 pixel art, non-isometric, young village witch named Marigold, wavy shoulder-length purple hair, dark simple practical witch outfit, soft gothic cottage-witch feeling, readable silhouette, cosy magical village game, transparent background.
+32×48 px character sprite, modern top-down 3/4 pixel art, non-isometric, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, cosy autumn cottage-witch feeling, readable silhouette, cosy magical village game, transparent background.
 ```
 
 ## 13. Implementation Order After Phase 1

@@ -227,10 +227,11 @@ Main character:
 ```text
 Name: Marigold
 Role: young witch and shop owner
-Hair: wavy purple shoulder-length hair
-Outfit: dark, simple, practical witch outfit
+Hair: long wavy copper-orange hair with loose curls and optional braid details
+Eyes: soft golden-brown
+Outfit: moss-green layered dress, cream puff-sleeve blouse, rust-orange shawl/capelet, olive witch hat, brown boots, warm amber staff
 Silhouette: readable at 32×48 px
-Personality in sprite: curious, gentle, capable, slightly mysterious
+Personality in sprite: warm, gentle, capable, cosy, practical, lightly magical
 ```
 
 Marigold should not look like:
@@ -243,22 +244,49 @@ Marigold should not look like:
 
 She should feel like a practical village witch who actually runs a shop, gathers ingredients, and talks to customers.
 
+Default outfit direction:
+
+* Wide-brimmed olive-green witch hat decorated with autumn flowers, leaves, and small natural details
+* Long copper-orange hair, usually loose and wavy, with braid details allowed if readable
+* Deep moss-green dress with a fitted bodice, lace-up front, full layered skirt, and subtle gold floral embroidery near the hem
+* Cream blouse or underdress with puffed sleeves and ruffled cuffs
+* Warm rust-orange shawl or capelet with delicate folk-style patterning and tasselled edges
+* Brown belt with brass buckle, tied rust sash, and sturdy brown lace-up ankle boots
+* Twisted dark wooden staff topped with a warm amber crystal or lantern-like gem
+
+At small pixel scale, prioritize the broad hat, copper hair, green dress, rust shawl, boots, and staff. Fine embroidery, flowers, tassels, and lace should be simplified into readable color clusters.
+
+Future outfit customization is planned. Alternate outfits should preserve Marigold's recognizable silhouette and warm handcrafted witch identity, even when changing colors, seasonal details, work clothes, festival outfits, or regional styles.
+
 ## 9. Black Cat Mascot Style
 
-The black cat is a major visual and emotional anchor.
+Saffron, the black cat, is a major visual and emotional anchor.
 
 Sprite requirements:
 
 ```text
-Small black cat companion
+Small black cat companion named Saffron
 Readable silhouette
-Expressive tail
-Slight warm rim light or collar charm
+Large golden-amber eyes
+Oversized triangular ears
+Expressive curled tail
+Olive-green collar with gold-framed amber crystal pendant
+Warm dark-brown fur highlights
 Clear idle pose
 Clear walk pose
 Clear sit pose
 Clear sleep pose
 ```
+
+Concept art direction:
+
+* Soft black fur with subtle warm brown highlights instead of a flat pure-black fill
+* Large golden-amber eyes with bright highlights; eyes should be the strongest facial read
+* Oversized triangular ears with warm brown inner ears
+* Small rounded muzzle, delicate whiskers, and neat little paws
+* Olive-green collar that visually ties him to Marigold's moss-green palette
+* Gold-framed amber crystal pendant that echoes Marigold's amber staff crystal
+* Curled tail with a plush, expressive shape
 
 The cat should feel:
 
@@ -267,6 +295,8 @@ The cat should feel:
 * Observant
 * Magical but understated
 * Funny without being cartoonish
+
+At small pixel scale, prioritize the eyes, ear shape, curled tail, collar band, and amber pendant. Fur texture can become a few warm highlight clusters.
 
 Avoid making the cat:
 
@@ -382,13 +412,13 @@ Use this structure for PixelLab prompts:
 Example Marigold prompt:
 
 ```text
-32×48 px character sprite, modern top-down 3/4 pixel art, non-isometric, young village witch named Marigold, wavy shoulder-length purple hair, dark simple practical witch outfit, soft gothic cottage-witch feeling, readable silhouette, cosy magical village game, transparent background.
+32×48 px character sprite, modern top-down 3/4 pixel art, non-isometric, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, cosy autumn cottage-witch feeling, readable silhouette, cosy magical village game, transparent background.
 ```
 
 Example black cat prompt:
 
 ```text
-Small black cat companion sprite, modern top-down 3/4 pixel art, non-isometric, cosy witch village game, expressive tail, tiny warm magical collar charm, readable silhouette, transparent background, game-ready sprite.
+Small black cat companion sprite named Saffron, modern top-down 3/4 pixel art, non-isometric, cosy witch village game, large golden-amber eyes, oversized triangular ears, soft black fur with warm brown highlights, olive-green collar, gold-framed amber crystal pendant, expressive curled tail, readable silhouette, magical but understated, transparent background, game-ready sprite.
 ```
 
 Example shop prop prompt:
