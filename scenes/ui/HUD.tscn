@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/HUD.gd" id="1_hud"]
 
@@ -9,6 +9,21 @@ border_width_top = 2
 border_width_right = 2
 border_width_bottom = 2
 border_color = Color(0.58, 0.38, 0.18, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.28)
+shadow_size = 3
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_quest_panel"]
+bg_color = Color(0.12, 0.075, 0.055, 0.9)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.42, 0.54, 0.26, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -49,6 +64,37 @@ theme_override_colors/font_color = Color(1, 0.72, 0.28, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 2
 theme_override_font_sizes/font_size = 16
+
+[node name="QuestPanel" type="PanelContainer" parent="."]
+visible = false
+offset_left = 8.0
+offset_top = 88.0
+offset_right = 246.0
+offset_bottom = 142.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_quest_panel")
+
+[node name="Margin" type="MarginContainer" parent="QuestPanel"]
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 7
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 7
+
+[node name="VBox" type="VBoxContainer" parent="QuestPanel/Margin"]
+theme_override_constants/separation = 3
+
+[node name="TitleLabel" type="Label" parent="QuestPanel/Margin/VBox"]
+text = "A Little Root Trouble"
+theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 15
+
+[node name="ObjectiveLabel" type="Label" parent="QuestPanel/Margin/VBox"]
+text = "Craft Root-Wake Tonic"
+theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
 
 [node name="ToastLabel" type="Label" parent="."]
 visible = false

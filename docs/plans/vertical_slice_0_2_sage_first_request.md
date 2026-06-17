@@ -1,8 +1,7 @@
 # Vertical Slice 0.2 - Sage's First Village Request
 
-> Status: PLANNED, not started.
-> This is a documentation plan only. Do not implement code, scenes, JSON data, art,
-> or Godot project changes until this slice is explicitly requested.
+> Status: IN PROGRESS.
+> First implementation pass is in-game. Keep remaining work small and focused.
 
 ## Goal
 
@@ -12,24 +11,23 @@ Vertical Slice 0.2 should show that Marigold can receive a non-shop request from
 villager, gather ingredients, craft a requested item, turn it in, receive a reward,
 and save the completed quest state.
 
-This slice should stay small and build directly on the existing First Potion Sale loop.
-It should not introduce the full village, farming, shop management, romance,
+This slice should stay small and build directly on the existing shop/forest/crafting
+loop. It should not introduce the full village, farming, shop management, romance,
 relationship systems, or a quest journal yet.
 
 ## Player Flow
 
-1. Player completes the First Potion Sale loop.
-2. Player sleeps and starts the next day.
-3. Sage visits Marigold's shop while the shop is closed.
-4. Sage introduces himself as the plant shop owner and asks for help with a plant tonic.
-5. Player accepts the quest.
-6. Player gathers Moonleaf x2 and Forest Water x1 from the existing forest clearing.
-7. Player returns to the shop.
-8. Player crafts Root-Wake Tonic at a small potting bench or workbench.
-9. Player talks to Sage again and gives him the tonic.
-10. Sage thanks Marigold, rewards her, and leaves.
-11. Quest completion is saved.
-12. Player sleeps; the quest remains completed after reload.
+1. Player starts a new game in Marigold's shop.
+2. Sage is already visiting the shop.
+3. Sage introduces himself as the plant shop owner and asks for help with a plant tonic.
+4. Player accepts the quest.
+5. Player gathers Moonleaf x2 and Forest Water x1 from the existing forest clearing.
+6. Player returns to the shop.
+7. Player crafts Root-Wake Tonic at a small potting bench or workbench.
+8. Player talks to Sage again and gives him the tonic.
+9. Sage thanks Marigold, rewards her, and leaves.
+10. Quest completion is saved.
+11. Player sleeps; the quest remains completed after reload.
 
 ## Quest Details
 
@@ -67,7 +65,7 @@ Suggested dialogue tone:
 
 Example intent, not final dialogue:
 
-- Sage notices Marigold has already helped someone with Calming Tea.
+- Sage politely interrupts Marigold's first morning in the shop.
 - He asks whether she can make something mild enough for fragile roots.
 - On completion, he gives her a seed packet and says she may have a good hand for
   green things.
@@ -138,9 +136,9 @@ Sage interaction behavior:
 
 Start condition:
 
-- Day 2 or later.
-- The First Potion Sale should be complete. If the existing game does not yet persist a
-  first-sale flag, add the smallest focused flag needed for this condition.
+- Day 1 or later.
+- No first-sale requirement. This slice starts with a villager request because the 0.1
+  shop customer only appears after their requested item already exists.
 
 Crafting:
 
@@ -196,22 +194,20 @@ Do not add:
 ## Manual Test Plan
 
 1. Start a new game.
-2. Complete the First Potion Sale loop.
-3. Sleep.
-4. Confirm Sage appears in the shop on the next day.
-5. Talk to Sage and confirm the quest starts.
-6. Talk to Sage again without the tonic and confirm reminder dialogue.
-7. Go to the forest and gather Moonleaf x2 and Forest Water x1.
-8. Return to the shop.
-9. Craft Root-Wake Tonic at the potting bench or workbench.
-10. Confirm Root-Wake Tonic appears in inventory.
-11. Talk to Sage.
-12. Confirm Root-Wake Tonic is removed.
-13. Confirm Marigold receives 25 gold and Moonleaf Seed Packet x1.
-14. Confirm Sage leaves or no longer offers the quest.
-15. Sleep and save.
-16. Relaunch or continue from title.
-17. Confirm the quest remains completed and Sage does not restart it.
+2. Confirm Sage appears in the shop on day 1.
+3. Talk to Sage and confirm the quest starts.
+4. Talk to Sage again without the tonic and confirm reminder dialogue.
+5. Go to the forest and gather Moonleaf x2 and Forest Water x1.
+6. Return to the shop.
+7. Craft Root-Wake Tonic at the potting bench or workbench.
+8. Confirm Root-Wake Tonic appears in inventory.
+9. Talk to Sage.
+10. Confirm Root-Wake Tonic is removed.
+11. Confirm Marigold receives 25 gold and Moonleaf Seed Packet x1.
+12. Confirm Sage leaves or no longer offers the quest.
+13. Sleep and save.
+14. Relaunch or continue from title.
+15. Confirm the quest remains completed and Sage does not restart it.
 
 Regression checks:
 

@@ -2,7 +2,7 @@ extends Node
 
 # Autoload singleton. Saves and loads the run to user://savegame.json.
 # Stores only stable ids and state (day, inventory, gold, depleted gatherables,
-# current scene, and player position).
+# quest states, current scene, and player position).
 # Auto-loads any existing save on startup. Must be the LAST autoload so the
 # systems it writes into are already initialised.
 
@@ -10,7 +10,7 @@ signal game_saved(day: int, gold: int)
 signal game_loaded(day: int, gold: int)
 
 const SAVE_PATH := "user://savegame.json"
-const VERSION := "0.1.0"
+const VERSION := "0.2.0"
 const START_SCENE := "res://scenes/world/ShopInterior.tscn"
 
 var _pending_scene_path: String = ""
@@ -31,6 +31,7 @@ func save_game() -> void:
 		"inventory": Inventory.get_all(),
 		"gold": Inventory.get_gold(),
 		"gatherables_depleted": DaySystem.get_depleted_dict(),
+		"quests": QuestSystem.get_save_data(),
 		"current_scene": _get_current_scene_path(),
 		"player_position": _get_player_position_data(),
 	}
@@ -54,6 +55,7 @@ func load_game(restore_scene: bool = true, notify: bool = true) -> void:
 	var data: Dictionary = parsed
 	Inventory.load_from(data.get("inventory", {}), int(data.get("gold", 0)))
 	DaySystem.apply_state(int(data.get("day", 1)), data.get("gatherables_depleted", {}))
+	QuestSystem.load_from(data.get("quests", {}))
 	_pending_scene_path = String(data.get("current_scene", ""))
 	_has_pending_player_position = _read_player_position(data.get("player_position", {}))
 	if restore_scene and _pending_scene_path != "":
@@ -74,6 +76,7 @@ func start_new_game() -> void:
 	_has_pending_player_position = false
 	Inventory.load_from({}, 0)
 	DaySystem.apply_state(1, {})
+	QuestSystem.load_from({})
 	if has_save():
 		var save_path := ProjectSettings.globalize_path(SAVE_PATH)
 		var error := DirAccess.remove_absolute(save_path)

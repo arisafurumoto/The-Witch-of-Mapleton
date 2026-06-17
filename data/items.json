@@ -28,5 +28,25 @@
     "sell_price": 18,
     "icon": "res://art/items/calming_tea.png",
     "tags": ["tea", "crafted", "calming"]
+  },
+  {
+    "id": "root_wake_tonic",
+    "name": "Root-Wake Tonic",
+    "category": "crafted_good",
+    "description": "A mild tonic for young roots that need a little magical encouragement.",
+    "stack_limit": 99,
+    "sell_price": 0,
+    "icon": "res://art/items/root_wake_tonic.png",
+    "tags": ["plant", "tonic", "quest", "sage"]
+  },
+  {
+    "id": "moonleaf_seed_packet",
+    "name": "Moonleaf Seed Packet",
+    "category": "seed",
+    "description": "A small paper packet of moonleaf seeds from Sage. They are a promise for later.",
+    "stack_limit": 99,
+    "sell_price": 0,
+    "icon": "res://art/items/moonleaf_seed_packet.png",
+    "tags": ["seed", "moonleaf", "future_farming"]
   }
 ]

@@ -44,13 +44,13 @@ data/dialogue/camellia.json
 data/dialogue/customer_generic.json
 data/dialogue/cat.json
 data/shop_requests.json
+data/quests.json
 data/save_template.json
 ```
 
 Later files:
 
 ```text
-data/quests.json
 data/relationships.json
 data/locations.json
 data/calendar.json
@@ -220,9 +220,10 @@ drying_rack
 stove
 mortar
 kitchen
+potting_bench
 ```
 
-For vertical slice 0.1, only `cauldron` is needed.
+For vertical slice 0.2, `cauldron` and `potting_bench` are used.
 
 Later, separate crafting and cooking by station and output category:
 
@@ -585,6 +586,47 @@ Possible combat rescue state:
 When Marigold loses all HP, she should wake at home the next day with the doctor nearby, lose a small amount of money, and start later than usual.
 
 ## 8.4 Future Quest and Progression Data
+
+The current 0.2 quest data is intentionally small and authored. It is enough for one
+NPC to request a specific crafted item, give rewards, and save completion state.
+
+Current quest record:
+
+```json
+{
+  "id": "sage_first_request",
+  "title": "A Little Root Trouble",
+  "npc_name": "Sage",
+  "turn_in_item_id": "root_wake_tonic",
+  "turn_in_quantity": 1,
+  "reward_gold": 25,
+  "reward_items": {
+    "moonleaf_seed_packet": 1
+  },
+  "start_lines": [],
+  "reminder_lines": [],
+  "complete_lines": []
+}
+```
+
+Quest save data is a dictionary keyed by quest ID:
+
+```json
+{
+  "quests": {
+    "sage_first_request": "completed"
+  }
+}
+```
+
+Allowed current quest states:
+
+```text
+not_started
+active
+ready_to_turn_in
+completed
+```
 
 Quest chains should be the main unlock structure for the full game. Craft milestones, reputation, and money can support progression, but quests should be the clearest source of new areas, recipes, facilities, village upgrades, and larger systems.
 

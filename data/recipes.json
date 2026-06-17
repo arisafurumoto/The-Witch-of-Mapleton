@@ -13,5 +13,20 @@
     },
     "craft_time": 1,
     "known_by_default": true
+  },
+  {
+    "id": "root_wake_tonic",
+    "name": "Root-Wake Tonic",
+    "station": "potting_bench",
+    "ingredients": {
+      "moonleaf": 2,
+      "forest_water": 1
+    },
+    "output": {
+      "item_id": "root_wake_tonic",
+      "quantity": 1
+    },
+    "craft_time": 1,
+    "known_by_default": true
   }
 ]

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "sage_first_request",
+    "title": "A Little Root Trouble",
+    "npc_name": "Sage",
+    "turn_in_item_id": "root_wake_tonic",
+    "turn_in_quantity": 1,
+    "reward_gold": 25,
+    "reward_items": {
+      "moonleaf_seed_packet": 1
+    },
+    "start_lines": [
+      "Marigold? I am Sage. I keep the plant shop, mostly upright.",
+      "I hope I am not interrupting your first morning in the shop.",
+      "I have a tray of young roots that will not wake after being moved.",
+      "I know plants, but this feels like it wants a gentler sort of magic.",
+      "Could you make a Root-Wake Tonic for them?"
+    ],
+    "reminder_lines": [
+      "No hurry. The roots are sleeping stubbornly, but not dangerously.",
+      "Moonleaf and forest water should be gentle enough for them."
+    ],
+    "complete_lines": [
+      "That is exactly it. Soft magic, not too sharp.",
+      "Thank you, Marigold. You may have a good hand for green things.",
+      "Please take this seed packet, and a little gold for your time."
+    ]
+  }
+]

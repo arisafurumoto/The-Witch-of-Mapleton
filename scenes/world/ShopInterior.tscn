@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://f6jxa72f8372"]
+[gd_scene load_steps=25 format=3 uid="uid://f6jxa72f8372"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" path="res://art/props/shop/shop_counter.png" id="12_counter_tex"]
 [ext_resource type="Texture2D" uid="uid://bblwvforxxws5" path="res://art/backgrounds/shop/shop_walls.png" id="13_shop_walls"]
 [ext_resource type="Texture2D" uid="uid://dio30h8bhoc6l" path="res://art/backgrounds/shop/shop_floor.png" id="14_shop_floor"]
+[ext_resource type="Script" path="res://scripts/npc/SageNPC.gd" id="15_sage"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -35,6 +36,12 @@ size = Vector2(60, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_zone"]
 size = Vector2(80, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_potting_bench_zone"]
+size = Vector2(72, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sage_zone"]
+size = Vector2(52, 56)
 
 [node name="ShopInterior" type="Node2D"]
 y_sort_enabled = true
@@ -123,6 +130,34 @@ offset_bottom = -48.0
 text = "Craft Tea"
 horizontal_alignment = 1
 
+[node name="PottingBench" type="Area2D" parent="."]
+position = Vector2(610, 190)
+script = ExtResource("4_crafting")
+prompt = "Craft Tonic"
+recipe_id = "root_wake_tonic"
+
+[node name="Visual" type="Polygon2D" parent="PottingBench"]
+position = Vector2(0, -24)
+color = Color(0.43, 0.28, 0.16, 1)
+polygon = PackedVector2Array(-36, -10, 36, -10, 36, 8, -36, 8, -36, -10)
+
+[node name="TrayVisual" type="Polygon2D" parent="PottingBench"]
+position = Vector2(0, -42)
+color = Color(0.28, 0.47, 0.24, 1)
+polygon = PackedVector2Array(-24, -6, 24, -6, 18, 6, -18, 6, -24, -6)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PottingBench"]
+position = Vector2(0, -24)
+shape = SubResource("RectangleShape2D_potting_bench_zone")
+
+[node name="PromptLabel" type="Label" parent="PottingBench"]
+offset_left = -60.0
+offset_top = -72.0
+offset_right = 60.0
+offset_bottom = -56.0
+text = "Craft Tonic"
+horizontal_alignment = 1
+
 [node name="Door" parent="." instance=ExtResource("3_door")]
 position = Vector2(480, 64)
 target_scene = "res://scenes/world/ForestClearing.tscn"
@@ -150,6 +185,38 @@ offset_left = -40.0
 offset_top = -66.0
 offset_right = 40.0
 offset_bottom = -50.0
+text = "Talk"
+horizontal_alignment = 1
+
+[node name="Sage" type="Area2D" parent="."]
+position = Vector2(360, 205)
+script = ExtResource("15_sage")
+prompt = "Talk"
+
+[node name="Visual" type="Polygon2D" parent="Sage"]
+position = Vector2(0, -34)
+color = Color(0.64, 0.68, 0.6, 1)
+polygon = PackedVector2Array(-15, -18, 15, -18, 19, 20, -19, 20, -15, -18)
+
+[node name="HairVisual" type="Polygon2D" parent="Sage"]
+position = Vector2(0, -55)
+color = Color(0.82, 0.82, 0.78, 1)
+polygon = PackedVector2Array(-13, -12, 13, -12, 17, 11, 8, 19, -8, 19, -17, 11, -13, -12)
+
+[node name="ApronVisual" type="Polygon2D" parent="Sage"]
+position = Vector2(0, -22)
+color = Color(0.36, 0.31, 0.2, 1)
+polygon = PackedVector2Array(-10, -18, 10, -18, 13, 14, -13, 14, -10, -18)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sage"]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_sage_zone")
+
+[node name="PromptLabel" type="Label" parent="Sage"]
+offset_left = -40.0
+offset_top = -78.0
+offset_right = 40.0
+offset_bottom = -62.0
 text = "Talk"
 horizontal_alignment = 1
 

@@ -17,6 +17,14 @@ added a first-pass forest ground detail overlay, gave Saffron simple idle glance
 added small save/load HUD notifications. The project now boots to a simple title/start
 menu before entering the playable slice.
 
+**Vertical Slice 0.2 — "Sage's First Village Request" has started.** A minimal quest
+database/system now tracks `sage_first_request`, Sage appears in the shop on day 1, the
+new Root-Wake Tonic recipe can be crafted at a placeholder potting bench, Sage can
+accept the tonic, reward 25 gold + a Moonleaf Seed Packet, and quest state is saved.
+The HUD now shows quest start/complete toasts and a small current-objective tracker.
+The new tonic and seed-packet inventory icons are in. Sage and the bench are placeholder
+scene art for now.
+
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
 Long-term vision notes now live in `docs/GDD.md`: **Atelier series meets cosy life
@@ -57,30 +65,38 @@ and an olive collar with a gold-framed amber crystal pendant.
 
 ## The playable loop
 
-Start in the shop → go through the top door to the forest → gather Moonleaf (×2) and
-Forest Water (×1) → return → craft Calming Tea at the cauldron → talk to the Customer
-(they buy it for 18 gold, shown in the HUD) → sleep in the bed → day advances, game
-saves, gatherables refill. Save auto-loads on next launch.
+0.2 quest loop: start in the shop → talk to Sage → go through the top door to the
+forest → gather Moonleaf (×2) and Forest Water (×1) → return → craft Root-Wake Tonic
+at the potting bench → talk to Sage → receive 25 gold + Moonleaf Seed Packet → sleep
+in the bed → day advances, game saves, quest completion persists.
+
+0.1 shop-sale loop: start in the shop → go through the top door to the forest → gather
+Moonleaf (×2) and Forest Water (×1) → return → craft Calming Tea at the cauldron →
+talk to the Customer (they buy it for 18 gold, shown in the HUD) → sleep in the bed →
+day advances, game saves, gatherables refill. Save auto-loads on next launch.
 
 ## Architecture
 
 **Autoload singletons** (order matters — defined in `project.godot`):
 `ItemDatabase`, `Inventory`, `RecipeDatabase`, `CraftingSystem`, `ShopRequestDatabase`,
-`ShopSystem`, `DialogueBox` (UI scene), `DaySystem`, `HUD` (UI scene),
-`InventoryPanel` (UI scene), `SaveSystem` (last, so it loads after the systems it writes
-into). `Inventory` holds items **and** gold and persists across scene changes.
-`DaySystem` holds the day + per-gatherable depletion state. `SaveSystem` also stores
-the current scene path and player position, then restores them when the saved scene's
-player is ready.
+`ShopSystem`, `AudioSystem`, `QuestDatabase`, `QuestSystem`, `DialogueBox` (UI scene),
+`DaySystem`, `HUD` (UI scene), `InventoryPanel` (UI scene), `SaveSystem` (last, so it
+loads after the systems it writes into). `Inventory` holds items **and** gold and
+persists across scene changes.
+`DaySystem` holds the day + per-gatherable depletion state. `QuestSystem` stores quest
+states (`not_started`, `active`, `ready_to_turn_in`, `completed`). `SaveSystem` stores
+inventory, gold, day/gatherable state, quests, current scene path, and player position,
+then restores the player position when the saved scene's player is ready.
 
 **Interaction pattern:** `scripts/core/Interactable.gd` (Area2D, has `interact()`,
 `show_prompt()`, optional inline `dialogue`). Subclasses: `Door`, `Gatherable`,
-`CraftingStation`, `Bed`, and `scripts/npc/CustomerNPC.gd`. The player
+`CraftingStation`, `Bed`, `scripts/npc/CustomerNPC.gd`, and `scripts/npc/SageNPC.gd`. The player
 (`scripts/player/PlayerController.gd`) detects nearby interactables via an Area2D and
 calls `interact()` on the nearest; movement/interaction freeze while a dialogue is open.
 
 **Data-driven content** (JSON loaders validate on load): `data/items.json`,
-`data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines).
+`data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
+and `data/quests.json` (Sage quest turn-in/reward/dialogue).
 
 **Scenes:** `scenes/world/{ShopInterior,ForestClearing}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
@@ -123,11 +139,18 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.2 — Sage's First Village Request is planned, not started.
-      See `docs/plans/vertical_slice_0_2_sage_first_request.md`. This slice should
-      prove quest-driven crafting progression by having Sage, the plant shop owner,
-      visit Marigold with a small plant-tonic request. Documentation only so far; do
-      not implement quest systems, data, scenes, or art until explicitly requested.
+- [ ] Vertical Slice 0.2 — Sage's First Village Request is in progress.
+      See `docs/plans/vertical_slice_0_2_sage_first_request.md`. First implementation
+      pass adds minimal quest state, Sage's authored interaction, Root-Wake Tonic,
+      a placeholder potting bench, rewards, and save/load support. Sage now appears
+      on day 1 so this slice starts with a villager request. Needs full manual
+      playthrough QA and follow-up polish before marking complete.
+- [x] Root-Wake Tonic / Moonleaf Seed Packet icons — native 16×16 pixel icons at
+      `art/items/<id>.png`. The inventory panel now shows art for all 0.2 items instead
+      of fallback swatches. Done 2026-06-17.
+- [x] Quest UX feedback — HUD toast on quest start/completion plus a small active quest
+      tracker showing the current Sage objective (`Craft Root-Wake Tonic` or
+      `Bring Root-Wake Tonic to Sage`). No full quest journal yet. Done 2026-06-17.
 - [x] Initial git baseline exists; continue committing after focused art/system batches.
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in
