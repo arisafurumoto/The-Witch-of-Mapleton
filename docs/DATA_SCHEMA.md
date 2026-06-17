@@ -223,7 +223,17 @@ kitchen
 potting_bench
 ```
 
-For vertical slice 0.2, `cauldron` and `potting_bench` are used.
+For vertical slice 0.2, `cauldron` is used for both Calming Tea and Root-Wake Tonic.
+
+### Optional Fields
+
+```text
+quest_id
+```
+
+`quest_id` can gate a recipe to a specific active quest. In vertical slice 0.2,
+`root_wake_tonic` uses `quest_id = "sage_first_request"` so the cauldron only
+prioritizes that tonic while Sage's quest needs it.
 
 Later, separate crafting and cooking by station and output category:
 

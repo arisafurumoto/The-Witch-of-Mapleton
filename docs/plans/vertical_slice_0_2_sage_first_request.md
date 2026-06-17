@@ -1,7 +1,7 @@
 # Vertical Slice 0.2 - Sage's First Village Request
 
-> Status: IN PROGRESS.
-> First implementation pass is in-game. Keep remaining work small and focused.
+> Status: COMPLETE.
+> Root-Wake Tonic now brews at the cauldron; the temporary potting bench was removed.
 
 ## Goal
 
@@ -23,7 +23,7 @@ relationship systems, or a quest journal yet.
 4. Player accepts the quest.
 5. Player gathers Moonleaf x2 and Forest Water x1 from the existing forest clearing.
 6. Player returns to the shop.
-7. Player crafts Root-Wake Tonic at a small potting bench or workbench.
+7. Player brews Root-Wake Tonic at the cauldron.
 8. Player talks to Sage again and gives him the tonic.
 9. Sage thanks Marigold, rewards her, and leaves.
 10. Quest completion is saved.
@@ -86,7 +86,7 @@ Items:
 Recipe:
 
 - `root_wake_tonic`
-  - Station: `potting_bench`
+  - Station: `cauldron`
   - Ingredients: Moonleaf x2, Forest Water x1
   - Output: Root-Wake Tonic x1
 
@@ -142,11 +142,11 @@ Start condition:
 
 Crafting:
 
-- Add a small potting bench or workbench interactable in the shop.
-- Reuse the existing `CraftingStation.gd` pattern if possible by setting
-  `recipe_id = "root_wake_tonic"`.
-- Keep the existing cauldron as the Calming Tea station.
-- Do not build a recipe selection UI in 0.2.
+- Root-Wake Tonic is brewed at the existing cauldron.
+- The cauldron has a tiny ordered recipe list for 0.2. It prioritizes the
+  quest-gated Root-Wake Tonic only while Sage's quest is active and Marigold does not
+  already have the tonic; otherwise it keeps the original Calming Tea behavior.
+- Do not build a recipe selection UI in 0.2. That is the focus of 0.3.
 
 ## Save/Load Notes
 
@@ -199,7 +199,7 @@ Do not add:
 4. Talk to Sage again without the tonic and confirm reminder dialogue.
 5. Go to the forest and gather Moonleaf x2 and Forest Water x1.
 6. Return to the shop.
-7. Craft Root-Wake Tonic at the potting bench or workbench.
+7. Brew Root-Wake Tonic at the cauldron.
 8. Confirm Root-Wake Tonic appears in inventory.
 9. Talk to Sage.
 10. Confirm Root-Wake Tonic is removed.

@@ -17,13 +17,12 @@ added a first-pass forest ground detail overlay, gave Saffron simple idle glance
 added small save/load HUD notifications. The project now boots to a simple title/start
 menu before entering the playable slice.
 
-**Vertical Slice 0.2 — "Sage's First Village Request" has started.** A minimal quest
-database/system now tracks `sage_first_request`, Sage appears in the shop on day 1, the
-new Root-Wake Tonic recipe can be crafted at a placeholder potting bench, Sage can
-accept the tonic, reward 25 gold + a Moonleaf Seed Packet, and quest state is saved.
-The HUD now shows quest start/complete toasts and a small current-objective tracker.
-The new tonic and seed-packet inventory icons are in. Sage now has a first PixelLab Pro
-sprite draft; the potting bench is still placeholder scene art for now.
+**Vertical Slice 0.2 — "Sage's First Village Request" is complete and playable.** A
+minimal quest database/system now tracks `sage_first_request`, Sage appears in the shop
+on day 1, Root-Wake Tonic is brewed at the cauldron, Sage accepts the tonic, rewards
+25 gold + a Moonleaf Seed Packet, leaves the shop, and quest state is saved. The HUD
+shows quest start/complete toasts and a small current-objective tracker. The tonic and
+seed-packet inventory icons are in, and Sage has an updated sprite draft.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -66,9 +65,9 @@ and an olive collar with a gold-framed amber crystal pendant.
 ## The playable loop
 
 0.2 quest loop: start in the shop → talk to Sage → go through the top door to the
-forest → gather Moonleaf (×2) and Forest Water (×1) → return → craft Root-Wake Tonic
-at the potting bench → talk to Sage → receive 25 gold + Moonleaf Seed Packet → sleep
-in the bed → day advances, game saves, quest completion persists.
+forest → gather Moonleaf (×2) and Forest Water (×1) → return → brew Root-Wake Tonic
+at the cauldron → talk to Sage → receive 25 gold + Moonleaf Seed Packet → sleep in
+the bed → day advances, game saves, quest completion persists.
 
 0.1 shop-sale loop: start in the shop → go through the top door to the forest → gather
 Moonleaf (×2) and Forest Water (×1) → return → craft Calming Tea at the cauldron →
@@ -146,12 +145,15 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.2 — Sage's First Village Request is in progress.
-      See `docs/plans/vertical_slice_0_2_sage_first_request.md`. First implementation
-      pass adds minimal quest state, Sage's authored interaction, Root-Wake Tonic,
-      a placeholder potting bench, rewards, and save/load support. Sage now appears
-      on day 1 so this slice starts with a villager request. Needs full manual
-      playthrough QA and follow-up polish before marking complete.
+- [ ] Vertical Slice 0.3 — Cauldron Crafting UI / Ingredient Selection v1 is next.
+      See `docs/plans/vertical_slice_0_3_cauldron_crafting_ui.md`. Keep it focused:
+      choose ingredients from inventory at the cauldron, brew, match an exact recipe,
+      and avoid quality/traits/discovery systems until the simple interaction works.
+- [x] Vertical Slice 0.2 — Sage's First Village Request. Minimal quest state, Sage's
+      authored interaction, Root-Wake Tonic, rewards, save/load support, quest HUD
+      feedback, Sage exit polish, and Sage art are in. Sage appears on day 1, and
+      Root-Wake Tonic now brews at the cauldron rather than a potting bench. Done
+      2026-06-17.
 - [x] Root-Wake Tonic / Moonleaf Seed Packet icons — native 16×16 pixel icons at
       `art/items/<id>.png`. The inventory panel now shows art for all 0.2 items instead
       of fallback swatches. Done 2026-06-17.
@@ -166,9 +168,9 @@ Rules:
 - [x] Sage PixelLab Pro sprite draft — `tools/generate_sage_pixellab_pro.py` submits
       a `create-character-pro` job with the Sage concept image plus a Mapleton style
       reference, then downloads the 8-direction export. Cleaned rotations live in
-      `art/characters/npcs/sage/rotations/`; `art/characters/npcs/sage.png` uses the
-      cleaned south-facing frame on the shared 180×180 sprite canvas. Earlier attempts
-      are backed up in `backups/sage_sprite_iterations/`. Done 2026-06-17.
+      `art/characters/npcs/sage/rotations/`; the shop scene uses the cleaned
+      south-facing frame on the shared 180×180 sprite canvas. Earlier attempts are
+      backed up in `backups/sage_sprite_iterations/`. Done 2026-06-17.
 - [x] Initial git baseline exists; continue committing after focused art/system batches.
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in

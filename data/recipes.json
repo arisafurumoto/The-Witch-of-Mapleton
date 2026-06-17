@@ -17,7 +17,8 @@
   {
     "id": "root_wake_tonic",
     "name": "Root-Wake Tonic",
-    "station": "potting_bench",
+    "station": "cauldron",
+    "quest_id": "sage_first_request",
     "ingredients": {
       "moonleaf": 2,
       "forest_water": 1
