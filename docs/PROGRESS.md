@@ -2,6 +2,7 @@
 
 > Living status doc. Read this first when starting a new session.
 > Last updated: 2026-06-17.
+> Milestone summary: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md`.
 
 ## Status
 
@@ -159,6 +160,11 @@ Rules:
 
 ## Next steps / backlog
 
+- [ ] Vertical Slice 0.4 — Quest and Recipe Guidance v1 is next.
+      See `docs/plans/vertical_slice_0_4_quest_recipe_guidance.md`. Keep it focused:
+      ingredient progress in the quest tracker, clearer gather feedback, and small item
+      icons for Dewcap Mushroom and Glowberry. Do not add a full quest journal, recipe
+      book, new quest chain, or new NPC.
 - [x] Vertical Slice 0.3.1 — Known Recipe Cauldron UI. The cauldron panel now lists
       known recipes, lets unavailable known recipes be selected for missing-ingredient
       preview, disables only Brew until ingredients are held, and supports capped batch
