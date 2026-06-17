@@ -14,3 +14,12 @@ func try_sell(item_id: String, quantity: int, gold: int) -> bool:
 	item_sold.emit(item_id, quantity, gold)
 	print("Sold %dx %s for %d gold (total gold: %d)" % [quantity, item_id, gold, Inventory.get_gold()])
 	return true
+
+func complete_display_sale(item_id: String, quantity: int, gold: int) -> bool:
+	if item_id == "" or quantity <= 0 or gold < 0:
+		return false
+	Inventory.add_gold(gold)
+	AudioSystem.play_sale()
+	item_sold.emit(item_id, quantity, gold)
+	print("Sold display item %dx %s for %d gold (total gold: %d)" % [quantity, item_id, gold, Inventory.get_gold()])
+	return true

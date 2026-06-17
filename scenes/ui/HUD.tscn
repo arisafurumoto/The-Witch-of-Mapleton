@@ -69,8 +69,8 @@ theme_override_font_sizes/font_size = 11
 visible = false
 offset_left = 5.0
 offset_top = 56.0
-offset_right = 176.0
-offset_bottom = 94.0
+offset_right = 202.0
+offset_bottom = 124.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_quest_panel")
 
 [node name="Margin" type="MarginContainer" parent="QuestPanel"]
@@ -91,6 +91,7 @@ theme_override_font_sizes/font_size = 11
 
 [node name="ObjectiveLabel" type="Label" parent="QuestPanel/Margin/VBox"]
 text = "Craft Root-Wake Tonic"
+autowrap_mode = 2
 theme_override_colors/font_color = Color(0.78, 0.88, 0.62, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 1

@@ -1,7 +1,6 @@
-[gd_scene load_steps=25 format=3 uid="uid://f6jxa72f8372"]
+[gd_scene load_steps=27 format=3 uid="uid://f6jxa72f8372"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
-[ext_resource type="Script" path="res://scripts/core/Interactable.gd" id="2_interactable"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="3_door"]
 [ext_resource type="Script" path="res://scripts/core/CraftingStation.gd" id="4_crafting"]
 [ext_resource type="Script" path="res://scripts/npc/CustomerNPC.gd" id="5_customer"]
@@ -16,6 +15,8 @@
 [ext_resource type="Texture2D" uid="uid://dio30h8bhoc6l" path="res://art/backgrounds/shop/shop_floor.png" id="14_shop_floor"]
 [ext_resource type="Script" path="res://scripts/npc/SageNPC.gd" id="15_sage"]
 [ext_resource type="Texture2D" uid="uid://cddvg45mvkrer" path="res://art/characters/npcs/sage/rotations/south.png" id="16_sage_tex"]
+[ext_resource type="Script" path="res://scripts/core/ShopDisplay.gd" id="17_shop_display"]
+[ext_resource type="Script" path="res://scripts/core/ShopOpenSign.gd" id="18_shop_open_sign"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(960, 16)
@@ -28,6 +29,9 @@ size = Vector2(96, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sign_zone"]
 size = Vector2(56, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_display_zone"]
+size = Vector2(64, 44)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cauldron_zone"]
 size = Vector2(64, 64)
@@ -84,12 +88,9 @@ shape = SubResource("RectangleShape2D_obstacle")
 
 [node name="Sign" type="Area2D" parent="."]
 position = Vector2(300, 280)
-script = ExtResource("2_interactable")
-prompt = "Read sign"
-speaker = "Sign"
-dialogue = "Marigold's Magic Shop.
-Gather in the forest, brew at the cauldron.
-Customers welcome."
+script = ExtResource("18_shop_open_sign")
+prompt = "Open shop"
+display_path = NodePath("../ShopDisplay")
 
 [node name="Visual" type="Sprite2D" parent="Sign"]
 position = Vector2(-28, -56)
@@ -104,7 +105,35 @@ offset_left = -40.0
 offset_top = -78.0
 offset_right = 40.0
 offset_bottom = -62.0
-text = "Read sign"
+text = "Open shop"
+horizontal_alignment = 1
+
+[node name="ShopDisplay" type="Area2D" parent="."]
+position = Vector2(585, 235)
+script = ExtResource("17_shop_display")
+prompt = "Stock display"
+display_id = "main_display"
+
+[node name="Visual" type="Polygon2D" parent="ShopDisplay"]
+position = Vector2(0, -8)
+color = Color(0.42, 0.24, 0.13, 1)
+polygon = PackedVector2Array(-32, -12, 32, -12, 28, 12, -28, 12)
+
+[node name="ItemIcon" type="Sprite2D" parent="ShopDisplay"]
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopDisplay"]
+position = Vector2(0, -8)
+shape = SubResource("RectangleShape2D_display_zone")
+
+[node name="PromptLabel" type="Label" parent="ShopDisplay"]
+offset_left = -56.0
+offset_top = -48.0
+offset_right = 56.0
+offset_bottom = -32.0
+text = "Stock display"
 horizontal_alignment = 1
 
 [node name="Cauldron" type="Area2D" parent="."]
@@ -141,6 +170,8 @@ prompt = "To forest"
 position = Vector2(250, 200)
 script = ExtResource("5_customer")
 prompt = "Talk"
+display_path = NodePath("../ShopDisplay")
+counter_position = Vector2(420, 235)
 
 [node name="Visual" type="Sprite2D" parent="Customer"]
 position = Vector2(0, -28)

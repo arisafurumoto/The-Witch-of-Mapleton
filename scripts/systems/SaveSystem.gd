@@ -2,7 +2,7 @@ extends Node
 
 # Autoload singleton. Saves and loads the run to user://savegame.json.
 # Stores only stable ids and state (day, inventory, gold, depleted gatherables,
-# quest states, current scene, and player position).
+# quest states, shop display stock, current scene, and player position).
 # Auto-loads any existing save on startup. Must be the LAST autoload so the
 # systems it writes into are already initialised.
 
@@ -10,12 +10,13 @@ signal game_saved(day: int, gold: int)
 signal game_loaded(day: int, gold: int)
 
 const SAVE_PATH := "user://savegame.json"
-const VERSION := "0.2.0"
+const VERSION := "0.5.0"
 const START_SCENE := "res://scenes/world/ShopInterior.tscn"
 
 var _pending_scene_path: String = ""
 var _pending_player_position: Vector2 = Vector2.ZERO
 var _has_pending_player_position: bool = false
+var _pending_shop_displays: Dictionary = {}
 
 func _ready() -> void:
 	if has_save():
@@ -32,6 +33,7 @@ func save_game() -> void:
 		"gold": Inventory.get_gold(),
 		"gatherables_depleted": DaySystem.get_depleted_dict(),
 		"quests": QuestSystem.get_save_data(),
+		"shop_displays": _get_shop_display_data(),
 		"current_scene": _get_current_scene_path(),
 		"player_position": _get_player_position_data(),
 	}
@@ -56,6 +58,7 @@ func load_game(restore_scene: bool = true, notify: bool = true) -> void:
 	Inventory.load_from(data.get("inventory", {}), int(data.get("gold", 0)))
 	DaySystem.apply_state(int(data.get("day", 1)), data.get("gatherables_depleted", {}))
 	QuestSystem.load_from(data.get("quests", {}))
+	_pending_shop_displays = _read_shop_display_data(data.get("shop_displays", {}))
 	_pending_scene_path = String(data.get("current_scene", ""))
 	_has_pending_player_position = _read_player_position(data.get("player_position", {}))
 	if restore_scene and _pending_scene_path != "":
@@ -74,6 +77,7 @@ func start_new_game() -> void:
 	_pending_scene_path = ""
 	_pending_player_position = Vector2.ZERO
 	_has_pending_player_position = false
+	_pending_shop_displays.clear()
 	Inventory.load_from({}, 0)
 	DaySystem.apply_state(1, {})
 	QuestSystem.load_from({})
@@ -91,6 +95,18 @@ func apply_pending_player_position(player: Node2D) -> void:
 		return
 	player.global_position = _pending_player_position
 	_has_pending_player_position = false
+
+func apply_pending_shop_display(display: Node) -> void:
+	if display == null or not display.has_method("get_save_id") or not display.has_method("load_from_save"):
+		return
+	var display_id := String(display.call("get_save_id"))
+	if display_id == "" or not _pending_shop_displays.has(display_id):
+		return
+	var display_data_value: Variant = _pending_shop_displays[display_id]
+	if typeof(display_data_value) != TYPE_DICTIONARY:
+		return
+	var display_data: Dictionary = display_data_value
+	display.call("load_from_save", display_data)
 
 func _restore_saved_scene() -> void:
 	var current_scene_path := _get_current_scene_path()
@@ -118,6 +134,43 @@ func _get_player_position_data() -> Dictionary:
 		"x": player.global_position.x,
 		"y": player.global_position.y,
 	}
+
+func _get_shop_display_data() -> Dictionary:
+	var displays: Dictionary = {}
+	for display in get_tree().get_nodes_in_group("shop_displays"):
+		if not display.has_method("get_save_id") or not display.has_method("get_save_data"):
+			continue
+		var display_id := String(display.call("get_save_id"))
+		if display_id == "":
+			continue
+		var display_data_value: Variant = display.call("get_save_data")
+		if typeof(display_data_value) != TYPE_DICTIONARY:
+			continue
+		var display_data: Dictionary = display_data_value
+		if not display_data.is_empty():
+			displays[display_id] = display_data
+	return displays
+
+func _read_shop_display_data(value: Variant) -> Dictionary:
+	var displays: Dictionary = {}
+	if typeof(value) != TYPE_DICTIONARY:
+		return displays
+	var source: Dictionary = value
+	for id in source:
+		var display_id := String(id)
+		var display_value: Variant = source[id]
+		if display_id == "" or typeof(display_value) != TYPE_DICTIONARY:
+			continue
+		var display_data: Dictionary = display_value
+		var item_id := String(display_data.get("item_id", ""))
+		var quantity := int(display_data.get("quantity", 0))
+		if item_id == "" or quantity <= 0 or not ItemDatabase.has_item(item_id):
+			continue
+		displays[display_id] = {
+			"item_id": item_id,
+			"quantity": quantity,
+		}
+	return displays
 
 func _read_player_position(value: Variant) -> bool:
 	if typeof(value) != TYPE_DICTIONARY:

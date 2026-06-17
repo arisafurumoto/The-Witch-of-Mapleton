@@ -1,6 +1,6 @@
 # Vertical Slice 0.4 - Quest and Recipe Guidance v1
 
-> Status: PLANNED.
+> Status: COMPLETE.
 > Start after Vertical Slice 0.3.1 is closed.
 
 ## Goal
@@ -106,3 +106,10 @@ Do not add:
 - The current 0.1 customer sale still works.
 - The current 0.3.1 cauldron UI remains compact and readable.
 - No new long-term systems are introduced early.
+
+## Implementation Notes
+
+- `HUD.show_toast(message)` is now public and gatherables use it for pickup feedback.
+- The compact quest tracker derives ingredient progress from the active quest turn-in
+  item and its matching recipe output.
+- Dewcap Mushroom and Glowberry now have native 16x16 inventory icons.

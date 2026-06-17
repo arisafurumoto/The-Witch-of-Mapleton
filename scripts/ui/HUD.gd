@@ -15,6 +15,7 @@ var _toast_tween: Tween
 func _ready() -> void:
 	layer = 50
 	Inventory.gold_changed.connect(_update_gold)
+	Inventory.inventory_changed.connect(_update_quest_tracker)
 	DaySystem.day_changed.connect(_update_day)
 	SaveSystem.game_saved.connect(_on_game_saved)
 	SaveSystem.game_loaded.connect(_on_game_loaded)
@@ -33,22 +34,22 @@ func _update_day(day: int) -> void:
 	_day_label.text = "Day %d" % day
 
 func _on_game_saved(_day: int, _gold: int) -> void:
-	_show_toast("Game saved")
+	show_toast("Game saved")
 
 func _on_game_loaded(day: int, _gold: int) -> void:
-	_show_toast("Loaded Day %d" % day)
+	show_toast("Loaded Day %d" % day)
 
 func _on_quest_state_changed(_quest_id: String, _state: String) -> void:
 	_update_quest_tracker()
 
 func _on_quest_started(quest_id: String) -> void:
 	var quest := QuestDatabase.get_quest(quest_id)
-	_show_toast("Quest started: " + String(quest.get("title", quest_id)))
+	show_toast("Quest started: " + String(quest.get("title", quest_id)))
 	_update_quest_tracker()
 
 func _on_quest_completed(quest_id: String) -> void:
 	var quest := QuestDatabase.get_quest(quest_id)
-	_show_toast("Quest complete: " + String(quest.get("title", quest_id)))
+	show_toast("Quest complete: " + String(quest.get("title", quest_id)))
 	_update_quest_tracker()
 
 func _update_quest_tracker() -> void:
@@ -82,9 +83,12 @@ func _quest_objective_text(quest: Dictionary, state: String) -> String:
 	var npc_name := String(quest.get("npc_name", "Sage"))
 	if state == QuestSystem.STATE_READY:
 		return "Bring %s to %s" % [item_name, npc_name]
-	return "Craft %s" % item_name
+	var recipe := RecipeDatabase.get_recipe_for_output(item_id)
+	if recipe.is_empty() or Inventory.has_item(item_id, int(quest.get("turn_in_quantity", 1))):
+		return "Craft %s" % item_name
+	return "Craft %s\n%s" % [item_name, _ingredient_progress_text(recipe)]
 
-func _show_toast(message: String) -> void:
+func show_toast(message: String) -> void:
 	if _toast_tween and _toast_tween.is_valid():
 		_toast_tween.kill()
 	_toast_label.text = message
@@ -97,3 +101,15 @@ func _show_toast(message: String) -> void:
 
 func _hide_toast() -> void:
 	_toast_label.visible = false
+
+func _ingredient_progress_text(recipe: Dictionary) -> String:
+	var ingredients: Dictionary = recipe.get("ingredients", {})
+	var ids: Array = ingredients.keys()
+	ids.sort()
+	var parts: PackedStringArray = PackedStringArray()
+	for id in ids:
+		var item_id := String(id)
+		var needed: int = int(ingredients[item_id])
+		var have: int = mini(Inventory.get_quantity(item_id), needed)
+		parts.append("%s %d/%d" % [ItemDatabase.get_item_name(item_id), have, needed])
+	return "\n".join(parts)

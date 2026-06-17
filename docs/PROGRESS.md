@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-17.
+> Last updated: 2026-06-18.
 > Milestone summary: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md`.
 
 ## Status
@@ -35,6 +35,22 @@ the player choose how many batches to brew. Batch brewing uses
 `CraftingSystem.craft_quantity()`. Root-Wake Tonic remains quest-gated and is capped to
 one brew while Sage's request is active/ready. It now uses Dewcap Mushroom and Glowberry
 so it no longer shares Calming Tea's ingredients.
+
+**Vertical Slice 0.4 — "Quest and Recipe Guidance v1" is complete.** The active quest
+tracker now shows Root-Wake Tonic ingredient progress while Sage's request is active
+(`Dewcap Mushroom 0/1`, `Glowberry 0/2`) and updates as inventory changes. Once the tonic
+is crafted, it switches back to the turn-in objective. Gatherables now show a short HUD
+toast with the picked-up item name and quantity, and Dewcap Mushroom / Glowberry have
+native 16x16 item icons for the inventory and cauldron detail rows.
+
+**Vertical Slice 0.5 — "Shop Browsing Prototype v1" is in progress.** The first pass
+starts replacing the temporary manual sale with the final-game-shaped shop loop:
+Marigold stocks one Calming Tea on a display, opens the shop at the sign, the existing
+customer walks to the display, chooses the item, walks to the counter, and waits for
+checkout. Interacting with the customer at the counter consumes the display stock and
+awards gold. Stocked display items are now saved and restored by stable display id. This
+is intentionally deterministic: no pricing UI, preferences, multiple customers,
+schedules, or shop upgrades yet.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -160,11 +176,16 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.4 — Quest and Recipe Guidance v1 is next.
+- [ ] Vertical Slice 0.5 — Shop Browsing Prototype v1.
+      See `docs/plans/vertical_slice_0_5_shop_browsing_prototype.md`. Keep it focused:
+      one display, one customer, one stockable item, one checkout interaction. Do not add
+      price setting, multiple displays, multiple customers, preferences, schedules, or
+      shop upgrades.
+- [x] Vertical Slice 0.4 — Quest and Recipe Guidance v1.
       See `docs/plans/vertical_slice_0_4_quest_recipe_guidance.md`. Keep it focused:
       ingredient progress in the quest tracker, clearer gather feedback, and small item
       icons for Dewcap Mushroom and Glowberry. Do not add a full quest journal, recipe
-      book, new quest chain, or new NPC.
+      book, new quest chain, or new NPC. Done 2026-06-17.
 - [x] Vertical Slice 0.3.1 — Known Recipe Cauldron UI. The cauldron panel now lists
       known recipes, lets unavailable known recipes be selected for missing-ingredient
       preview, disables only Brew until ingredients are held, and supports capped batch

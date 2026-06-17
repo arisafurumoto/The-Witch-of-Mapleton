@@ -26,6 +26,7 @@
     "description": "A small blue mushroom that drinks morning mist through its cap.",
     "stack_limit": 99,
     "sell_price": 3,
+    "icon": "res://art/items/dewcap_mushroom.png",
     "tags": ["mushroom", "forest", "dew"]
   },
   {
@@ -35,6 +36,7 @@
     "description": "A warm little berry with a pulse of gentle plant magic.",
     "stack_limit": 99,
     "sell_price": 5,
+    "icon": "res://art/items/glowberry.png",
     "tags": ["berry", "forest", "glow"]
   },
   {

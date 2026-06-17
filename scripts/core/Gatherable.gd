@@ -30,6 +30,7 @@ func interact() -> void:
 		return
 	Inventory.add_item(item_id, item_quantity)
 	AudioSystem.play_gather()
+	HUD.show_toast("Gathered %s x%d" % [ItemDatabase.get_item_name(item_id), item_quantity])
 	interacted.emit()
 	set_depleted(true)
 	DaySystem.set_gatherable_depleted(gatherable_id, true)

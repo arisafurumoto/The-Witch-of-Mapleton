@@ -67,6 +67,14 @@ func get_recipes_for_station(station: String) -> Array[Dictionary]:
 			results.append(recipe)
 	return results
 
+func get_recipe_for_output(item_id: String) -> Dictionary:
+	for id in _recipes:
+		var recipe: Dictionary = _recipes[id]
+		var output: Dictionary = recipe.get("output", {})
+		if String(output.get("item_id", "")) == item_id:
+			return recipe
+	return {}
+
 func find_matching_recipe(station: String, ingredients: Dictionary, preferred_ids: PackedStringArray = PackedStringArray()) -> Dictionary:
 	for id in preferred_ids:
 		var recipe_id := String(id)
