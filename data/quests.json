@@ -9,6 +9,7 @@
     "reward_items": {
       "moonleaf_seed_packet": 1
     },
+    "reward_recipes": ["root_wake_tonic"],
     "start_lines": [
       "Marigold? I am Sage. I keep the plant shop, mostly upright.",
       "I hope I am not interrupting your first morning in the shop.",

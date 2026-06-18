@@ -36,6 +36,7 @@ func interact() -> void:
 	if _busy or not _present:
 		return
 	interacted.emit()
+	_face_player()
 	if _fulfilled:
 		_say("Customer", ["Thank you again, witch."])
 		return
@@ -170,6 +171,13 @@ func _direction_for(delta_position: Vector2) -> String:
 	if absf(delta_position.x) > absf(delta_position.y):
 		return "east" if delta_position.x >= 0.0 else "west"
 	return "south" if delta_position.y >= 0.0 else "north"
+
+func _face_player() -> void:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		return
+	var direction := _direction_for(player.global_position - global_position)
+	_sprite.play("idle_" + direction)
 
 func _entrance_position() -> Vector2:
 	var entrance := get_node_or_null(entrance_path) as Node2D

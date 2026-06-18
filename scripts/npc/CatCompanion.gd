@@ -26,10 +26,40 @@ var _was_idle: bool = false
 
 func _ready() -> void:
 	_acquire_target()
+	_place_at_transition_entrance()
 	_reset_idle_turn_timer()
 
 func _acquire_target() -> void:
 	_target = get_tree().get_first_node_in_group("player")
+
+func _place_at_transition_entrance() -> void:
+	if not is_instance_valid(_target):
+		return
+	if not get_tree().root.has_meta("transition_from_scene"):
+		return
+	var target_facing := String(_target.get("facing"))
+	global_position = _target.global_position - _facing_vector(target_facing) * 48.0
+	facing = target_facing
+
+func _facing_vector(direction: String) -> Vector2:
+	match direction:
+		"east":
+			return Vector2.RIGHT
+		"south_east":
+			return Vector2(1, 1).normalized()
+		"south":
+			return Vector2.DOWN
+		"south_west":
+			return Vector2(-1, 1).normalized()
+		"west":
+			return Vector2.LEFT
+		"north_west":
+			return Vector2(-1, -1).normalized()
+		"north":
+			return Vector2.UP
+		"north_east":
+			return Vector2(1, -1).normalized()
+	return Vector2.DOWN
 
 func _physics_process(delta: float) -> void:
 	if not is_instance_valid(_target):

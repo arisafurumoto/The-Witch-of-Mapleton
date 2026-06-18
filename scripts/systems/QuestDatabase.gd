@@ -45,6 +45,14 @@ func _add_quest(entry: Variant) -> void:
 		if not ItemDatabase.has_item(String(item_id)):
 			push_warning("QuestDatabase: quest '%s' rewards unknown item '%s'" % [id, item_id])
 			return
+	var reward_recipes: Variant = entry.get("reward_recipes", [])
+	if typeof(reward_recipes) != TYPE_ARRAY:
+		push_warning("QuestDatabase: quest '%s' reward_recipes must be an array" % id)
+		return
+	for recipe_id in reward_recipes:
+		if not RecipeDatabase.has_recipe(String(recipe_id)):
+			push_warning("QuestDatabase: quest '%s' rewards unknown recipe '%s'" % [id, recipe_id])
+			return
 	_quests[id] = entry
 
 func has_quest(id: String) -> bool:

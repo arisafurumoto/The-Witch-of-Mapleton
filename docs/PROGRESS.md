@@ -61,11 +61,20 @@ or shop upgrades yet.
 Stock now remains on its display overnight and through save/continue. Sleeping uses a
 full-screen fade with a centered new-day announcement while the day advances and saves.
 
-**Vertical Slice 0.6 — "Home Layout and Recipe Progression v1" is planned.** First add
-the three-door shop layout and Marigold's separate room, including persistent shop stock
-when saving from an unloaded shop. Then add saved recipe knowledge so Sage's quest
-permanently unlocks Root-Wake Tonic. See
-`docs/plans/vertical_slice_0_6_home_layout_and_recipe_progression.md`.
+**Vertical Slice 0.6 — "Home Layout and Recipe Progression v1" is complete and
+playable.** The shop now has separate forest, front visitor, and bedroom doors;
+Marigold's bed and Saffron live in a separate room scene; the customer and Sage enter
+through the front door; and the display/customer/counter route has been rebuilt around
+the compact 720x480 shop and 540x360 bedroom. Sage and the customer wait directly along
+the counter's public edge, with Sage facing the counter. Shop
+display stock now lives in persistent global state, so sleeping and
+saving from the room preserves unloaded shop stock. Calming Tea is known by default,
+Sage's active quest temporarily exposes Root-Wake Tonic, and completing the quest
+permanently unlocks and saves the recipe. Completed 0.5 saves migrate the recipe reward
+without replaying quest rewards or notifications.
+Saffron now enters each destination behind Marigold from the same doorway instead of
+walking in from that scene's default placement.
+Sage and the generic customer turn to face Marigold when she starts a conversation.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -101,6 +110,9 @@ and an olive collar with a gold-framed amber crystal pendant.
 # Headless load/parse check (should print no ERROR lines; warnings are treated as errors)
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --quit
 
+# Focused 0.6 state/layout acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_6.gd
+
 # Play the game
 /Applications/Godot.app/Contents/MacOS/Godot --path .
 ```
@@ -119,20 +131,28 @@ enters, browses, chooses the tea, and waits at the public side of the counter �
 from behind the counter → receive 18 gold → sleep → stocked displays persist, the day
 advances with a full-screen transition, and the game saves.
 
+0.6 home/progression loop: use the top forest door and right-side room door while the
+front door remains visitor-only → stock Calming Tea → sleep and save in Marigold's room
+without losing shop stock → start Sage's request to temporarily reveal Root-Wake Tonic
+at the cauldron → complete the request to permanently learn the recipe → sleep and
+continue with the learned recipe and room position restored.
+
 ## Architecture
 
 **Autoload singletons** (order matters — defined in `project.godot`):
-`ItemDatabase`, `Inventory`, `RecipeDatabase`, `CraftingSystem`, `ShopRequestDatabase`,
-`ShopSystem`, `AudioSystem`, `QuestDatabase`, `QuestSystem`, `DialogueBox` (UI scene),
+`ItemDatabase`, `Inventory`, `RecipeDatabase`, `RecipeKnowledgeSystem`, `CraftingSystem`,
+`ShopRequestDatabase`, `ShopSystem`, `ShopState`, `AudioSystem`, `QuestDatabase`,
+`QuestSystem`, `DialogueBox` (UI scene),
 `DaySystem`, `HUD` (UI scene), `InventoryPanel` (UI scene), `CauldronCraftingPanel`
 (UI scene), `SaveSystem` (last, so it loads after the systems it writes into).
 `Inventory` holds items **and** gold and persists across scene changes.
 `DaySystem` holds the day + per-gatherable depletion state. `QuestSystem` stores quest
 states (`not_started`, `active`, `ready_to_turn_in`, `completed`). `SaveSystem` stores
-inventory, gold, day/gatherable state, quests, current scene path, and player position,
-then restores the player position when the saved scene's player is ready. Display stock
-is currently captured from loaded `shop_displays`; 0.6 must move this to persistent
-global shop state before the bed moves into a separate room scene.
+inventory, gold, day/gatherable state, quests, known recipes, persistent shop stock,
+current scene path, and player position, then restores the player position when the
+saved scene's player is ready. `ShopState` owns stable display stock independently of
+loaded scenes. `RecipeKnowledgeSystem` owns quest-unlocked recipes; default-known recipes
+remain data-driven and are not duplicated in save data.
 
 **Interaction pattern:** `scripts/core/Interactable.gd` (Area2D, has `interact()`,
 `show_prompt()`, optional inline `dialogue`). Subclasses: `Door`, `Gatherable`,
@@ -145,7 +165,7 @@ cauldron crafting panel, or the new-day transition is active.
 `data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
 and `data/quests.json` (Sage quest turn-in/reward/dialogue).
 
-**Scenes:** `scenes/world/{ShopInterior,ForestClearing}.tscn` (Y-sort enabled),
+**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
 `scenes/player/Player.tscn`,
 `scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
@@ -199,12 +219,11 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.6 — Home Layout and Recipe Progression v1.
-      See `docs/plans/vertical_slice_0_6_home_layout_and_recipe_progression.md`. Build
-      0.6A first: persistent shop state, separate room, three shop doors, and updated
-      furniture/customer routes. Then build 0.6B: saved recipe knowledge and Sage's
-      Root-Wake Tonic unlock. Do not add the front exterior, room decoration systems,
-      pricing, schedules, or a recipe-book UI.
+- [x] Vertical Slice 0.6 — Home Layout and Recipe Progression v1. Persistent shop state,
+      separate room, three shop doors, visitor route updates, saved recipe knowledge,
+      Sage's recipe reward, HUD feedback, and 0.5 save migration are complete. The front
+      exterior, room decoration, pricing, schedules, and recipe-book UI remain out of
+      scope. Done 2026-06-18.
 - [x] Vertical Slice 0.5 — Shop Browsing Prototype v1.
       See `docs/plans/vertical_slice_0_5_shop_browsing_prototype.md`. Keep it focused:
       one display, one customer, one stockable item, one checkout interaction. Do not add

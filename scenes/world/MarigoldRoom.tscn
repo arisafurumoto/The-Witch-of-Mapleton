@@ -1,0 +1,109 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="3_cat"]
+[ext_resource type="Script" path="res://scripts/core/Bed.gd" id="4_bed"]
+[ext_resource type="Texture2D" path="res://art/props/shop/bed.png" id="5_bed_tex"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/shop/shop_walls.png" id="6_walls"]
+[ext_resource type="Texture2D" path="res://art/backgrounds/shop/shop_floor.png" id="7_floor"]
+
+[sub_resource type="RectangleShape2D" id="WallHorizontal"]
+size = Vector2(540, 9)
+
+[sub_resource type="RectangleShape2D" id="WallLeftSegment"]
+size = Vector2(9, 145)
+
+[sub_resource type="RectangleShape2D" id="WallVertical"]
+size = Vector2(9, 360)
+
+[sub_resource type="RectangleShape2D" id="RoomDoorBarrier"]
+size = Vector2(9, 70)
+
+[sub_resource type="RectangleShape2D" id="BedZone"]
+size = Vector2(80, 64)
+
+[node name="MarigoldRoom" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("6_walls")
+centered = false
+
+[node name="Floor" type="Sprite2D" parent="."]
+position = Vector2(9, 9)
+scale = Vector2(0.5625, 0.5625)
+texture = ExtResource("7_floor")
+centered = false
+
+[node name="Walls" type="StaticBody2D" parent="."]
+
+[node name="CollTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(270, 4.5)
+shape = SubResource("WallHorizontal")
+
+[node name="CollBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(270, 355.5)
+shape = SubResource("WallHorizontal")
+
+[node name="CollLeftTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(4.5, 72.5)
+shape = SubResource("WallLeftSegment")
+
+[node name="CollLeftBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(4.5, 287.5)
+shape = SubResource("WallLeftSegment")
+
+[node name="CollRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(535.5, 180)
+shape = SubResource("WallVertical")
+
+[node name="DoorBarrier" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorBarrier"]
+position = Vector2(4.5, 180)
+shape = SubResource("RoomDoorBarrier")
+
+[node name="ShopDoor" parent="." instance=ExtResource("2_door")]
+position = Vector2(24, 180)
+rotation = -1.5708
+target_scene = "res://scenes/world/ShopInterior.tscn"
+use_target_player_position = true
+target_player_position = Vector2(665, 135)
+target_player_facing = "west"
+prompt = "To shop"
+
+[node name="Bed" type="Area2D" parent="."]
+position = Vector2(395, 145)
+script = ExtResource("4_bed")
+prompt = "Sleep"
+
+[node name="Visual" type="Sprite2D" parent="Bed"]
+texture = ExtResource("5_bed_tex")
+offset = Vector2(0, -22)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
+position = Vector2(0, -26)
+shape = SubResource("BedZone")
+
+[node name="PromptLabel" type="Label" parent="Bed"]
+offset_left = -40.0
+offset_top = -74.0
+offset_right = 40.0
+offset_bottom = -58.0
+text = "Sleep"
+horizontal_alignment = 1
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(120, 180)
+
+[node name="Camera2D" parent="Player" index="2"]
+zoom = Vector2(1.2, 1.2)
+limit_right = 540
+limit_bottom = 360
+
+[node name="Cat" parent="." instance=ExtResource("3_cat")]
+position = Vector2(160, 200)
+
+[editable path="Player"]

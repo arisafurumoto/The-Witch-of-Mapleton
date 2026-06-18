@@ -55,9 +55,10 @@ func complete_quest(quest_id: String) -> bool:
 	var reward_items: Dictionary = quest.get("reward_items", {})
 	for reward_item_id in reward_items:
 		Inventory.add_item(String(reward_item_id), int(reward_items[reward_item_id]))
-
 	_set_quest_state(quest_id, STATE_COMPLETED)
 	quest_completed.emit(quest_id)
+	for recipe_id in quest.get("reward_recipes", []):
+		RecipeKnowledgeSystem.unlock_recipe(String(recipe_id))
 	return true
 
 func get_save_data() -> Dictionary:

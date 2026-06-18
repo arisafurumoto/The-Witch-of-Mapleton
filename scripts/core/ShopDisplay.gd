@@ -19,7 +19,7 @@ func _ready() -> void:
 	super._ready()
 	add_to_group("shop_displays")
 	DaySystem.day_changed.connect(_on_day_changed)
-	SaveSystem.apply_pending_shop_display(self)
+	load_from_save(ShopState.get_display_stock(display_id))
 	_update_visual()
 
 func interact() -> void:
@@ -50,6 +50,7 @@ func reserve_stock() -> bool:
 	if not has_stock() or _reserved:
 		return false
 	_reserved = true
+	_sync_shop_state()
 	_update_visual()
 	stock_changed.emit()
 	return true
@@ -65,6 +66,7 @@ func consume_stock() -> Dictionary:
 	_stock_item_id = ""
 	_stock_quantity = 0
 	_reserved = false
+	_sync_shop_state()
 	_update_visual()
 	stock_changed.emit()
 	return sold_stock
@@ -111,6 +113,7 @@ func _stock_from_inventory() -> void:
 	_stock_item_id = accepted_item_id
 	_stock_quantity = accepted_quantity
 	_reserved = false
+	_sync_shop_state()
 	HUD.show_toast("Stocked %s x%d" % [ItemDatabase.get_item_name(_stock_item_id), _stock_quantity])
 	_update_visual()
 	stock_changed.emit()
@@ -123,6 +126,7 @@ func _return_stock_to_inventory() -> void:
 	_stock_item_id = ""
 	_stock_quantity = 0
 	_reserved = false
+	_sync_shop_state()
 	_update_visual()
 	stock_changed.emit()
 
@@ -141,5 +145,12 @@ func _on_day_changed(_day: int) -> void:
 	if not _reserved:
 		return
 	_reserved = false
+	_sync_shop_state()
 	_update_visual()
 	stock_changed.emit()
+
+func _sync_shop_state() -> void:
+	if has_stock():
+		ShopState.set_display_stock(display_id, _stock_item_id, _stock_quantity)
+	else:
+		ShopState.clear_display_stock(display_id)

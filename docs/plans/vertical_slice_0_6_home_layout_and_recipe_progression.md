@@ -1,6 +1,6 @@
 # Vertical Slice 0.6 - Home Layout and Recipe Progression v1
 
-> Status: PLANNED.
+> Status: COMPLETE (2026-06-18).
 > Start after Vertical Slice 0.5.
 
 ## Goal
@@ -14,9 +14,9 @@ playable.
 
 ### Shop layout
 
-Keep the current 960x640 shop footprint and use placeholder door openings where the
-existing background art does not contain one. Do not modify or resample the source
-background PNGs.
+Use a compact 720x480 shop footprint and placeholder door openings where the existing
+background art does not contain one. Scale the existing background at display time with
+Nearest filtering; do not modify or resample the source background PNGs.
 
 - Rear/top-centre door: existing player transition to the forest at approximately
   `(480, 64)`.
@@ -37,7 +37,7 @@ background PNGs.
 
 ### Marigold's room
 
-- Add `scenes/world/MarigoldRoom.tscn` as a temporary 960x640 room shell using the
+- Add `scenes/world/MarigoldRoom.tscn` as a temporary 540x360 room shell using the
   existing shop floor/wall textures at native scale.
 - Add player and Saffron instances, room boundary collision, a left-wall return door to
   the shop, and explicit transition spawn/facing values in both directions.

@@ -5,9 +5,7 @@
 [ext_resource type="Script" path="res://scripts/core/CraftingStation.gd" id="4_crafting"]
 [ext_resource type="Script" path="res://scripts/npc/CustomerNPC.gd" id="5_customer"]
 [ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="6_cat"]
-[ext_resource type="Script" path="res://scripts/core/Bed.gd" id="7_bed"]
 [ext_resource type="Texture2D" uid="uid://b56vs3hwdajwu" path="res://art/props/shop/cauldron.png" id="8_cauldron_tex"]
-[ext_resource type="Texture2D" uid="uid://dvfi57h6wpoxb" path="res://art/props/shop/bed.png" id="9_bed_tex"]
 [ext_resource type="SpriteFrames" path="res://art/characters/npcs/generic_customer/GenericCustomer.tres" id="10_customer_frames"]
 [ext_resource type="Texture2D" path="res://art/props/shop/shop_sign.png" id="11_sign_tex"]
 [ext_resource type="Texture2D" path="res://art/props/shop/shop_counter.png" id="12_counter_tex"]
@@ -18,76 +16,114 @@
 [ext_resource type="Script" path="res://scripts/core/ShopDisplay.gd" id="17_shop_display"]
 [ext_resource type="Script" path="res://scripts/core/ShopOpenSign.gd" id="18_shop_open_sign"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
-size = Vector2(960, 16)
+[sub_resource type="RectangleShape2D" id="WallHorizontalSegment"]
+size = Vector2(330, 12)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_v"]
-size = Vector2(16, 640)
+[sub_resource type="RectangleShape2D" id="WallVerticalFull"]
+size = Vector2(12, 480)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_obstacle"]
-size = Vector2(96, 64)
+[sub_resource type="RectangleShape2D" id="WallRightTop"]
+size = Vector2(12, 100)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sign_zone"]
+[sub_resource type="RectangleShape2D" id="WallRightBottom"]
+size = Vector2(12, 310)
+
+[sub_resource type="RectangleShape2D" id="DoorBarrierHorizontal"]
+size = Vector2(60, 12)
+
+[sub_resource type="RectangleShape2D" id="DoorBarrierVertical"]
+size = Vector2(12, 70)
+
+[sub_resource type="RectangleShape2D" id="CounterCollision"]
+size = Vector2(96, 32)
+
+[sub_resource type="RectangleShape2D" id="SignZone"]
 size = Vector2(56, 56)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_display_zone"]
+[sub_resource type="RectangleShape2D" id="DisplayZone"]
 size = Vector2(64, 44)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cauldron_zone"]
+[sub_resource type="RectangleShape2D" id="CauldronZone"]
 size = Vector2(64, 64)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_customer_zone"]
+[sub_resource type="RectangleShape2D" id="CustomerZone"]
 size = Vector2(60, 60)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bed_zone"]
-size = Vector2(80, 64)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sage_zone"]
+[sub_resource type="RectangleShape2D" id="SageZone"]
 size = Vector2(52, 56)
 
 [node name="ShopInterior" type="Node2D"]
 y_sort_enabled = true
 
 [node name="Background" type="Sprite2D" parent="."]
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("13_shop_walls")
 centered = false
 
 [node name="Floor" type="Sprite2D" parent="."]
-position = Vector2(16, 16)
+position = Vector2(12, 12)
+scale = Vector2(0.75, 0.75)
 texture = ExtResource("14_shop_floor")
 centered = false
 
 [node name="Walls" type="StaticBody2D" parent="."]
 
-[node name="CollTop" type="CollisionShape2D" parent="Walls"]
-position = Vector2(480, 8)
-shape = SubResource("RectangleShape2D_wall_h")
+[node name="CollTopLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(165, 6)
+shape = SubResource("WallHorizontalSegment")
 
-[node name="CollBottom" type="CollisionShape2D" parent="Walls"]
-position = Vector2(480, 632)
-shape = SubResource("RectangleShape2D_wall_h")
+[node name="CollTopRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(555, 6)
+shape = SubResource("WallHorizontalSegment")
+
+[node name="CollBottomLeft" type="CollisionShape2D" parent="Walls"]
+position = Vector2(165, 474)
+shape = SubResource("WallHorizontalSegment")
+
+[node name="CollBottomRight" type="CollisionShape2D" parent="Walls"]
+position = Vector2(555, 474)
+shape = SubResource("WallHorizontalSegment")
 
 [node name="CollLeft" type="CollisionShape2D" parent="Walls"]
-position = Vector2(8, 320)
-shape = SubResource("RectangleShape2D_wall_v")
+position = Vector2(6, 240)
+shape = SubResource("WallVerticalFull")
 
-[node name="CollRight" type="CollisionShape2D" parent="Walls"]
-position = Vector2(952, 320)
-shape = SubResource("RectangleShape2D_wall_v")
+[node name="CollRightTop" type="CollisionShape2D" parent="Walls"]
+position = Vector2(714, 50)
+shape = SubResource("WallRightTop")
 
-[node name="Obstacle" type="StaticBody2D" parent="."]
-position = Vector2(480, 300)
+[node name="CollRightBottom" type="CollisionShape2D" parent="Walls"]
+position = Vector2(714, 325)
+shape = SubResource("WallRightBottom")
 
-[node name="ObstacleVisual" type="Sprite2D" parent="Obstacle"]
+[node name="DoorBarriers" type="StaticBody2D" parent="."]
+
+[node name="ForestDoorBarrier" type="CollisionShape2D" parent="DoorBarriers"]
+position = Vector2(360, 6)
+shape = SubResource("DoorBarrierHorizontal")
+
+[node name="FrontDoorBarrier" type="CollisionShape2D" parent="DoorBarriers"]
+position = Vector2(360, 474)
+shape = SubResource("DoorBarrierHorizontal")
+
+[node name="RoomDoorBarrier" type="CollisionShape2D" parent="DoorBarriers"]
+position = Vector2(714, 135)
+shape = SubResource("DoorBarrierVertical")
+
+[node name="Counter" type="StaticBody2D" parent="."]
+position = Vector2(360, 225)
+
+[node name="Visual" type="Sprite2D" parent="Counter"]
 position = Vector2(-48, -64)
 texture = ExtResource("12_counter_tex")
 centered = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Obstacle"]
-shape = SubResource("RectangleShape2D_obstacle")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Counter"]
+position = Vector2(0, -16)
+shape = SubResource("CounterCollision")
 
 [node name="Sign" type="Area2D" parent="."]
-position = Vector2(300, 280)
+position = Vector2(220, 330)
 script = ExtResource("18_shop_open_sign")
 prompt = "Open shop"
 display_path = NodePath("../ShopDisplay")
@@ -98,7 +134,7 @@ texture = ExtResource("11_sign_tex")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sign"]
-shape = SubResource("RectangleShape2D_sign_zone")
+shape = SubResource("SignZone")
 
 [node name="PromptLabel" type="Label" parent="Sign"]
 offset_left = -40.0
@@ -109,7 +145,7 @@ text = "Open shop"
 horizontal_alignment = 1
 
 [node name="ShopDisplay" type="Area2D" parent="."]
-position = Vector2(585, 235)
+position = Vector2(500, 350)
 script = ExtResource("17_shop_display")
 prompt = "Stock display"
 display_id = "main_display"
@@ -126,7 +162,7 @@ visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ShopDisplay"]
 position = Vector2(0, -8)
-shape = SubResource("RectangleShape2D_display_zone")
+shape = SubResource("DisplayZone")
 
 [node name="PromptLabel" type="Label" parent="ShopDisplay"]
 offset_left = -56.0
@@ -137,7 +173,7 @@ text = "Stock display"
 horizontal_alignment = 1
 
 [node name="Cauldron" type="Area2D" parent="."]
-position = Vector2(680, 300)
+position = Vector2(475, 170)
 script = ExtResource("4_crafting")
 prompt = "Brew"
 recipe_ids = PackedStringArray("root_wake_tonic", "calming_tea")
@@ -148,7 +184,7 @@ offset = Vector2(0, -28)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Cauldron"]
 position = Vector2(0, -18)
-shape = SubResource("RectangleShape2D_cauldron_zone")
+shape = SubResource("CauldronZone")
 
 [node name="PromptLabel" type="Label" parent="Cauldron"]
 offset_left = -70.0
@@ -158,36 +194,49 @@ offset_bottom = -48.0
 text = "Brew"
 horizontal_alignment = 1
 
-[node name="Door" parent="." instance=ExtResource("3_door")]
-position = Vector2(480, 64)
+[node name="ForestDoor" parent="." instance=ExtResource("3_door")]
+position = Vector2(360, 52)
 target_scene = "res://scenes/world/ForestClearing.tscn"
 use_target_player_position = true
 target_player_position = Vector2(450, 460)
 target_player_facing = "north"
 prompt = "To forest"
 
-[node name="ShopEntrance" type="Marker2D" parent="."]
-position = Vector2(480, 64)
+[node name="FrontDoor" parent="." instance=ExtResource("3_door")]
+position = Vector2(360, 465)
+prompt = "Outside coming soon"
 
-[node name="ShopInteriorWaypoint" type="Marker2D" parent="."]
-position = Vector2(480, 150)
+[node name="RoomDoor" parent="." instance=ExtResource("3_door")]
+position = Vector2(692, 135)
+rotation = 1.5708
+target_scene = "res://scenes/world/MarigoldRoom.tscn"
+use_target_player_position = true
+target_player_position = Vector2(70, 180)
+target_player_facing = "east"
+prompt = "To Marigold's room"
+
+[node name="VisitorEntrance" type="Marker2D" parent="."]
+position = Vector2(360, 465)
+
+[node name="VisitorInteriorWaypoint" type="Marker2D" parent="."]
+position = Vector2(360, 405)
 
 [node name="CustomerCounterAisle" type="Marker2D" parent="."]
-position = Vector2(560, 220)
+position = Vector2(435, 325)
 
 [node name="CustomerCounterApproach" type="Marker2D" parent="."]
-position = Vector2(560, 340)
+position = Vector2(430, 260)
 
 [node name="Customer" type="Area2D" parent="."]
-position = Vector2(250, 200)
+position = Vector2(180, 180)
 script = ExtResource("5_customer")
 prompt = "Talk"
-entrance_path = NodePath("../ShopEntrance")
-interior_waypoint_path = NodePath("../ShopInteriorWaypoint")
+entrance_path = NodePath("../VisitorEntrance")
+interior_waypoint_path = NodePath("../VisitorInteriorWaypoint")
 counter_aisle_path = NodePath("../CustomerCounterAisle")
 counter_approach_path = NodePath("../CustomerCounterApproach")
 display_path = NodePath("../ShopDisplay")
-counter_position = Vector2(480, 330)
+counter_position = Vector2(390, 260)
 
 [node name="Visual" type="AnimatedSprite2D" parent="Customer"]
 position = Vector2(0, -28)
@@ -197,7 +246,7 @@ animation = &"idle_south"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Customer"]
 position = Vector2(0, -22)
-shape = SubResource("RectangleShape2D_customer_zone")
+shape = SubResource("CustomerZone")
 
 [node name="PromptLabel" type="Label" parent="Customer"]
 offset_left = -40.0
@@ -208,21 +257,22 @@ text = "Talk"
 horizontal_alignment = 1
 
 [node name="Sage" type="Area2D" parent="."]
-position = Vector2(360, 205)
+position = Vector2(330, 260)
 script = ExtResource("15_sage")
 prompt = "Talk"
-entrance_path = NodePath("../ShopEntrance")
-interior_waypoint_path = NodePath("../ShopInteriorWaypoint")
+entrance_path = NodePath("../VisitorEntrance")
+interior_waypoint_path = NodePath("../VisitorInteriorWaypoint")
+home_facing = "north"
 
 [node name="Visual" type="AnimatedSprite2D" parent="Sage"]
 position = Vector2(0, -30)
 scale = Vector2(0.66, 0.66)
 sprite_frames = ExtResource("16_sage_frames")
-animation = &"idle_south"
+animation = &"idle_north"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sage"]
 position = Vector2(0, -26)
-shape = SubResource("RectangleShape2D_sage_zone")
+shape = SubResource("SageZone")
 
 [node name="PromptLabel" type="Label" parent="Sage"]
 offset_left = -40.0
@@ -232,29 +282,14 @@ offset_bottom = -62.0
 text = "Talk"
 horizontal_alignment = 1
 
-[node name="Bed" type="Area2D" parent="."]
-position = Vector2(820, 200)
-script = ExtResource("7_bed")
-prompt = "Sleep"
-
-[node name="Visual" type="Sprite2D" parent="Bed"]
-texture = ExtResource("9_bed_tex")
-offset = Vector2(0, -22)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
-position = Vector2(0, -26)
-shape = SubResource("RectangleShape2D_bed_zone")
-
-[node name="PromptLabel" type="Label" parent="Bed"]
-offset_left = -40.0
-offset_top = -74.0
-offset_right = 40.0
-offset_bottom = -58.0
-text = "Sleep"
-horizontal_alignment = 1
-
 [node name="Player" parent="." instance=ExtResource("1_player")]
-position = Vector2(480, 250)
+position = Vector2(360, 185)
+
+[node name="Camera2D" parent="Player" index="2"]
+limit_right = 720
+limit_bottom = 480
 
 [node name="Cat" parent="." instance=ExtResource("6_cat")]
-position = Vector2(430, 260)
+position = Vector2(320, 200)
+
+[editable path="Player"]

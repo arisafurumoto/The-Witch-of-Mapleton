@@ -29,6 +29,8 @@ func _ready() -> void:
 	_plus_button.pressed.connect(_change_quantity.bind(1))
 	_close_button.pressed.connect(close)
 	Inventory.inventory_changed.connect(_rebuild)
+	RecipeKnowledgeSystem.recipe_unlocked.connect(_on_recipe_unlocked)
+	QuestSystem.quest_state_changed.connect(_on_quest_state_changed)
 
 func is_active() -> bool:
 	return visible
@@ -248,7 +250,8 @@ func _max_brew_quantity(recipe: Dictionary) -> int:
 		max_quantity = mini(max_quantity, int(floor(float(Inventory.get_quantity(item_id)) / float(needed_per_batch))))
 	if max_quantity == 999:
 		return 0
-	if String(recipe.get("quest_id", "")) != "":
+	var quest_id := String(recipe.get("quest_id", ""))
+	if quest_id != "" and _is_quest_recipe_active(quest_id):
 		return mini(max_quantity, 1)
 	return max_quantity
 
@@ -275,16 +278,21 @@ func _ordered_candidate_recipes() -> Array[Dictionary]:
 	return recipes
 
 func _is_recipe_known(recipe: Dictionary) -> bool:
+	var recipe_id := String(recipe.get("id", ""))
+	if RecipeKnowledgeSystem.is_recipe_known(recipe_id):
+		return true
 	var quest_id: String = String(recipe.get("quest_id", ""))
-	if quest_id != "":
-		var state := QuestSystem.get_quest_state(quest_id)
-		if state == QuestSystem.STATE_NOT_STARTED or state == QuestSystem.STATE_COMPLETED:
-			return false
-		var output: Dictionary = recipe.get("output", {})
-		var output_id: String = String(output.get("item_id", ""))
-		var output_quantity: int = int(output.get("quantity", 1))
-		return output_id == "" or not Inventory.has_item(output_id, output_quantity)
-	return bool(recipe.get("known_by_default", true))
+	return quest_id != "" and _is_quest_recipe_active(quest_id)
+
+func _is_quest_recipe_active(quest_id: String) -> bool:
+	var state := QuestSystem.get_quest_state(quest_id)
+	return state == QuestSystem.STATE_ACTIVE or state == QuestSystem.STATE_READY
+
+func _on_recipe_unlocked(_recipe_id: String) -> void:
+	_rebuild()
+
+func _on_quest_state_changed(_quest_id: String, _state: String) -> void:
+	_rebuild()
 
 func _swatch_color(item_id: String) -> Color:
 	var hue: float = float(hash(item_id) % 360) / 360.0

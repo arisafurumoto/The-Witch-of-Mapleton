@@ -6,6 +6,7 @@ extends "res://scripts/core/Interactable.gd"
 @export var quest_id: String = "sage_first_request"
 @export var entrance_path: NodePath
 @export var interior_waypoint_path: NodePath
+@export var home_facing: String = "south"
 
 const DIRECTIONS := [
 	"east", "south_east", "south", "south_west",
@@ -28,7 +29,7 @@ func _ready() -> void:
 	super._ready()
 	_home_position = position
 	_returned_from_forest = String(get_tree().root.get_meta("transition_from_scene", "")) == FOREST_SCENE
-	_sprite.play("idle_south")
+	_sprite.play("idle_" + home_facing)
 	_set_present(false)
 	DaySystem.day_changed.connect(_on_world_state_changed)
 	QuestSystem.quest_state_changed.connect(_on_quest_state_changed)
@@ -39,6 +40,7 @@ func interact() -> void:
 		return
 	interacted.emit()
 	_busy = true
+	_face_player()
 	var quest: Dictionary = QuestDatabase.get_quest(quest_id)
 	if quest.is_empty():
 		_busy = false
@@ -131,7 +133,7 @@ func _show_or_enter() -> void:
 
 func _show_at_home() -> void:
 	position = _home_position
-	_sprite.play("idle_south")
+	_sprite.play("idle_" + home_facing)
 	_busy = false
 	_set_present(true)
 
@@ -146,7 +148,7 @@ func _enter_shop() -> void:
 	_finish_enter_shop()
 
 func _finish_enter_shop() -> void:
-	_sprite.play("idle_south")
+	_sprite.play("idle_" + home_facing)
 	_entering = false
 	_busy = false
 	_set_collision_enabled(true)
@@ -165,6 +167,13 @@ func _direction_for(delta_position: Vector2) -> String:
 	var index: int = int(round(rad_to_deg(delta_position.angle()) / 45.0))
 	index = (index % 8 + 8) % 8
 	return DIRECTIONS[index]
+
+func _face_player() -> void:
+	var player := get_tree().get_first_node_in_group("player") as Node2D
+	if player == null:
+		return
+	var direction := _direction_for(player.global_position - global_position)
+	_sprite.play("idle_" + direction)
 
 func _entrance_position() -> Vector2:
 	var entrance := get_node_or_null(entrance_path) as Node2D

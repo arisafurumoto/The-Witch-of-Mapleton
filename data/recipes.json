@@ -28,6 +28,6 @@
       "quantity": 1
     },
     "craft_time": 1,
-    "known_by_default": true
+    "known_by_default": false
   }
 ]

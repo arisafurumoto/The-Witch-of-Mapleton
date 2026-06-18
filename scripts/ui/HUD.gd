@@ -27,6 +27,7 @@ func _ready() -> void:
 	QuestSystem.quest_state_changed.connect(_on_quest_state_changed)
 	QuestSystem.quest_started.connect(_on_quest_started)
 	QuestSystem.quest_completed.connect(_on_quest_completed)
+	RecipeKnowledgeSystem.recipe_unlocked.connect(_on_recipe_unlocked)
 	_update_gold()
 	_update_day(DaySystem.get_day())
 	_update_quest_tracker()
@@ -82,6 +83,10 @@ func _on_quest_completed(quest_id: String) -> void:
 	var quest := QuestDatabase.get_quest(quest_id)
 	show_toast("Quest complete: " + String(quest.get("title", quest_id)))
 	_update_quest_tracker()
+
+func _on_recipe_unlocked(recipe_id: String) -> void:
+	var recipe := RecipeDatabase.get_recipe(recipe_id)
+	show_toast("Recipe learned: " + String(recipe.get("name", recipe_id)))
 
 func _update_quest_tracker() -> void:
 	var quest_id := _get_tracked_quest_id()
