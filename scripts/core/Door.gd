@@ -10,6 +10,9 @@ extends "res://scripts/core/Interactable.gd"
 func interact() -> void:
 	interacted.emit()
 	if target_scene != "":
+		var current_scene := get_tree().current_scene
+		if current_scene != null:
+			get_tree().root.set_meta("transition_from_scene", current_scene.scene_file_path)
 		if use_target_player_position:
 			get_tree().root.set_meta("target_player_position", target_player_position)
 		if target_player_facing != "":

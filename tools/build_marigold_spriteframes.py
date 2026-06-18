@@ -4,7 +4,9 @@ import os
 PROJECT = "/Users/arisafurumoto/Projects/claude/The-Witch-of-Mapleton"
 BASE_RES = "res://art/characters/marigold"
 BASE_FS = os.path.join(PROJECT, "art/characters/marigold")
-WALK_SUBDIR = "animations/walking_with_staff"
+VARIANT_SUBDIR = "with_staff"
+WALK_SUBDIR = f"{VARIANT_SUBDIR}/animations/walking"
+IDLE_SUBDIR = f"{VARIANT_SUBDIR}/rotations"
 OUT = os.path.join(BASE_FS, "Marigold.tres")
 WALK_FRAMES = 9
 
@@ -52,10 +54,10 @@ for folder, suffix in DIRS:
     )
 
 for folder, suffix in DIRS:
-    fs_path = os.path.join(BASE_FS, "rotations", f"{folder}.png")
+    fs_path = os.path.join(BASE_FS, IDLE_SUBDIR, f"{folder}.png")
     if not os.path.exists(fs_path):
         raise SystemExit("Missing rotation: " + fs_path)
-    rid = ext_id(f"{BASE_RES}/rotations/{folder}.png")
+    rid = ext_id(f"{BASE_RES}/{IDLE_SUBDIR}/{folder}.png")
     frame = '{\n"duration": 1.0,\n"texture": ExtResource("%s")\n}' % rid
     animations.append(
         '{\n"frames": [%s],\n"loop": true,\n"name": &"idle_%s",\n"speed": %s\n}'

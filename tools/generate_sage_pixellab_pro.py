@@ -26,7 +26,15 @@ OUT_DIR = ROOT / "tmp" / "pixellab_sage"
 API_BASE = "https://api.pixellab.ai/v2"
 
 CONCEPT_SOURCE = Path("/Users/arisafurumoto/Downloads/Generated image 1 (1).png")
-MARIGOLD_SOUTH = ROOT / "art" / "characters" / "marigold" / "rotations" / "south.png"
+MARIGOLD_SOUTH = (
+    ROOT
+    / "art"
+    / "characters"
+    / "marigold"
+    / "with_staff"
+    / "rotations"
+    / "south.png"
+)
 SAGE_SPRITE = ROOT / "art" / "characters" / "npcs" / "sage.png"
 SAGE_ROTATIONS = ROOT / "art" / "characters" / "npcs" / "sage" / "rotations"
 ROTATION_NAMES = [

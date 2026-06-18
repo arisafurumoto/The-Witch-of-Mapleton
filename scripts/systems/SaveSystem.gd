@@ -68,12 +68,14 @@ func load_game(restore_scene: bool = true, notify: bool = true) -> void:
 		game_loaded.emit(DaySystem.get_day(), Inventory.get_gold())
 
 func continue_game() -> void:
+	_clear_transition_context()
 	if has_save():
 		load_game(true, true)
 	else:
 		start_new_game()
 
 func start_new_game() -> void:
+	_clear_transition_context()
 	_pending_scene_path = ""
 	_pending_player_position = Vector2.ZERO
 	_has_pending_player_position = false
@@ -87,6 +89,11 @@ func start_new_game() -> void:
 		if error != OK:
 			push_warning("SaveSystem: could not remove save file: " + save_path)
 	get_tree().change_scene_to_file(START_SCENE)
+
+func _clear_transition_context() -> void:
+	var root := get_tree().root
+	if root.has_meta("transition_from_scene"):
+		root.remove_meta("transition_from_scene")
 
 func apply_pending_player_position(player: Node2D) -> void:
 	if not _has_pending_player_position:

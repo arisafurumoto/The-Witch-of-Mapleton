@@ -11,6 +11,7 @@ signal stock_changed
 
 var _stock_item_id: String = ""
 var _stock_quantity: int = 0
+var _reserved: bool = false
 
 @onready var _item_icon: Sprite2D = get_node_or_null("ItemIcon") as Sprite2D
 
@@ -23,6 +24,9 @@ func _ready() -> void:
 
 func interact() -> void:
 	interacted.emit()
+	if _reserved:
+		HUD.show_toast("Customer has chosen this item")
+		return
 	if has_stock():
 		_return_stock_to_inventory()
 		return
@@ -42,6 +46,14 @@ func get_stock_total_price() -> int:
 		return 0
 	return ItemDatabase.get_sell_price(_stock_item_id) * _stock_quantity
 
+func reserve_stock() -> bool:
+	if not has_stock() or _reserved:
+		return false
+	_reserved = true
+	_update_visual()
+	stock_changed.emit()
+	return true
+
 func consume_stock() -> Dictionary:
 	if not has_stock():
 		return {}
@@ -52,6 +64,7 @@ func consume_stock() -> Dictionary:
 	}
 	_stock_item_id = ""
 	_stock_quantity = 0
+	_reserved = false
 	_update_visual()
 	stock_changed.emit()
 	return sold_stock
@@ -76,11 +89,15 @@ func load_from_save(data: Dictionary) -> void:
 	else:
 		_stock_item_id = item_id
 		_stock_quantity = quantity
+	_reserved = false
 	_update_visual()
 	stock_changed.emit()
 
 func show_prompt(value: bool) -> void:
-	prompt = "Take item" if has_stock() else "Stock display"
+	if _reserved:
+		prompt = "Item chosen"
+	else:
+		prompt = "Take item" if has_stock() else "Stock display"
 	if _label:
 		_label.text = prompt
 	super.show_prompt(value)
@@ -93,6 +110,7 @@ func _stock_from_inventory() -> void:
 		return
 	_stock_item_id = accepted_item_id
 	_stock_quantity = accepted_quantity
+	_reserved = false
 	HUD.show_toast("Stocked %s x%d" % [ItemDatabase.get_item_name(_stock_item_id), _stock_quantity])
 	_update_visual()
 	stock_changed.emit()
@@ -104,13 +122,14 @@ func _return_stock_to_inventory() -> void:
 	HUD.show_toast("Returned %s x%d" % [ItemDatabase.get_item_name(_stock_item_id), _stock_quantity])
 	_stock_item_id = ""
 	_stock_quantity = 0
+	_reserved = false
 	_update_visual()
 	stock_changed.emit()
 
 func _update_visual() -> void:
 	if _item_icon == null:
 		return
-	_item_icon.visible = has_stock()
+	_item_icon.visible = has_stock() and not _reserved
 	if not has_stock():
 		_item_icon.texture = null
 		return

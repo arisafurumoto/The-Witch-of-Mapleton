@@ -4,10 +4,15 @@ extends "res://scripts/core/Interactable.gd"
 # display, bring the item to the counter, and wait for Marigold to confirm the sale.
 
 @export var request_id: String = "first_calming_tea_request"
-@export var entry_offset: Vector2 = Vector2(0, -48)
+@export var entrance_path: NodePath
+@export var interior_waypoint_path: NodePath
+@export var counter_aisle_path: NodePath
+@export var counter_approach_path: NodePath
 @export var display_path: NodePath
 @export var counter_position: Vector2 = Vector2(250, 200)
 @export var browse_time: float = 0.8
+
+const WALK_SPEED: float = 90.0
 
 var _fulfilled: bool = false
 var _busy: bool = false
@@ -16,11 +21,13 @@ var _present: bool = true
 var _state: String = "hidden"
 
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
+@onready var _sprite: AnimatedSprite2D = $Visual
 
 func _ready() -> void:
 	super._ready()
 	add_to_group("shop_customers")
 	_waiting_position = position
+	_sprite.play("idle_south")
 	_set_present(false)
 	DaySystem.day_changed.connect(_on_day_changed)
 
@@ -43,21 +50,29 @@ func start_shop_session() -> void:
 		return
 	_busy = true
 	_state = "entering"
+	position = _entrance_position()
 	_set_present(true)
-	position = _waiting_position + entry_offset
-	modulate = Color(1, 1, 1, 0)
-	await _walk_to(display.global_position + Vector2(0, 18), 0.55, true)
+	_set_collision_enabled(false)
+	await _walk_to(_interior_waypoint_position())
+	await _walk_to(display.position + Vector2(0, 18))
 	_state = "browsing"
 	await get_tree().create_timer(browse_time).timeout
 	if not bool(display.call("has_stock")):
 		await _leave_shop()
 		return
 	var chosen_item_id := String(display.call("get_stock_item_id"))
+	if not display.has_method("reserve_stock") or not bool(display.call("reserve_stock")):
+		await _leave_shop()
+		return
 	HUD.show_toast("Customer chose %s" % ItemDatabase.get_item_name(chosen_item_id))
-	await _walk_to(counter_position, 0.55, false)
+	await _walk_to(_counter_aisle_position())
+	await _walk_to(_counter_approach_position())
+	await _walk_to(counter_position)
 	_state = "at_counter"
-	prompt = "Sell item"
+	prompt = "Attend customer"
+	_sprite.play("idle_north")
 	_busy = false
+	_set_collision_enabled(true)
 
 func show_prompt(value: bool) -> void:
 	if _label:
@@ -102,10 +117,14 @@ func _confirm_display_sale() -> void:
 func _leave_shop() -> void:
 	_busy = true
 	super.show_prompt(false)
-	await _walk_to(_waiting_position + entry_offset, 0.45, false)
+	_set_collision_enabled(false)
+	if _state == "at_counter":
+		await _walk_to(_counter_approach_position())
+		await _walk_to(_counter_aisle_position())
+	await _walk_to(_interior_waypoint_position())
+	await _walk_to(_entrance_position())
 	_set_present(false)
 	position = _waiting_position
-	modulate = Color.WHITE
 	_state = "hidden"
 	_busy = false
 
@@ -113,19 +132,52 @@ func _set_present(value: bool) -> void:
 	_present = value
 	visible = value
 	monitorable = value
-	if _collision_shape:
-		_collision_shape.disabled = not value
+	_set_collision_enabled(value and not _busy)
 	if not value:
 		super.show_prompt(false)
 
-func _walk_to(target_position: Vector2, duration: float, fade_in: bool) -> void:
-	var tween := create_tween()
+func _set_collision_enabled(value: bool) -> void:
+	if _collision_shape:
+		_collision_shape.disabled = not value
+
+func _walk_to(target_position: Vector2) -> void:
+	var movement: Vector2 = target_position - position
+	var direction: String = _direction_for(movement)
+	var duration: float = movement.length() / WALK_SPEED
+	_sprite.play("walk_" + direction)
+	var tween: Tween = create_tween()
 	tween.tween_property(self, "position", target_position, duration)
-	if fade_in:
-		tween.parallel().tween_property(self, "modulate", Color.WHITE, 0.25)
-	else:
-		tween.parallel().tween_property(self, "modulate", Color.WHITE, 0.1)
 	await tween.finished
+	_sprite.play("idle_" + direction)
+
+func _direction_for(delta_position: Vector2) -> String:
+	if absf(delta_position.x) > absf(delta_position.y):
+		return "east" if delta_position.x >= 0.0 else "west"
+	return "south" if delta_position.y >= 0.0 else "north"
+
+func _entrance_position() -> Vector2:
+	var entrance := get_node_or_null(entrance_path) as Node2D
+	if entrance != null:
+		return entrance.position
+	return _waiting_position
+
+func _interior_waypoint_position() -> Vector2:
+	var waypoint := get_node_or_null(interior_waypoint_path) as Node2D
+	if waypoint != null:
+		return waypoint.position
+	return _entrance_position()
+
+func _counter_aisle_position() -> Vector2:
+	var waypoint := get_node_or_null(counter_aisle_path) as Node2D
+	if waypoint != null:
+		return waypoint.position
+	return counter_position
+
+func _counter_approach_position() -> Vector2:
+	var waypoint := get_node_or_null(counter_approach_path) as Node2D
+	if waypoint != null:
+		return waypoint.position
+	return counter_position
 
 func _display() -> Node2D:
 	return get_node_or_null(display_path) as Node2D

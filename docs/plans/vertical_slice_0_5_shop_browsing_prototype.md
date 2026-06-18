@@ -29,7 +29,17 @@ Keep this first pass deterministic and tiny:
 - Display stock is saved and restored by stable display id.
 - The shop sign now starts the prototype shop session.
 - The generic customer enters only after the shop is opened with a stocked display.
-- The customer walks to the display, then to the counter, and waits for checkout.
+- The customer walks in through the shop door using four-direction walking art, visits
+  the display, then walks to the counter and waits for checkout.
+- Sage also enters through the shop door and returns to it after his quest is completed.
+- A shared interior doorway waypoint keeps both NPC routes inside the visible opening
+  before they turn toward their destinations.
+- Buying customers route around the counter, wait on its public side facing Marigold,
+  and can be attended while Marigold stands behind the counter.
+- When the customer chooses an item it becomes reserved and disappears from the display;
+  the underlying stock is consumed only when Marigold completes checkout.
+- Sage enters only when first offering his quest; returning from the forest while his
+  quest is in any unfinished state leaves him stationed at his shop position.
 - `ShopSystem.complete_display_sale()` awards gold for already-stocked display items.
 
 ## Non-Goals
@@ -55,9 +65,10 @@ Do not add yet:
 4. Interact with the display near the counter to stock Calming Tea.
 5. Sleep or save/continue after stocking to confirm the display keeps the tea.
 6. Interact with the shop sign to open the shop.
-7. Confirm the customer enters, walks to the display, then walks to the counter.
+7. Confirm the customer walks in through the door, visits the display, then walks to the counter.
 8. Interact with the customer at the counter.
 9. Confirm Calming Tea is removed from the display and 18 gold is awarded.
+10. Confirm the customer walks back through the door after checkout.
 
 ## Known Follow-Ups
 

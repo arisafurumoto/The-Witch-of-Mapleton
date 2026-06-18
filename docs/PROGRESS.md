@@ -49,7 +49,13 @@ Marigold stocks one Calming Tea on a display, opens the shop at the sign, the ex
 customer walks to the display, chooses the item, walks to the counter, and waits for
 checkout. Interacting with the customer at the counter consumes the display stock and
 awards gold. Stocked display items are now saved and restored by stable display id. This
-is intentionally deterministic: no pricing UI, preferences, multiple customers,
+customer now uses four-direction walking art, Sage uses his eight-direction walking
+art, and both NPCs follow a doorway waypoint when entering and leaving so they do not
+cut through the north wall. Their movement and animation speeds match Marigold's
+90 pixels/second and 12 fps. The customer routes around the counter and waits on its
+public side for Marigold, while active Sage no longer replays his entrance after a
+forest round trip, even if his quest has not been accepted. Chosen stock is reserved and its display icon disappears while the
+customer carries it to checkout. This is intentionally deterministic: no pricing UI, preferences, multiple customers,
 schedules, or shop upgrades yet.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
@@ -138,8 +144,12 @@ PixelLab exports a folder per character: `animations/<long-name>/<dir>/frame_NNN
 (8 directions × ~9 walk frames) plus `rotations/<dir>.png` (8 idle poses). A Python
 generator turns these into a `SpriteFrames` `.tres` with `walk_<dir>` / `idle_<dir>`
 animations. Generators live in `tools/` (`build_marigold_spriteframes.py`,
-`build_saffron_spriteframes.py`) — run them to regenerate a `.tres` after re-export.
-Marigold's current walking frames are under `art/characters/marigold/animations/walking_with_staff/`.
+`build_saffron_spriteframes.py`, `build_generic_customer_spriteframes.py`) — run the
+matching generator to regenerate a `.tres` after re-export. Sage uses
+`build_sage_spriteframes.py` for the same pipeline.
+Marigold's active walking and idle art is the `with_staff` variant under
+`art/characters/marigold/with_staff/`; the `default` and `no_hat` folders are inactive
+outfit references and are not included in `Marigold.tres`.
 
 Rules:
 1. **Never overwrite/resample source art in place.** Baking a downscale into the PNGs
