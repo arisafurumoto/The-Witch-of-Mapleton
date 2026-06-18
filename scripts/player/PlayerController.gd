@@ -24,9 +24,14 @@ func _ready() -> void:
 	detector.area_exited.connect(_on_detector_area_exited)
 
 func _physics_process(delta: float) -> void:
+	if HUD.is_day_transition_active():
+		velocity = Vector2.ZERO
+		_update_animation()
+		_update_prompts()
+		return
 	# Freeze movement while a dialogue or modal crafting panel is open.
 	var input_dir := Vector2.ZERO
-	if not DialogueBox.is_active() and not CauldronCraftingPanel.is_active():
+	if not DialogueBox.is_active() and not CauldronCraftingPanel.is_active() and not HUD.is_day_transition_active():
 		input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if input_dir != Vector2.ZERO:
 		velocity = velocity.move_toward(input_dir * max_speed, acceleration * delta)
@@ -38,7 +43,7 @@ func _physics_process(delta: float) -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	# While UI is open, interact is handled by that UI.
-	if DialogueBox.is_active() or CauldronCraftingPanel.is_active():
+	if DialogueBox.is_active() or CauldronCraftingPanel.is_active() or HUD.is_day_transition_active():
 		return
 	if event.is_action_pressed("interact"):
 		var target := _nearest_interactable()

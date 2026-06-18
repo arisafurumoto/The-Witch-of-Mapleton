@@ -19,6 +19,7 @@ var _busy: bool = false
 var _waiting_position: Vector2 = Vector2.ZERO
 var _present: bool = true
 var _state: String = "hidden"
+var _session_generation: int = 0
 
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var _sprite: AnimatedSprite2D = $Visual
@@ -49,14 +50,22 @@ func start_shop_session() -> void:
 		HUD.show_toast("Stock the display first")
 		return
 	_busy = true
+	_session_generation += 1
+	var session_generation: int = _session_generation
 	_state = "entering"
 	position = _entrance_position()
 	_set_present(true)
 	_set_collision_enabled(false)
 	await _walk_to(_interior_waypoint_position())
+	if session_generation != _session_generation:
+		return
 	await _walk_to(display.position + Vector2(0, 18))
+	if session_generation != _session_generation:
+		return
 	_state = "browsing"
 	await get_tree().create_timer(browse_time).timeout
+	if session_generation != _session_generation:
+		return
 	if not bool(display.call("has_stock")):
 		await _leave_shop()
 		return
@@ -66,8 +75,14 @@ func start_shop_session() -> void:
 		return
 	HUD.show_toast("Customer chose %s" % ItemDatabase.get_item_name(chosen_item_id))
 	await _walk_to(_counter_aisle_position())
+	if session_generation != _session_generation:
+		return
 	await _walk_to(_counter_approach_position())
+	if session_generation != _session_generation:
+		return
 	await _walk_to(counter_position)
+	if session_generation != _session_generation:
+		return
 	_state = "at_counter"
 	prompt = "Attend customer"
 	_sprite.play("idle_north")
@@ -86,6 +101,7 @@ func _say(speaker_name: String, lines: Array) -> void:
 		await DialogueBox.dialogue_finished
 
 func _on_day_changed(_day: int) -> void:
+	_session_generation += 1
 	_fulfilled = false
 	_busy = false
 	_state = "hidden"

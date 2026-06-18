@@ -27,6 +27,8 @@ Keep this first pass deterministic and tiny:
 
 - `ShopDisplay` can stock or return one Calming Tea from inventory.
 - Display stock is saved and restored by stable display id.
+- Sleeping preserves stocked display items across days; an in-progress reservation is
+  cancelled so the item reappears on the display after the day transition.
 - The shop sign now starts the prototype shop session.
 - The generic customer enters only after the shop is opened with a stocked display.
 - The customer walks in through the shop door using four-direction walking art, visits
@@ -69,6 +71,7 @@ Do not add yet:
 8. Interact with the customer at the counter.
 9. Confirm Calming Tea is removed from the display and 18 gold is awarded.
 10. Confirm the customer walks back through the door after checkout.
+11. Sleep and confirm the screen fades out, announces the new day, then fades back in.
 
 ## Known Follow-Ups
 

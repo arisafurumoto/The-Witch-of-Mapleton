@@ -138,4 +138,8 @@ func _update_visual() -> void:
 		_item_icon.texture = load(icon_path)
 
 func _on_day_changed(_day: int) -> void:
-	_return_stock_to_inventory()
+	if not _reserved:
+		return
+	_reserved = false
+	_update_visual()
+	stock_changed.emit()

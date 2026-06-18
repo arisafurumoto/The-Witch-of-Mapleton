@@ -1,14 +1,14 @@
 extends "res://scripts/core/Interactable.gd"
 
-# Sleeping in the bed ends the day: advance the day (refilling gatherables),
-# save the game, then show a short confirmation.
+# Sleeping fades out the current day, advances and saves while the screen is
+# covered, then reveals the new day before returning control to the player.
 
 func interact() -> void:
+	if HUD.is_day_transition_active():
+		return
 	interacted.emit()
 	AudioSystem.play_sleep()
+	await HUD.fade_to_night()
 	DaySystem.advance_day()
 	SaveSystem.save_game()
-	DialogueBox.show_dialogue("", [
-		"You tuck in for the night...",
-		"A new day begins. Day %d." % DaySystem.get_day(),
-	])
+	await HUD.reveal_new_day(DaySystem.get_day())

@@ -57,6 +57,8 @@ public side for Marigold, while active Sage no longer replays his entrance after
 forest round trip, even if his quest has not been accepted. Chosen stock is reserved and its display icon disappears while the
 customer carries it to checkout. This is intentionally deterministic: no pricing UI, preferences, multiple customers,
 schedules, or shop upgrades yet.
+Stock now remains on its display overnight and through save/continue. Sleeping uses a
+full-screen fade with a centered new-day announcement while the day advances and saves.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 

@@ -9,8 +9,13 @@ extends CanvasLayer
 @onready var _quest_title_label: Label = $QuestPanel/Margin/VBox/TitleLabel
 @onready var _quest_objective_label: Label = $QuestPanel/Margin/VBox/ObjectiveLabel
 @onready var _toast_label: Label = $ToastLabel
+@onready var _day_transition: Control = $DayTransition
+@onready var _new_day_text: VBoxContainer = $DayTransition/NewDayText
+@onready var _new_day_label: Label = $DayTransition/NewDayText/DayLabel
 
 var _toast_tween: Tween
+var _day_transition_tween: Tween
+var _day_transition_active: bool = false
 
 func _ready() -> void:
 	layer = 50
@@ -26,6 +31,32 @@ func _ready() -> void:
 	_update_day(DaySystem.get_day())
 	_update_quest_tracker()
 	_toast_label.visible = false
+	_day_transition.visible = false
+
+func is_day_transition_active() -> bool:
+	return _day_transition_active
+
+func fade_to_night() -> void:
+	_day_transition_active = true
+	_day_transition.visible = true
+	_day_transition.modulate = Color(1, 1, 1, 0)
+	_new_day_text.visible = false
+	_day_transition_tween = create_tween()
+	_day_transition_tween.tween_property(_day_transition, "modulate:a", 1.0, 0.55)
+	await _day_transition_tween.finished
+
+func reveal_new_day(day: int) -> void:
+	_new_day_label.text = "Day %d" % day
+	_new_day_text.visible = true
+	_new_day_text.modulate = Color(1, 1, 1, 0)
+	_day_transition_tween = create_tween()
+	_day_transition_tween.tween_property(_new_day_text, "modulate:a", 1.0, 0.25)
+	_day_transition_tween.tween_interval(0.9)
+	_day_transition_tween.tween_property(_new_day_text, "modulate:a", 0.0, 0.2)
+	_day_transition_tween.tween_property(_day_transition, "modulate:a", 0.0, 0.55)
+	await _day_transition_tween.finished
+	_day_transition.visible = false
+	_day_transition_active = false
 
 func _update_gold() -> void:
 	_gold_label.text = "Gold: %d" % Inventory.get_gold()
