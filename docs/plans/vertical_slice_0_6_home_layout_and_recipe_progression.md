@@ -19,7 +19,7 @@ background art does not contain one. Scale the existing background at display ti
 Nearest filtering; do not modify or resample the source background PNGs.
 
 - Rear/top-centre door: existing player transition to the forest at approximately
-  `(480, 64)`.
+  `(360, 52)`.
 - Front/bottom-centre door: customer and visitor entrance. It has no destination scene
   and must not transition the player yet.
 - Upper-right wall door: player transition to Marigold's room.
@@ -38,7 +38,7 @@ Nearest filtering; do not modify or resample the source background PNGs.
 ### Marigold's room
 
 - Add `scenes/world/MarigoldRoom.tscn` as a temporary 540x360 room shell using the
-  existing shop floor/wall textures at native scale.
+  existing shop floor/wall textures scaled at display time with Nearest filtering.
 - Add player and Saffron instances, room boundary collision, a left-wall return door to
   the shop, and explicit transition spawn/facing values in both directions.
 - Move the existing bed node and sprite out of the shop and into the room. Sleeping,
@@ -130,3 +130,20 @@ Complete persistence before moving the bed.
 - Multiple displays, multiple customers, pricing, preferences, or navigation AI.
 - Recipe book screen, recipe experimentation, item quality, or traits.
 - New quest, NPC, ingredient, recipe, or region content.
+
+## Final Implementation Notes
+
+- Shop footprint: 720x480. Bedroom footprint: 540x360 with a 1.2 camera zoom.
+- The counter remains centred; its final collision is 96x32 and aligned to the visible
+  lower base rather than extending into the customer aisle.
+- Sage and the generic customer use the same centred `(360, 260)` counter position at
+  different times, directly along the public edge.
+- Sage and the customer face Marigold when dialogue starts.
+- Sage registers as a `closed_shop_visitors` member while present. The shop sign shows
+  `Visitor here` and cannot start a browsing session until he leaves.
+- Saffron enters each destination 48 pixels behind Marigold using her arrival facing,
+  so he comes through the same doorway instead of walking from a scene default.
+- The front door remains visitor-only and has no destination scene.
+- `tools/verify_vertical_slice_0_6.gd` covers scene topology, room/shop footprints,
+  counter collision, visitor positions/facing, companion transition placement,
+  persistent stock, recipe unlocks, and completed-0.5 migration.

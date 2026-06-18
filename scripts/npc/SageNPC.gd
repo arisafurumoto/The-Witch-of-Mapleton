@@ -115,7 +115,10 @@ func _set_present(value: bool) -> void:
 	visible = value
 	monitorable = value
 	_set_collision_enabled(value and not _busy)
-	if not value:
+	if value:
+		add_to_group("closed_shop_visitors")
+	else:
+		remove_from_group("closed_shop_visitors")
 		super.show_prompt(false)
 
 func _set_collision_enabled(value: bool) -> void:

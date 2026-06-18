@@ -32,10 +32,10 @@ func _check_scene_layout() -> void:
 	_check(shop.get_node("Background").scale == Vector2(0.75, 0.75), "Shop footprint is not scaled to 720x480")
 	_check(room.get_node("Background").scale == Vector2(0.5625, 0.5625), "Room footprint is not scaled to 540x360")
 	var sage := shop.get_node("Sage")
-	_check(sage.position == Vector2(330, 260), "Sage is not directly in front of the counter")
+	_check(sage.position == Vector2(360, 260), "Sage is not centred in front of the counter")
 	_check(String(sage.get("home_facing")) == "north", "Sage is not facing the counter")
 	var customer := shop.get_node("Customer")
-	_check(customer.get("counter_position") == Vector2(390, 260), "Customer is not directly in front of the counter")
+	_check(customer.get("counter_position") == Vector2(360, 260), "Customer is not centred in front of the counter")
 	var counter_collision := shop.get_node("Counter/CollisionShape2D") as CollisionShape2D
 	var counter_shape := counter_collision.shape as RectangleShape2D
 	_check(counter_shape.size == Vector2(96, 32), "Counter collision is not half-height")
@@ -67,6 +67,13 @@ func _check_shop_state() -> void:
 	_check(cat_position.distance_to(Vector2(360, 52)) < 4.0, "Saffron did not enter behind Marigold through the forest door")
 	var player := shop.get_node("Player") as Node2D
 	var sage := shop.get_node("Sage")
+	var sign := shop.get_node("Sign")
+	sage.call("_set_present", true)
+	_check(bool(sign.call("_has_closed_shop_visitor")), "Shop sign did not detect the closed-shop visitor")
+	sign.call("show_prompt", true)
+	_check(String(sign.get_node("PromptLabel").text) == "Visitor here", "Shop sign did not show its disabled visitor prompt")
+	sage.call("_set_present", false)
+	_check(not bool(sign.call("_has_closed_shop_visitor")), "Shop sign stayed disabled after the visitor left")
 	player.position = sage.position + Vector2(80, 0)
 	sage.call("_face_player")
 	_check(String(sage.get_node("Visual").animation) == "idle_east", "Sage did not turn toward Marigold")

@@ -236,7 +236,7 @@ interior_waypoint_path = NodePath("../VisitorInteriorWaypoint")
 counter_aisle_path = NodePath("../CustomerCounterAisle")
 counter_approach_path = NodePath("../CustomerCounterApproach")
 display_path = NodePath("../ShopDisplay")
-counter_position = Vector2(390, 260)
+counter_position = Vector2(360, 260)
 
 [node name="Visual" type="AnimatedSprite2D" parent="Customer"]
 position = Vector2(0, -28)
@@ -257,7 +257,7 @@ text = "Talk"
 horizontal_alignment = 1
 
 [node name="Sage" type="Area2D" parent="."]
-position = Vector2(330, 260)
+position = Vector2(360, 260)
 script = ExtResource("15_sage")
 prompt = "Talk"
 entrance_path = NodePath("../VisitorEntrance")

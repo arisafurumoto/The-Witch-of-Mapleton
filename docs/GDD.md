@@ -739,14 +739,17 @@ Use these rules for AI-assisted development:
 
 ## 15. Current Priority
 
-Vertical Slice 0.1, **First Potion Sale**, is complete and playable. The current priority is to preserve that tiny working loop while planning future systems in small, focused milestones.
+Vertical Slice 0.6, **Home Layout and Recipe Progression v1**, is complete and playable.
+The current priority is Vertical Slice 0.7, **Camellia's First Request and Quest
+Chaining v1**: one second request that proves quest prerequisites and a second permanent
+recipe unlock without expanding into the village or restaurant systems.
 
 Do not expand directly into the full long-term feature set. Choose one next system or polish pass at a time, and keep each milestone testable inside the existing loop.
 
 Near-term milestone candidates:
 
-* Keep polishing the First Potion Sale slice.
-* Add a small second recipe/request only when the first loop feels stable.
-* Add data-driven NPC/dialogue loaders when more than one reusable NPC or dialogue is needed.
-* Split Marigold's room from the shop when sleeping/cooking needs a dedicated scene.
+* Complete Camellia's small second recipe/request and keep the existing loop stable.
+* Add data-driven NPC/dialogue loaders when ambient dialogue, schedules, or a third
+  reusable quest visitor creates a concrete need.
+* Add a small shop exterior or village threshold only after the second request works.
 * Add calendar seasons only when a seasonal item or gatherable needs them.

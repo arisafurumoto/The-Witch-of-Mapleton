@@ -1,8 +1,9 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-18.
-> Milestone summary: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md`.
+> Last updated: 2026-06-19.
+> Milestone summaries: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md` and
+> `docs/VERTICAL_SLICE_SUMMARY_0_4_TO_0_6.md`.
 
 ## Status
 
@@ -75,6 +76,16 @@ without replaying quest rewards or notifications.
 Saffron now enters each destination behind Marigold from the same doorway instead of
 walking in from that scene's default placement.
 Sage and the generic customer turn to face Marigold when she starts a conversation.
+The final layout pass reduced the counter collider to its visible 96x32 base so
+Marigold can comfortably attend visitors from behind it. Sage and browsing customers
+now use the same centred counter position at different times: while Sage is present,
+the shop sign reads `Visitor here` and refuses to open the browsing session.
+
+**Vertical Slice 0.7 — "Camellia's First Request and Quest Chaining v1" is planned.**
+This will add one prerequisite-gated Day 2 quest, one Glowberry Cordial item/recipe made
+from existing ingredients, and one Camellia shop visit that joins the existing
+closed-shop visitor rule. See
+`docs/plans/vertical_slice_0_7_camellia_quest_chaining.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -210,8 +221,8 @@ Rules:
 
 - `backups/` holds local art snapshots; it has a `.gdignore` (Godot skips it) and is
   git-ignored. See `backups/README.md`. Snapshots are taken before destructive art ops.
-- **The repo is committed through 0.5** (latest implementation commit at handoff:
-  `72e4a52`). Keep
+- **The repo is committed through 0.6** (latest implementation commit at handoff:
+  `8cadb64`). Keep
   committing after each focused batch — it's the real safety net (an early loss of crisp
   Marigold frames predates the baseline). `.gitignore` excludes `.godot/`, `backups/`,
   and keeps `*.import` files. The implementation worktree was clean before this
@@ -219,6 +230,12 @@ Rules:
 
 ## Next steps / backlog
 
+- [ ] Vertical Slice 0.7 — Camellia's First Request and Quest Chaining v1.
+      See `docs/plans/vertical_slice_0_7_camellia_quest_chaining.md`. Add one second
+      request with quest prerequisites, one recipe unlock, one Camellia visitor, and
+      register her with the existing closed-shop visitor rule. Do not add the village
+      exterior, restaurant gameplay, relationships, schedules, new gathering regions,
+      or a broad NPC system.
 - [x] Vertical Slice 0.6 — Home Layout and Recipe Progression v1. Persistent shop state,
       separate room, three shop doors, visitor route updates, saved recipe knowledge,
       Sage's recipe reward, HUD feedback, and 0.5 save migration are complete. The front

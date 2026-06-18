@@ -223,7 +223,7 @@ kitchen
 potting_bench
 ```
 
-For vertical slice 0.2, `cauldron` is used for both Calming Tea and Root-Wake Tonic.
+For vertical slice 0.6, `cauldron` is used for both Calming Tea and Root-Wake Tonic.
 
 ### Optional Fields
 
@@ -231,9 +231,10 @@ For vertical slice 0.2, `cauldron` is used for both Calming Tea and Root-Wake To
 quest_id
 ```
 
-`quest_id` can gate a recipe to a specific active quest. In vertical slice 0.2,
-`root_wake_tonic` uses `quest_id = "sage_first_request"` so the cauldron only
-prioritizes that tonic while Sage's quest needs it.
+`quest_id` can temporarily expose a recipe while its quest is active or ready. In
+vertical slice 0.6, `root_wake_tonic` uses `quest_id = "sage_first_request"`; completing
+the quest adds it to saved recipe knowledge. Recipes with `known_by_default: true` are
+always known and are not duplicated in `known_recipes` save data.
 
 Later, separate crafting and cooking by station and output category:
 
@@ -595,10 +596,11 @@ Possible combat rescue state:
 
 When Marigold loses all HP, she should wake at home the next day with the doctor nearby, lose a small amount of money, and start later than usual.
 
-## 8.4 Future Quest and Progression Data
+## 8.4 Quest and Progression Data
 
-The current 0.2 quest data is intentionally small and authored. It is enough for one
-NPC to request a specific crafted item, give rewards, and save completion state.
+The current 0.6 quest data is intentionally small and authored. It supports a specific
+crafted-item turn-in, item/gold/recipe rewards, saved completion state, and migration of
+recipe rewards for older completed saves.
 
 Current quest record:
 
@@ -613,11 +615,27 @@ Current quest record:
   "reward_items": {
     "moonleaf_seed_packet": 1
   },
+  "reward_recipes": ["root_wake_tonic"],
   "start_lines": [],
   "reminder_lines": [],
   "complete_lines": []
 }
 ```
+
+`reward_recipes` is optional. Each referenced ID must exist in `data/recipes.json`.
+`QuestSystem.complete_quest()` unlocks those recipes only after the turn-in item is
+successfully consumed and the other rewards are granted.
+
+Vertical Slice 0.7 plans two small optional availability fields:
+
+```json
+{
+  "required_quests": ["sage_first_request"],
+  "minimum_day": 2
+}
+```
+
+These fields should remain simple prerequisite checks, not a generic condition system.
 
 Quest save data is a dictionary keyed by quest ID:
 
@@ -744,29 +762,46 @@ Current vertical-slice save file:
 
 ```json
 {
-  "version": "0.1.0",
-  "day": 1,
+  "version": "0.6.0",
+  "day": 2,
   "inventory": {
-    "moonleaf": 0,
-    "forest_water": 0,
-    "calming_tea": 0
+    "moonleaf": 2,
+    "forest_water": 1,
+    "calming_tea": 0,
+    "root_wake_tonic": 0
   },
-  "gold": 0,
-  "gatherables_depleted": {},
-  "current_scene": "res://scenes/world/ShopInterior.tscn",
+  "gold": 43,
+  "gatherables_depleted": {
+    "moonleaf_bush_001": true
+  },
+  "quests": {
+    "sage_first_request": "completed"
+  },
+  "known_recipes": ["root_wake_tonic"],
+  "shop_displays": {
+    "main_display": {
+      "item_id": "calming_tea",
+      "quantity": 1
+    }
+  },
+  "current_scene": "res://scenes/world/MarigoldRoom.tscn",
   "player_position": {
-    "x": 480,
-    "y": 440
+    "x": 120,
+    "y": 180
   }
 }
 ```
 
-Later save files may add time blocks, flags, relationships, and richer gatherable
-records when those systems exist:
+`shop_displays` stores stable stock only. Customer reservation, movement, open-shop
+session state, and UI state are transient. Default-known recipes are derived from
+recipe data; `known_recipes` stores only permanent progression unlocks.
+
+Possible long-term save fields include time blocks, flags, relationships, and richer
+gatherable records. These are not part of save version 0.6.0:
 
 ```json
 {
-  "version": "0.1.0",
+  "version": "future",
   "day": 1,
   "time_block": "morning",
   "inventory": {
@@ -875,6 +910,9 @@ Check:
 * Every NPC default dialogue ID exists.
 * Every shop request item exists.
 * Every shop request customer exists.
+* Every quest turn-in and reward item exists.
+* Every quest recipe reward exists.
+* Every quest prerequisite exists and is not the quest itself.
 * Stack limits are greater than 0.
 * Sell prices are 0 or higher.
 * Quantities are greater than 0.
