@@ -1,6 +1,6 @@
-# Vertical Slice Summary - 0.1 to 0.3.1
+# Vertical Slice Summary - 0.1 to 0.5
 
-> Current milestone summary as of 2026-06-17.
+> Current milestone summary as of 2026-06-18.
 
 ## Current Playable Shape
 
@@ -12,8 +12,10 @@ The game now has a small but complete cosy witch-shop loop:
 4. Travel between the shop and the forest clearing.
 5. Gather ingredients from daily-reset nodes.
 6. Brew known recipes at the cauldron.
-7. Serve the first customer or complete Sage's request.
-8. Sleep, save, and start a new day.
+7. Stock a display and run the first customer browsing/checkout sequence, or complete
+   Sage's request.
+8. Sleep through a full-screen new-day transition, save, and start a new day with shop
+   stock preserved.
 
 ## Vertical Slice 0.1 - First Potion Sale
 
@@ -86,6 +88,35 @@ Content added around 0.3.1:
 - New PNG forest assets, harvested bush variants, and spring tree replacement.
 - Harvested-state art support for gatherables.
 
+## Vertical Slice 0.4 - Quest and Recipe Guidance
+
+0.4 made the existing quest and gathering loop readable without adding a journal:
+
+- The HUD tracks Root-Wake Tonic ingredient counts while Sage's quest is active.
+- The objective changes to the turn-in instruction once the tonic is crafted.
+- Gatherables show item-name and quantity toasts.
+- Dewcap Mushroom and Glowberry have native 16x16 inventory/recipe icons.
+
+## Vertical Slice 0.5 - Shop Browsing Prototype
+
+0.5 replaced the temporary direct customer sale with a deterministic Moonlighter-shaped
+prototype:
+
+- Marigold stocks one Calming Tea on one display and opens the shop at the sign.
+- The animated customer enters through the door, browses, reserves the displayed item,
+  routes around the counter, and waits on its public side.
+- The chosen item's icon disappears immediately; checkout consumes the reserved stock
+  and awards 18 gold.
+- Customer and Sage use authored wall-safe door routes and walking animations at
+  Marigold's movement/animation pace.
+- Display stock persists through day advancement and save/continue.
+- Sleeping fades to black, announces the new day, saves, and returns control.
+
+The next planned milestone is 0.6, documented in
+`docs/plans/vertical_slice_0_6_home_layout_and_recipe_progression.md`. It first creates
+the three-door shop and separate room with scene-independent shop stock, then adds
+persistent quest-rewarded recipe knowledge.
+
 ## Current Data Files
 
 - `data/items.json`
@@ -112,9 +143,8 @@ Content added around 0.3.1:
 - `CauldronCraftingPanel`
 - `TitleMenu`
 
-The HUD currently shows day, gold, save/load toasts, quest start/complete toasts, and a
-small active quest objective. The next slice should improve this guidance rather than
-add a large journal.
+The HUD currently shows day, gold, save/load and quest/gather toasts, a small active
+quest objective, and the full-screen sleep/new-day transition.
 
 ## Important Constraints Going Forward
 
@@ -131,5 +161,5 @@ add a large journal.
 
 - The normal headless startup command currently exits with code 1 while printing no
   project error lines, but targeted smoke tests have been passing.
-- Completed slice plan files have been retired. The living truth is `docs/PROGRESS.md`
-  plus this summary; `docs/plans/` should stay focused on active future plans.
+- The living truth is `docs/PROGRESS.md`, this summary, and the active 0.6 plan in
+  `docs/plans/`.

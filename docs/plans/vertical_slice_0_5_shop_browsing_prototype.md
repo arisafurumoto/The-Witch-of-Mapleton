@@ -1,6 +1,6 @@
 # Vertical Slice 0.5 - Shop Browsing Prototype v1
 
-> Status: IN PROGRESS.
+> Status: COMPLETE (2026-06-18).
 > Start after Vertical Slice 0.4.
 
 ## Goal
