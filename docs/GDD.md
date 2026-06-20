@@ -106,7 +106,7 @@ Name: **Marigold**
 Description:
 
 * Young witch
-* Long wavy copper-orange hair, with loose curls and occasional braid details
+* Long wavy copper-orange hair with loose curls
 * Soft golden-brown eyes and a gentle, friendly expression
 * Autumn village-witch outfit built around moss green, rust orange, cream, warm brown, amber, and gold
 * Wide-brimmed olive-green witch hat with autumn flowers, leaves, and natural details
