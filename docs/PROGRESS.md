@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-19.
+> Last updated: 2026-06-20.
 > Milestone summaries: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md` and
 > `docs/VERTICAL_SLICE_SUMMARY_0_4_TO_0_6.md`.
 
@@ -195,22 +195,39 @@ Marigold's active walking and idle art is the `with_staff` variant under
 outfit references and are not included in `Marigold.tres`.
 
 Rules:
-1. **Never overwrite/resample source art in place.** Baking a downscale into the PNGs
+1. **New character standard (locked 2026-06-20):** Mapleton remains fully 2D,
+   rectangular-grid, and non-isometric. Future and deliberately rebuilt humanoid
+   characters use classic early-2000s fantasy MMORPG-inspired proportions and detail:
+   native 96×112 frames, ordinary adults approximately 84-94 px tall, approximately
+   3.1-3.6 heads tall, and `scale = 1.0`. This is a structural influence only; do not
+   copy existing game characters, costumes, frames, palettes, or pixel clusters.
+   Existing playable sprites remain unchanged until each one is intentionally rebuilt.
+   See `docs/PIXEL_CHARACTER_GENERATION_WORKFLOW.md` for the production gates and
+   `docs/CHARACTER_FACE_SYSTEM.md` for the native face construction rules. The current
+   neutral south-eye standard uses a mirrored `3x3` role grid: `UUU / WPP / WPP`
+   for the left eye and its horizontal mirror for the right. Complete reference sheets
+   must be used to verify facing; static Ragnarok NPC examples are commonly south-west,
+   not true south. Ordinary humanoids now use one exact shared face shape
+   (`shared_south_v1`) rather than character-specific face families. Camellia's approved
+   south sprite is `art/characters/npcs/camellia.png`; its preserved source is
+   `concept_art/characters/camellia/south_source.png`. Her identity comes from auburn
+   hair, palette, clothing, posture, and silhouette.
+2. **Never overwrite/resample source art in place.** Baking a downscale into the PNGs
    (e.g. LANCZOS) blurs pixel art permanently. Instead, keep high-res frames and let
    Godot scale them at *display* time with the Nearest filter (crisp).
    - **Marigold:** 180px frames, `AnimatedSprite2D` `scale = 0.63`, offset `(0,-28)`.
    - **Saffron (cat):** 68px frames authored ~native, `scale = 1.0`, offset `(0,-17)`.
    - Rule of thumb: native-size art → scale 1.0; high-res art → display scale, never bake.
-2. **Direction mapping lives in the `.tres`/generator, not in guesswork.** The generator
+3. **Direction mapping lives in the `.tres`/generator, not in guesswork.** The generator
    maps each `walk_<dir>` animation to a source folder. Marigold currently uses the
    **identity** mapping (folder name = direction) because the art folders are correctly
    organised. If a character faces the wrong way, fix the folder→animation mapping in its
    generator — **trust the in-game observation over reading the frames.** (We lost time
    applying a wrong "mirror" remap; reverted to identity.)
-3. **Feet/base at bottom-centre of the canvas**; set the sprite offset so the feet sit at
+4. **Feet/base at bottom-centre of the canvas**; set the sprite offset so the feet sit at
    the node origin. Y-sort uses node position, so this keeps depth + collision aligned.
-4. Project setting `textures/canvas_textures/default_texture_filter = 0` (Nearest) — keep it.
-5. **Before sending any paid/external art-generation API request, show the user the
+5. Project setting `textures/canvas_textures/default_texture_filter = 0` (Nearest) — keep it.
+6. **Before sending any paid/external art-generation API request, show the user the
    redacted request first and wait for explicit approval.** This especially applies to
    PixelLab Pro jobs, because they spend subscription credits. Include endpoint,
    method, estimated cost if known, dimensions, prompt/style fields, and which local

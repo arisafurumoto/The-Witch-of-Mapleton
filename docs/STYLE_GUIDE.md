@@ -4,7 +4,10 @@
 
 ## 1. Visual Target
 
-**The Witch of Mapleton** uses a modern top-down 3/4 pixel-art style inspired by games such as Chef RPG.
+**The Witch of Mapleton** uses a modern top-down 3/4 pixel-art style. Environments
+take inspiration from dense modern pixel-art life sims, while character proportions
+and rendering density take inspiration from classic early-2000s Korean MMORPG
+sprites such as Ragnarok Online.
 
 The game is not isometric. It uses conventional 2D movement and collision, but buildings, furniture, trees, cliffs, shop interiors, and characters are drawn from a classic 3/4 viewing angle so their front faces and vertical volume are visible.
 
@@ -34,6 +37,15 @@ Primary visual direction:
 * Non-isometric world layout
 
 Chef RPG is a reference for camera angle, density, modern pixel rendering, and environmental richness. The game should not directly copy Chef RPG assets, characters, UI, screenshots, palettes, or exact composition.
+
+Ragnarok Online is a structural character reference only: larger readable heads,
+compact fantasy proportions, layered outfit silhouettes, detailed hair, and clear
+directional animations. Do not copy its characters, costumes, palettes, sprite
+frames, environments, UI, or exact pixel clusters.
+
+The Ragnarok influence does **not** change the world into isometric or 3D art.
+Mapleton remains fully 2D, uses rectangular tiles, conventional X/Y movement, and
+bottom-centre Y-sorting.
 
 Safe reference wording:
 
@@ -106,8 +118,11 @@ Recommended production specs:
 ```text
 Base tile size: 16×16 px
 Primary environment modules: 16×16 px and 32×32 px
-Character sprite size: 32×48 px
-Large NPC sprite maximum: 32×64 px
+Character frame canvas: 96×112 px
+Ordinary adult visible size: approximately 32-52×84-94 px
+Ordinary adult proportion: approximately 3.1-3.6 heads tall
+Large character visible maximum: approximately 64×104 px
+Character display scale: 1.0 at the 640×360 internal resolution
 Black cat sprite: approximately 24×24 px or 24×32 px
 Item icons: 16×16 px
 Large item icons: 32×32 px
@@ -119,8 +134,13 @@ Output scale: 3× for 1920×1080
 Default recommendation:
 
 ```text
-Use 16×16 tiles, 32×48 characters, 128×128 portraits, and 640×360 internal resolution.
+Use 16×16 tiles, native 96×112 character frames, 128×128 portraits, and a
+640×360 internal resolution. Keep ordinary adult silhouettes within the 84-94 px
+height band unless an approved species, age, or costume requires an exception.
 ```
+
+The complete generation and validation process is defined in
+`docs/PIXEL_CHARACTER_GENERATION_WORKFLOW.md`.
 
 ## 5. Camera and Perspective
 
@@ -222,6 +242,10 @@ smooth vector
 
 ## 8. Main Character Style
 
+Gameplay faces follow the native-scale construction rules in
+`docs/CHARACTER_FACE_SYSTEM.md`. Do not rely on shrinking generated portrait
+details into a gameplay sprite.
+
 Main character:
 
 ```text
@@ -230,7 +254,7 @@ Role: young witch and shop owner
 Hair: long wavy copper-orange hair with loose curls and optional braid details
 Eyes: soft golden-brown
 Outfit: moss-green layered dress, cream puff-sleeve blouse, rust-orange shawl/capelet, olive witch hat, brown boots, warm amber staff
-Silhouette: readable at 32×48 px
+Silhouette: readable within a native 96×112 frame at the 640×360 game resolution
 Personality in sprite: warm, gentle, capable, cosy, practical, lightly magical
 ```
 
@@ -412,7 +436,7 @@ Use this structure for PixelLab prompts:
 Example Marigold prompt:
 
 ```text
-32×48 px character sprite, modern top-down 3/4 pixel art, non-isometric, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, cosy autumn cottage-witch feeling, readable silhouette, cosy magical village game, transparent background.
+Native 96×112 px character frame, ordinary adult silhouette approximately 84-94 px tall, fully 2D modern top-down 3/4 pixel art, non-isometric, compact classic fantasy MMORPG-inspired proportions without copying an existing game asset, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, cosy autumn cottage-witch feeling, readable silhouette, transparent background.
 ```
 
 Example black cat prompt:

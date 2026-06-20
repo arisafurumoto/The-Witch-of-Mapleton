@@ -94,7 +94,7 @@ Use:
 * 640×360 internal resolution
 * Pixel-perfect scaling
 * 16×16 base tiles
-* 32×48 character sprites
+* 96×112 character frame canvases, with ordinary adults approximately 84-94 px tall
 * 128×128 dialogue portraits
 
 Use a layered 2D scene structure:

@@ -384,7 +384,7 @@ Use this format:
 Example:
 
 ```text
-32×48 px character sprite, modern top-down 3/4 pixel art, non-isometric, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, cosy autumn cottage-witch feeling, readable silhouette, cosy magical village game, transparent background.
+Native 96×112 px character frame, ordinary adult silhouette approximately 84-94 px tall, fully 2D top-down 3/4 pixel art, non-isometric, original compact classic fantasy MMORPG-inspired proportions without copying an existing game asset, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, warm autumn Mapleton palette, soft dark-brown outlines, restrained saturation, readable silhouette, transparent background. Follow docs/PIXEL_CHARACTER_GENERATION_WORKFLOW.md.
 ```
 
 ## 13. Implementation Order After Phase 1

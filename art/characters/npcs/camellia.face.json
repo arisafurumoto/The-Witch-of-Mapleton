@@ -1,0 +1,29 @@
+{
+  "facing": "south",
+  "source_asset": "res://concept_art/characters/camellia/south_source.png",
+  "derived_from_native_candidate": false,
+  "normalization": {
+    "canvas": [96, 112],
+    "visible_size": [32, 92],
+    "feet_baseline_y": 104,
+    "resampling": "nearest"
+  },
+  "palette_reduction": {
+    "visible_colors": 48,
+    "method": "median_cut",
+    "dither": false
+  },
+  "face_shape_id": "shared_south_v1",
+  "face_rect": [42, 24, 12, 8],
+  "left_eye_rect": [43, 25, 3, 3],
+  "right_eye_rect": [50, 25, 3, 3],
+  "feature_luminance_max": 150,
+  "eye_template_path": "../../style_reference/characters/mapleton_eye_templates.json",
+  "eye_template_id": "south_neutral_v2",
+  "role_colors": {
+    "U": [46, 6, 2, 255],
+    "P": [21, 4, 1, 255],
+    "W": [253, 224, 188, 255]
+  },
+  "eye_grammar": "mapleton_true_south_adaptation_v2"
+}

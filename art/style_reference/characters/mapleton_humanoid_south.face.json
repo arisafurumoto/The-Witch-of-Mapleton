@@ -1,0 +1,16 @@
+{
+  "facing": "south",
+  "face_shape_id": "shared_south_v1",
+  "face_rect": [42, 28, 12, 8],
+  "left_eye_rect": [43, 29, 3, 3],
+  "right_eye_rect": [50, 29, 3, 3],
+  "feature_luminance_max": 150,
+  "eye_template_path": "mapleton_eye_templates.json",
+  "eye_template_id": "south_neutral_v2",
+  "role_colors": {
+    "U": [55, 25, 20, 255],
+    "P": [13, 0, 0, 255],
+    "W": [253, 228, 197, 255]
+  },
+  "eye_grammar": "mapleton_true_south_adaptation_v2"
+}
