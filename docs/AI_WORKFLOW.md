@@ -11,8 +11,7 @@ The official tool roles are:
 ```text
 ChatGPT: design, planning, documentation, art direction, prompts, architecture review, debugging explanation
 Claude Code: Godot implementation, file edits, refactoring, local project work
-PixelLab: production-oriented pixel asset drafts
-Aseprite or Pixelorama: final pixel cleanup and animation correction
+Retro Diffusion character-sheet creation: user-managed outside the repository
 Godot: implementation, scene testing, gameplay validation
 ```
 
@@ -274,7 +273,7 @@ It is not isometric. It uses conventional 2D movement and collision, but objects
 
 The art direction is cosy, witchy, warm, magical, dense, handcrafted, autumnal, lantern-lit, and readable.
 
-PixelLab is used for production-oriented pixel asset drafts. Aseprite or Pixelorama is used for cleanup.
+Finished humanoid sprite sheets are supplied by the user and imported without pixel edits.
 
 ## Current Target
 
@@ -308,50 +307,16 @@ Use:
 Do not hard-code item names, recipe ingredients, NPC dialogue, or shop requests unless explicitly temporary.
 ```
 
-## 9. PixelLab Workflow
+## 9. Character Sheet Intake
 
-PixelLab is the main asset draft generator.
+The user supplies each finished humanoid sheet in Sage's 200×242 Retro Diffusion
+layout. Codex preserves it, separates exact 50×80 cells, packages the SpriteFrames,
+and tests the result in Godot. Codex does not generate, resize, pad, reposition,
+recolour, clean, or repaint character pixels.
 
-Use PixelLab after the gameplay placeholder version exists, not before.
+See `docs/CHARACTER_SPRITE_SHEET_WORKFLOW.md` for the input contract and command.
 
-Asset order:
-
-```text
-1. Marigold idle
-2. Marigold 4-direction walk
-3. Black cat idle
-4. Black cat walk
-5. Moonleaf bush
-6. Forest water spring
-7. Shop floor and wall tiles
-8. Shop counter
-9. Cauldron or crafting station
-10. Calming Tea icon
-11. Dialogue box UI
-```
-
-Do not generate all romance candidates, town areas, or ancient-region assets before the vertical slice works.
-
-## 10. PixelLab Approval Process
-
-Every PixelLab asset must pass this checklist:
-
-```text
-Looks good at 100 percent pixel scale
-Reads clearly in Godot
-Matches the 3/4 top-down perspective
-Has a clean transparent background
-Uses the approved palette direction
-Does not look too noisy
-Has a correct sprite origin
-Does not jitter during animation
-Works beside Marigold
-Works beside the tileset
-```
-
-If the asset fails, either regenerate or clean it in Aseprite or Pixelorama.
-
-## 11. ChatGPT Usage
+## 10. ChatGPT Usage
 
 Use ChatGPT for:
 
@@ -360,7 +325,6 @@ Breaking the game into milestones
 Designing systems before implementation
 Writing Claude Code prompts
 Reviewing Claude Code output
-Creating PixelLab prompts
 Developing NPCs and dialogue
 Keeping scope controlled
 Debugging explanations
@@ -373,21 +337,7 @@ Good ChatGPT prompt:
 I am building The Witch of Mapleton in Godot 4.6. The next system is inventory. Design the simplest data-driven inventory system for the First Potion Sale vertical slice. Include the scene/script structure, JSON data needed, and a Claude Code implementation prompt. Do not add equipment, storage, item quality, or sorting yet.
 ```
 
-## 12. PixelLab Prompt Pattern
-
-Use this format:
-
-```text
-[asset type], modern top-down 3/4 pixel art, non-isometric, cosy witch village game, detailed but readable, warm purple and autumn palette, lantern-lit magical atmosphere, clear silhouette, transparent background, game-ready sprite, consistent with The Witch of Mapleton style.
-```
-
-Example:
-
-```text
-Native 96×112 px character frame, ordinary adult silhouette approximately 84-94 px tall, fully 2D top-down 3/4 pixel art, non-isometric, original compact classic fantasy MMORPG-inspired proportions without copying an existing game asset, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, warm autumn Mapleton palette, soft dark-brown outlines, restrained saturation, readable silhouette, transparent background. Follow docs/PIXEL_CHARACTER_GENERATION_WORKFLOW.md.
-```
-
-## 13. Implementation Order After Phase 1
+## 11. Implementation Order After Phase 1
 
 After Phase 1, build in this order:
 
@@ -410,7 +360,7 @@ After Phase 1, build in this order:
 
 Do not reorder unless there is a strong technical reason.
 
-## 14. Definition of Done For Each System
+## 12. Definition of Done For Each System
 
 A system is done when:
 
@@ -424,7 +374,7 @@ The changed files are known
 The next smallest step is clear
 ```
 
-## 15. Main Risk
+## 13. Main Risk
 
 The main risk is not code. The main risk is uncontrolled scope.
 

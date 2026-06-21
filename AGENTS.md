@@ -2,7 +2,7 @@
 
 This is a Godot 4 GDScript project.
 
-The game is a cosy top-down 3/4 pixel-art witch life sim about **Marigold**, a young witch with wavy purple shoulder-length hair, who runs a magical shop in the village of Mapleton with her black cat companion.
+The game is a cosy top-down 3/4 pixel-art witch life sim about **Marigold**, a young witch with wavy long auburn hair, who runs a magical shop in the village of Mapleton with her black cat companion.
 
 ## Current Status
 
@@ -77,7 +77,7 @@ The art direction is:
 * Atmospheric
 * Readable at small pixel scale
 
-PixelLab is used for production-oriented pixel asset drafts.
+Humanoid character sheets are created manually by the user in Retro Diffusion.
 
 Aseprite or Pixelorama is used for cleanup.
 
@@ -94,7 +94,7 @@ Use:
 * 640×360 internal resolution
 * Pixel-perfect scaling
 * 16×16 base tiles
-* 96×112 character frame canvases, with ordinary adults approximately 84-94 px tall
+* 50×80 frames for new four-direction humanoid sheets
 * 128×128 dialogue portraits
 
 Use a layered 2D scene structure:
@@ -261,18 +261,17 @@ Acceptable placeholders:
 
 Do not spend development time on polished art before the loop is playable.
 
-Final art will come from:
+New humanoid art will come from:
 
 ```text
-PixelLab → Aseprite or Pixelorama → Godot
+Finished Retro Diffusion sheet → lossless frame separation → Godot
 ```
 
 ## Art & Asset Rules (learned — follow these)
 
-* **Never overwrite or resample source art in place.** Baking a downscale into PNGs
-  blurs pixel art permanently. Keep high-res frames and let Godot scale at *display*
-  time with the Nearest filter (crisp). Marigold = 180px frames at `scale 0.63`;
-  Saffron (cat) = ~native frames at `scale 1.0`. Native-size art → 1.0; high-res → display scale.
+* **Never overwrite or resample source art in place.** New 200×242 humanoid sheets are
+  split into exact 50×80 crops. Do not downscale, pad, reposition, recolour, or repaint
+  their pixels. Existing high-resolution characters continue to scale at display time.
 * **Snapshot to `backups/` before any destructive art op.** `backups/` is `.gdignore`d and git-ignored.
 * **Build SpriteFrames with the generators in `tools/`** (`build_*_spriteframes.py`); regenerate the
   `.tres` after a re-export. The animation→folder direction mapping lives there.

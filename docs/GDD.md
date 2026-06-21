@@ -78,7 +78,7 @@ Pixel art, non-isometric, top-down or slightly top-down 2D.
 Recommended production specs:
 
 * Tile size: 16×16 px
-* Character frame: 96×112 px; ordinary adult silhouette approximately 84-94 px tall
+* New humanoid character frame: 50×80 px from a finished 200×242 four-direction sheet
 * Dialogue portraits: 96×96 px
 * UI icons: 16×16 px
 * Larger item icons: 32×32 px

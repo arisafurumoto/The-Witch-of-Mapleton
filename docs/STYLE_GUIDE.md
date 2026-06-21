@@ -63,53 +63,21 @@ Use a Chef RPG screenshot as the direct production reference.
 
 ## 3. Art Pipeline
 
-The official art pipeline is:
+Humanoid character image creation is user-managed outside the repository. The repo
+receives one finished Retro Diffusion sheet and performs only lossless separation and
+Godot import:
 
 ```text
-1. ChatGPT creates broad concept art or art-direction prompts.
-2. PixelLab generates production-oriented pixel assets.
-3. Aseprite or Pixelorama is used for cleanup.
-4. Assets are imported into Godot.
-5. Assets are tested at real game scale.
-6. Approved assets are added to the style bible.
+1. The user supplies a finished 200x242 transparent sheet.
+2. Codex preserves the sheet unchanged under concept_art/.
+3. tools/separate_character_sheet.py extracts twelve exact 50x80 cells.
+4. The character's SpriteFrames generator packages those cells for Godot.
+5. The four directions and two walk frames are checked at game scale.
 ```
 
-PixelLab is the main pixel-art generation tool.
-
-PixelLab should be used for:
-
-* Character sprites
-* NPC sprites
-* Black cat sprites
-* Item icons
-* Prop sheets
-* Basic sprite animations
-* Tileset drafts
-* UI elements
-* Style-consistent variations
-* Reference-based asset generation
-
-ChatGPT image generation should be used for:
-
-* Concept art
-* Mood exploration
-* Shop exterior concepts
-* Region concepts
-* Title screen concepts
-* Character direction
-* Colour palette exploration
-* Marketing-style art
-
-Aseprite or Pixelorama should be used for:
-
-* Final sprite cleanup
-* Palette correction
-* Animation timing
-* Frame alignment
-* Pixel-level edits
-* Removing AI artefacts
-* Sprite sheet organisation
-* Exporting final production PNGs
+The repo does not create appearance sources, call image-generation APIs, downscale
+figures, reconstruct faces, clean transparency, or repaint supplied pixels. The full
+input contract is in `docs/CHARACTER_SPRITE_SHEET_WORKFLOW.md`.
 
 ## 4. Technical Art Specs
 
@@ -118,11 +86,11 @@ Recommended production specs:
 ```text
 Base tile size: 16×16 px
 Primary environment modules: 16×16 px and 32×32 px
-Character frame canvas: 96×112 px
-Ordinary adult visible size: approximately 32-52×84-94 px
-Ordinary adult proportion: approximately 3.1-3.6 heads tall
-Large character visible maximum: approximately 64×104 px
-Character display scale: 1.0 at the 640×360 internal resolution
+New humanoid frame canvas: 50×80 px
+New humanoid sheet: 200×242 px (4 columns × 3 rows + 2 transparent rows)
+Column order: south, west, east, north
+Row order: idle, walk A, walk B
+Character display scale: set per character at the 640×360 internal resolution
 Black cat sprite: approximately 24×24 px or 24×32 px
 Item icons: 16×16 px
 Large item icons: 32×32 px
@@ -134,13 +102,13 @@ Output scale: 3× for 1920×1080
 Default recommendation:
 
 ```text
-Use 16×16 tiles, native 96×112 character frames, 128×128 portraits, and a
-640×360 internal resolution. Keep ordinary adult silhouettes within the 84-94 px
-height band unless an approved species, age, or costume requires an exception.
+Use 16×16 tiles, exact 50×80 crops for new humanoid frames, 128×128 portraits, and a
+640×360 internal resolution. Existing characters keep their current frame sizes until
+they are deliberately replaced.
 ```
 
-The complete generation and validation process is defined in
-`docs/PIXEL_CHARACTER_GENERATION_WORKFLOW.md`.
+The machine-readable sheet contract is
+`art/style_reference/character_standard.json`.
 
 ## 5. Camera and Perspective
 
@@ -242,9 +210,7 @@ smooth vector
 
 ## 8. Main Character Style
 
-Gameplay faces follow the native-scale construction rules in
-`docs/CHARACTER_FACE_SYSTEM.md`. Do not rely on shrinking generated portrait
-details into a gameplay sprite.
+Gameplay faces are accepted exactly as supplied in the finished character sheet.
 
 Main character:
 
@@ -254,7 +220,7 @@ Role: young witch and shop owner
 Hair: long wavy copper-orange hair with loose curls and optional braid details
 Eyes: soft golden-brown
 Outfit: moss-green layered dress, cream puff-sleeve blouse, rust-orange shawl/capelet, olive witch hat, brown boots, warm amber staff
-Silhouette: readable within a native 96×112 frame at the 640×360 game resolution
+Silhouette: readable within the supplied 50×80 frame at the 640×360 game resolution
 Personality in sprite: warm, gentle, capable, cosy, practical, lightly magical
 ```
 
@@ -425,31 +391,11 @@ Y-sort should be used for:
 * Signs
 * Large props
 
-## 13. PixelLab Prompt Template
+## 13. Character Sheet Intake
 
-Use this structure for PixelLab prompts:
-
-```text
-[asset type], modern top-down 3/4 pixel art, non-isometric, cosy witch village game, detailed but readable, warm purple and autumn palette, lantern-lit magical atmosphere, clear silhouette, transparent background, game-ready sprite, consistent with The Witch of Mapleton style.
-```
-
-Example Marigold prompt:
-
-```text
-Native 96×112 px character frame, ordinary adult silhouette approximately 84-94 px tall, fully 2D modern top-down 3/4 pixel art, non-isometric, compact classic fantasy MMORPG-inspired proportions without copying an existing game asset, young village witch named Marigold, long wavy copper-orange hair, soft golden-brown eyes, wide olive witch hat with autumn flowers, moss-green layered dress, cream puff sleeves, rust-orange shawl, brown lace-up boots, twisted wooden staff with warm amber crystal, cosy autumn cottage-witch feeling, readable silhouette, transparent background.
-```
-
-Example black cat prompt:
-
-```text
-Small black cat companion sprite named Saffron, modern top-down 3/4 pixel art, non-isometric, cosy witch village game, large golden-amber eyes, oversized triangular ears, soft black fur with warm brown highlights, olive-green collar, gold-framed amber crystal pendant, expressive curled tail, readable silhouette, magical but understated, transparent background, game-ready sprite.
-```
-
-Example shop prop prompt:
-
-```text
-Pixel art prop sheet for a cosy witch shop, modern top-down 3/4 non-isometric style, includes cauldron, potion bottles, dried herbs, candle lantern, wooden counter, small spellbook, moonleaf basket, warm purple autumn palette, transparent background.
-```
+Finished humanoid sheets must match Sage's 200×242 layout. Preserve the source sheet,
+separate it with `tools/separate_character_sheet.py`, and assess it only in Godot. Do
+not normalize the art or repair individual frames during import.
 
 ## 14. Asset Approval Checklist
 

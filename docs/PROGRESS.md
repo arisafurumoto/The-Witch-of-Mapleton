@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-20.
+> Last updated: 2026-06-21.
 > Milestone summaries: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md` and
 > `docs/VERTICAL_SLICE_SUMMARY_0_4_TO_0_6.md`.
 
@@ -183,41 +183,29 @@ reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
-PixelLab exports a folder per character: `animations/<long-name>/<dir>/frame_NNN.png`
-(8 directions × ~9 walk frames) plus `rotations/<dir>.png` (8 idle poses). A Python
-generator turns these into a `SpriteFrames` `.tres` with `walk_<dir>` / `idle_<dir>`
-animations. Generators live in `tools/` (`build_marigold_spriteframes.py`,
-`build_saffron_spriteframes.py`, `build_generic_customer_spriteframes.py`) — run the
-matching generator to regenerate a `.tres` after re-export. Sage uses
-`build_sage_spriteframes.py` for the same pipeline.
+The user now creates finished humanoid sheets manually in Retro Diffusion. New sheets
+use Sage's 200x242 layout: four 50x80 direction columns (`south`, `west`, `east`,
+`north`), three rows (`idle`, `walk_a`, `walk_b`), and two transparent trailing rows.
+Codex preserves the finished sheet and runs `tools/separate_character_sheet.py`; it
+does not generate source images, downscale, pad, reposition, recolour, clean, or repaint
+the supplied frames. See `docs/CHARACTER_SPRITE_SHEET_WORKFLOW.md`.
+
+`tools/build_4dir_spriteframes.py` packages separated new sheets into a Godot
+`SpriteFrames` `.tres`, reusing cardinal textures for the diagonal animation names
+expected by current movement code. Existing characters retain their current production
+art and frame sizes until deliberately replaced.
 Marigold's active walking and idle art is the `with_staff` variant under
 `art/characters/marigold/with_staff/`; the `default` and `no_hat` folders are inactive
 outfit references and are not included in `Marigold.tres`.
 
 Rules:
-1. **New character standard (locked 2026-06-20):** Mapleton remains fully 2D,
-   rectangular-grid, and non-isometric. Future and deliberately rebuilt humanoid
-   characters use classic early-2000s fantasy MMORPG-inspired proportions and detail:
-   native 96×112 frames, ordinary adults approximately 84-94 px tall, approximately
-   3.1-3.6 heads tall, and `scale = 1.0`. This is a structural influence only; do not
-   copy existing game characters, costumes, frames, palettes, or pixel clusters.
-   Existing playable sprites remain unchanged until each one is intentionally rebuilt.
-   See `docs/PIXEL_CHARACTER_GENERATION_WORKFLOW.md` for the production gates and
-   `docs/CHARACTER_FACE_SYSTEM.md` for the native face construction rules. The current
-   neutral south-eye standard uses a mirrored `3x3` role grid: `UUU / WPP / WPP`
-   for the left eye and its horizontal mirror for the right. Complete reference sheets
-   must be used to verify facing; static Ragnarok NPC examples are commonly south-west,
-   not true south. Ordinary humanoids now use one exact shared face shape
-   (`shared_south_v1`) rather than character-specific face families. Camellia's approved
-   south sprite is `art/characters/npcs/camellia.png`; its preserved source is
-   `concept_art/characters/camellia/south_source.png`. Her identity comes from auburn
-   hair, palette, clothing, posture, and silhouette.
-2. **Never overwrite/resample source art in place.** Baking a downscale into the PNGs
-   (e.g. LANCZOS) blurs pixel art permanently. Instead, keep high-res frames and let
-   Godot scale them at *display* time with the Nearest filter (crisp).
+1. **New humanoid frame standard:** exact 50x80 crops from the supplied sheet. No
+   proportion or face reconstruction is performed in the repo.
+2. **Never overwrite/resample source art in place.** New humanoid frames are exact
+   source-cell crops. Existing high-resolution art continues to scale only at display
+   time with the Nearest filter.
    - **Marigold:** 180px frames, `AnimatedSprite2D` `scale = 0.63`, offset `(0,-28)`.
    - **Saffron (cat):** 68px frames authored ~native, `scale = 1.0`, offset `(0,-17)`.
-   - Rule of thumb: native-size art → scale 1.0; high-res art → display scale, never bake.
 3. **Direction mapping lives in the `.tres`/generator, not in guesswork.** The generator
    maps each `walk_<dir>` animation to a source folder. Marigold currently uses the
    **identity** mapping (folder name = direction) because the art folders are correctly
@@ -227,12 +215,6 @@ Rules:
 4. **Feet/base at bottom-centre of the canvas**; set the sprite offset so the feet sit at
    the node origin. Y-sort uses node position, so this keeps depth + collision aligned.
 5. Project setting `textures/canvas_textures/default_texture_filter = 0` (Nearest) — keep it.
-6. **Before sending any paid/external art-generation API request, show the user the
-   redacted request first and wait for explicit approval.** This especially applies to
-   PixelLab Pro jobs, because they spend subscription credits. Include endpoint,
-   method, estimated cost if known, dimensions, prompt/style fields, and which local
-   reference images will be encoded. Never display or store API secrets; use
-   `<base64 redacted>` / `<token redacted>` placeholders for request previews.
 
 ## Backups & safety
 
@@ -295,12 +277,6 @@ Rules:
 - [x] Sage turn-in exit polish — Sage now uses his walking frames to enter the shop and
       walk upward out after Root-Wake Tonic is delivered instead of disappearing
       instantly. Done 2026-06-17.
-- [x] Sage PixelLab Pro sprite draft — `tools/generate_sage_pixellab_pro.py` submits
-      a `create-character-pro` job with the Sage concept image plus a Mapleton style
-      reference, then downloads the 8-direction export. Cleaned rotations live in
-      `art/characters/npcs/sage/rotations/`; the shop scene uses the cleaned
-      south-facing frame on the shared 180×180 sprite canvas. Earlier attempts are
-      backed up in `backups/sage_sprite_iterations/`. Done 2026-06-17.
 - [x] Initial git baseline exists; continue committing after focused art/system batches.
 - [x] Cauldron & bed sprites (milestone 0.2a) — `art/props/shop/{cauldron,bed}.png`
       (native 72×56 / 72×44, scale 1.0) replace the `Polygon2D` "Visual" nodes in
