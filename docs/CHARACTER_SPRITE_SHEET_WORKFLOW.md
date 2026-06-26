@@ -64,6 +64,17 @@ unless `--force` is supplied.
 
    The required diagonal animation names reuse cardinal textures; no image files are
    duplicated or edited.
+
+   Characters with four authored walking frames per direction use:
+
+   ```bash
+   python3 tools/build_4dir_spriteframes.py \
+     <character_art_directory> \
+     <spriteframes_output> \
+     --walk-frame-count 4
+   ```
+
+   Marigold's active `with_staff` art uses this four-frame option.
 5. Run Godot's headless import.
 6. Check all four directions and both walk frames at game scale.
 7. Adjust only the scene's display offset or direction mapping when required; do not

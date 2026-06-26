@@ -33,7 +33,7 @@ def resource_path(path: Path) -> str:
     return f"res://{relative.as_posix()}"
 
 
-def build(character_dir: Path, output: Path) -> None:
+def build(character_dir: Path, output: Path, walk_frame_count: int = 2) -> None:
     ext_lines: list[str] = []
     ext_ids: dict[Path, str] = {}
 
@@ -52,15 +52,25 @@ def build(character_dir: Path, output: Path) -> None:
     animations: list[str] = []
     for source_direction, animation_direction in DIRECTIONS:
         idle = character_dir / "rotations" / f"{source_direction}.png"
-        walk_a = (
+        walk_dir = (
             character_dir
             / "animations"
             / "walking"
             / source_direction
-            / "frame_000.png"
         )
-        walk_b = walk_a.with_name("frame_001.png")
-        frame_ids = [ext_id(walk_a), ext_id(idle), ext_id(walk_b), ext_id(idle)]
+        walk_frames = [
+            walk_dir / f"frame_{index:03d}.png"
+            for index in range(walk_frame_count)
+        ]
+        if walk_frame_count == 2:
+            frame_ids = [
+                ext_id(walk_frames[0]),
+                ext_id(idle),
+                ext_id(walk_frames[1]),
+                ext_id(idle),
+            ]
+        else:
+            frame_ids = [ext_id(frame) for frame in walk_frames]
         frames = ", ".join(
             '{\n"duration": 1.0,\n"texture": ExtResource("%s")\n}' % identifier
             for identifier in frame_ids
@@ -99,8 +109,15 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("character_dir", type=Path)
     parser.add_argument("output", type=Path, help="Output .tres path")
+    parser.add_argument(
+        "--walk-frame-count",
+        type=int,
+        choices=(2, 4),
+        default=2,
+        help="Number of authored walk frames per direction (default: 2)",
+    )
     args = parser.parse_args()
-    build(args.character_dir, args.output)
+    build(args.character_dir, args.output, args.walk_frame_count)
 
 
 if __name__ == "__main__":

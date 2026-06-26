@@ -265,8 +265,7 @@ interior_waypoint_path = NodePath("../VisitorInteriorWaypoint")
 home_facing = "north"
 
 [node name="Visual" type="AnimatedSprite2D" parent="Sage"]
-position = Vector2(0, -30)
-scale = Vector2(0.66, 0.66)
+position = Vector2(0, -40)
 sprite_frames = ExtResource("16_sage_frames")
 animation = &"idle_north"
 
