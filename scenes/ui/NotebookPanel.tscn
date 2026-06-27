@@ -1,0 +1,187 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/NotebookPanel.gd" id="1_notebook"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.12, 0.075, 0.055, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.6, 0.4, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+shadow_color = Color(0, 0, 0, 0.35)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_button"]
+bg_color = Color(0.28, 0.16, 0.09, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.78, 0.5, 0.22, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="NotebookPanel" type="CanvasLayer"]
+script = ExtResource("1_notebook")
+
+[node name="Panel" type="PanelContainer" parent="."]
+offset_left = 74.0
+offset_top = 34.0
+offset_right = 566.0
+offset_bottom = 326.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="Panel"]
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
+theme_override_constants/separation = 7
+
+[node name="Header" type="HBoxContainer" parent="Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="TitleLabel" type="Label" parent="Panel/Margin/VBox/Header"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Marigold's Notebook"
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 15
+
+[node name="CloseButton" type="Button" parent="Panel/Margin/VBox/Header"]
+layout_mode = 2
+custom_minimum_size = Vector2(28, 22)
+focus_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+text = "x"
+
+[node name="Tabs" type="HBoxContainer" parent="Panel/Margin/VBox"]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="QuestsTabButton" type="Button" parent="Panel/Margin/VBox/Tabs"]
+layout_mode = 2
+custom_minimum_size = Vector2(82, 22)
+focus_mode = 2
+toggle_mode = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Quests"
+
+[node name="RecipesTabButton" type="Button" parent="Panel/Margin/VBox/Tabs"]
+layout_mode = 2
+custom_minimum_size = Vector2(82, 22)
+focus_mode = 2
+toggle_mode = true
+theme_override_styles/normal = SubResource("StyleBoxFlat_button")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_button")
+text = "Recipes"
+
+[node name="Body" type="HBoxContainer" parent="Panel/Margin/VBox"]
+layout_mode = 2
+custom_minimum_size = Vector2(472, 216)
+theme_override_constants/separation = 10
+
+[node name="QuestPage" type="HBoxContainer" parent="Panel/Margin/VBox/Body"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ListSection" type="VBoxContainer" parent="Panel/Margin/VBox/Body/QuestPage"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ListLabel" type="Label" parent="Panel/Margin/VBox/Body/QuestPage/ListSection"]
+layout_mode = 2
+text = "Quests"
+theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 12
+
+[node name="QuestScroll" type="ScrollContainer" parent="Panel/Margin/VBox/Body/QuestPage/ListSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(212, 188)
+horizontal_scroll_mode = 0
+
+[node name="QuestRows" type="VBoxContainer" parent="Panel/Margin/VBox/Body/QuestPage/ListSection/QuestScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DetailSection" type="VBoxContainer" parent="Panel/Margin/VBox/Body/QuestPage"]
+layout_mode = 2
+custom_minimum_size = Vector2(230, 188)
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="QuestDetailTitleLabel" type="Label" parent="Panel/Margin/VBox/Body/QuestPage/DetailSection"]
+layout_mode = 2
+text = "No quests"
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 13
+
+[node name="QuestDetailRows" type="VBoxContainer" parent="Panel/Margin/VBox/Body/QuestPage/DetailSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 160)
+theme_override_constants/separation = 4
+
+[node name="RecipePage" type="HBoxContainer" parent="Panel/Margin/VBox/Body"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ListSection" type="VBoxContainer" parent="Panel/Margin/VBox/Body/RecipePage"]
+layout_mode = 2
+theme_override_constants/separation = 4
+
+[node name="ListLabel" type="Label" parent="Panel/Margin/VBox/Body/RecipePage/ListSection"]
+layout_mode = 2
+text = "Recipes"
+theme_override_colors/font_color = Color(0.98, 0.86, 0.6, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 12
+
+[node name="RecipeScroll" type="ScrollContainer" parent="Panel/Margin/VBox/Body/RecipePage/ListSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(212, 188)
+horizontal_scroll_mode = 0
+
+[node name="RecipeRows" type="VBoxContainer" parent="Panel/Margin/VBox/Body/RecipePage/ListSection/RecipeScroll"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 4
+
+[node name="DetailSection" type="VBoxContainer" parent="Panel/Margin/VBox/Body/RecipePage"]
+layout_mode = 2
+custom_minimum_size = Vector2(230, 188)
+size_flags_horizontal = 3
+theme_override_constants/separation = 5
+
+[node name="RecipeDetailTitleLabel" type="Label" parent="Panel/Margin/VBox/Body/RecipePage/DetailSection"]
+layout_mode = 2
+text = "No recipes"
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 1
+theme_override_font_sizes/font_size = 13
+
+[node name="RecipeDetailRows" type="VBoxContainer" parent="Panel/Margin/VBox/Body/RecipePage/DetailSection"]
+layout_mode = 2
+custom_minimum_size = Vector2(220, 160)
+theme_override_constants/separation = 4

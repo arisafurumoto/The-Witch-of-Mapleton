@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -6,6 +6,8 @@
 [ext_resource type="Script" path="res://scripts/core/NoticeBoard.gd" id="4_notice_board"]
 [ext_resource type="Script" path="res://scripts/npc/CamelliaLaneNPC.gd" id="5_camellia_lane"]
 [ext_resource type="SpriteFrames" path="res://art/characters/npcs/camellia/Camellia.tres" id="6_camellia_frames"]
+[ext_resource type="Script" path="res://scripts/npc/SageLaneNPC.gd" id="7_sage_lane"]
+[ext_resource type="SpriteFrames" path="res://art/characters/npcs/sage/Sage.tres" id="8_sage_frames"]
 
 [sub_resource type="RectangleShape2D" id="BoundaryHorizontal"]
 size = Vector2(720, 16)
@@ -21,6 +23,12 @@ size = Vector2(52, 56)
 
 [sub_resource type="RectangleShape2D" id="StallCollision"]
 size = Vector2(150, 42)
+
+[sub_resource type="RectangleShape2D" id="PlantStallCollision"]
+size = Vector2(116, 38)
+
+[sub_resource type="RectangleShape2D" id="SageZone"]
+size = Vector2(52, 56)
 
 [node name="MapletonLane" type="Node2D"]
 y_sort_enabled = true
@@ -97,10 +105,39 @@ polygon = PackedVector2Array(54, 354, 260, 354, 260, 368, 54, 368)
 color = Color(0.39, 0.25, 0.16, 1)
 polygon = PackedVector2Array(460, 354, 666, 354, 666, 368, 460, 368)
 
+[node name="PlantStall" type="StaticBody2D" parent="."]
+position = Vector2(128, 306)
+
+[node name="Canopy" type="Polygon2D" parent="PlantStall"]
+z_index = -7
+color = Color(0.22, 0.38, 0.22, 1)
+polygon = PackedVector2Array(-72, -50, 72, -50, 62, -20, -62, -20)
+
+[node name="Counter" type="Polygon2D" parent="PlantStall"]
+color = Color(0.31, 0.21, 0.13, 1)
+polygon = PackedVector2Array(-58, -8, 58, -8, 52, 24, -52, 24)
+
+[node name="PlantCrateLeft" type="Polygon2D" parent="PlantStall"]
+color = Color(0.34, 0.50, 0.28, 1)
+polygon = PackedVector2Array(-44, -28, -18, -28, -18, -8, -44, -8)
+
+[node name="PlantCrateMiddle" type="Polygon2D" parent="PlantStall"]
+color = Color(0.38, 0.56, 0.30, 1)
+polygon = PackedVector2Array(-8, -34, 18, -34, 18, -8, -8, -8)
+
+[node name="PlantCrateRight" type="Polygon2D" parent="PlantStall"]
+color = Color(0.30, 0.45, 0.25, 1)
+polygon = PackedVector2Array(26, -26, 48, -26, 48, -8, 26, -8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlantStall"]
+position = Vector2(0, 8)
+shape = SubResource("PlantStallCollision")
+
 [node name="NoticeBoard" type="Area2D" parent="."]
 position = Vector2(230, 258)
 script = ExtResource("4_notice_board")
 prompt = "Read notice"
+quest_ids = PackedStringArray("camellia_cordial_delivery", "sage_seedling_restock")
 
 [node name="Visual" type="Polygon2D" parent="NoticeBoard"]
 color = Color(0.43, 0.25, 0.14, 1)
@@ -141,6 +178,28 @@ position = Vector2(0, -26)
 shape = SubResource("CamelliaZone")
 
 [node name="PromptLabel" type="Label" parent="Camellia"]
+offset_left = -40.0
+offset_top = -78.0
+offset_right = 40.0
+offset_bottom = -62.0
+text = "Talk"
+horizontal_alignment = 1
+
+[node name="Sage" type="Area2D" parent="."]
+position = Vector2(184, 330)
+script = ExtResource("7_sage_lane")
+prompt = "Talk"
+
+[node name="Visual" type="AnimatedSprite2D" parent="Sage"]
+position = Vector2(0, -40)
+sprite_frames = ExtResource("8_sage_frames")
+animation = &"idle_east"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sage"]
+position = Vector2(0, -26)
+shape = SubResource("SageZone")
+
+[node name="PromptLabel" type="Label" parent="Sage"]
 offset_left = -40.0
 offset_top = -78.0
 offset_right = 40.0

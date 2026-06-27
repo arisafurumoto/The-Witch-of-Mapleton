@@ -1,7 +1,7 @@
 # Vertical Slice 1.1 - Marigold's Notebook / Quest and Recipe Notes v1
 
-> Status: PLANNED.
-> Start after Vertical Slice 1.0 is committed or otherwise safely backed up.
+> Status: IMPLEMENTED and headless-verified.
+> Implemented 2026-06-28.
 
 ## Goal
 
@@ -182,9 +182,9 @@ CauldronCraftingPanel.gd as a modal input reference
 
 ## Verification
 
-Add `tools/verify_vertical_slice_1_1.gd`.
+Added `tools/verify_vertical_slice_1_1.gd`.
 
-The verifier should check:
+The verifier checks:
 
 - `NotebookPanel.tscn` exists and loads.
 - `project.godot` includes the `toggle_notebook` input action.
@@ -204,6 +204,21 @@ The verifier should check:
 - Recipe ready/missing status updates after ingredients are added.
 - The notebook can close cleanly.
 - Existing 0.6-1.0 verifiers still pass.
+
+## Implementation Notes
+
+- Added `scenes/ui/NotebookPanel.tscn` and `scripts/ui/NotebookPanel.gd`.
+- Registered `NotebookPanel` as an autoload UI scene and added `toggle_notebook` bound to
+  `J`.
+- The notebook rebuilds from existing singleton state whenever it opens or while visible
+  when inventory, quest state, or recipe knowledge changes.
+- The Quests tab shows ready/active quests first and completed quests below. Open quest
+  rows include turn-in progress, including the multi-item delivery request.
+- The Recipes tab mirrors the cauldron recipe visibility rule: known recipes are shown,
+  and quest recipes are temporarily shown while their quest is active or ready.
+- `PlayerController.gd` now treats `NotebookPanel.is_active()` as modal, matching
+  dialogue, cauldron crafting, and the day transition.
+- Added `tools/verify_vertical_slice_1_1.gd`; it passes headlessly.
 
 ## Manual Acceptance Test
 

@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-27.
+> Last updated: 2026-06-28.
 > Milestone summaries: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md` and
 > `docs/VERTICAL_SLICE_SUMMARY_0_4_TO_0_6.md`.
 
@@ -124,15 +124,42 @@ The user reported "That works great" on 2026-06-27. See
 `tools/verify_vertical_slice_1_0.gd` and
 `docs/plans/vertical_slice_1_0_mapleton_lane_hand_delivery.md`.
 
-**Vertical Slice 1.1 — "Marigold's Notebook / Quest and Recipe Notes v1" is planned.**
-This should add a compact notebook UI that lets the player review active/ready/completed
-quests and known recipes without adding new content. The goal is readability for the
-current Sage/Camellia/request-board chain: what quests are open, what item and quantity
-are needed, which recipes are known, what ingredients are required, and what Marigold is
-currently carrying. Keep it to one UI panel with two tabs. Do not add a full journal,
-map markers, NPC portraits, relationship UI, calendar, recipe discovery, new quests,
-new recipes, or new areas. See
+**Vertical Slice 1.1 — "Marigold's Notebook / Quest and Recipe Notes v1" is implemented
+and headless-verified.** Pressing `J` opens a compact modal notebook over gameplay and
+freezes Marigold's movement/interaction until the panel is closed with `J`, `Esc`, or
+the close button. The notebook has two tabs: Quests and Recipes. Quests shows active or
+ready quests first, completed quests below, requester/state/objective text, and clear
+turn-in progress such as `Glowberry Cordial 1/2`. Recipes shows known default or
+unlocked recipes, plus quest-active recipes while their quest is active/ready, with
+station, output, ingredient owned/needed counts, and `Ready` / `Missing ingredients`
+status. It reads from existing quest, recipe, recipe-knowledge, inventory, and item
+data; no save data, new content, full journal, map markers, portraits, relationship UI,
+calendar, recipe discovery, new quests, new recipes, or new areas were added. See
 `docs/plans/vertical_slice_1_1_notebook_notes.md`.
+
+**Vertical Slice 1.2 — "Sage's Posted Delivery and Lane Presence v1" is implemented and
+headless-verified.** The notice board now supports a tiny deterministic authored quest
+sequence while keeping the existing `quest_id` compatibility path. After Camellia's
+delivery is completed and Day 4 begins, the board offers Sage's
+`sage_seedling_restock` request: Marigold brews one existing Root-Wake Tonic and turns
+it in to Sage at a small placeholder plant stall in the existing Mapleton Lane scene.
+The quest rewards 45 gold, persists through existing quest save data, and appears in
+the notebook with Root-Wake Tonic progress. No new items, recipes, gathering nodes,
+farming, plant-shop gameplay, schedules, new NPCs, new areas, reputation, relationship
+points, deadlines, quality requirements, request-board menu, or repeatable job system
+were added. See
+`docs/plans/vertical_slice_1_2_sage_posted_delivery.md`.
+
+**Vertical Slice 1.3 — "Forest Path Unlock and Brookmint Tea v1" is planned.** This
+should prove the first quest-gated world expansion: completing `sage_seedling_restock`
+opens a tiny new forest path from the existing forest clearing, where Marigold can
+gather Brookmint for Camellia's Day 5 Brookmint Tea request. The slice should add one
+small `ForestPath` scene, one new ingredient, one new cauldron recipe, and one authored
+request, while reusing the notice board, notebook, cauldron, inventory, quest, save/load,
+and Saffron transition patterns. Do not add a full forest region, multiple new screens,
+seasons, farming, combat, new NPCs, schedules, request-board menu, repeatable requests,
+map UI, item quality, or shop-pricing/customer-preference systems. See
+`docs/plans/vertical_slice_1_3_forest_path_brookmint.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -183,6 +210,12 @@ and an olive collar with a gold-framed amber crystal pendant.
 # Focused 1.0 Mapleton Lane / hand delivery acceptance check
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_0.gd
 
+# Focused 1.1 notebook / quest and recipe notes acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_1.gd
+
+# Focused 1.2 Sage posted delivery / lane presence acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_2.gd
+
 # Play the game
 /Applications/Godot.app/Contents/MacOS/Godot --path .
 ```
@@ -231,6 +264,16 @@ exterior for tiny Mapleton Lane → read the notice board → accept
 the restaurant stall → hand over the cordials in person → receive 60 gold →
 sleep/continue and confirm completion persists.
 
+1.1 notebook loop: press `J` during gameplay → review active/ready quests and completed
+history on the Quests tab → switch to Recipes to review known and quest-active recipes,
+ingredient counts, and brew readiness → close with `J` or `Esc` and confirm movement
+resumes.
+
+1.2 Sage delivery loop: complete `camellia_cordial_delivery` → sleep to Day 4 → go to
+Mapleton Lane → read the notice board → accept `sage_seedling_restock` → brew or carry
+Root-Wake Tonic x1 → deliver it to Sage at the placeholder plant stall → receive 45
+gold → sleep/continue and confirm completion persists.
+
 ## Architecture
 
 **Autoload singletons** (order matters — defined in `project.godot`):
@@ -238,7 +281,8 @@ sleep/continue and confirm completion persists.
 `ShopRequestDatabase`, `ShopSystem`, `ShopState`, `AudioSystem`, `QuestDatabase`,
 `QuestSystem`, `DialogueBox` (UI scene),
 `DaySystem`, `HUD` (UI scene), `InventoryPanel` (UI scene), `CauldronCraftingPanel`
-(UI scene), `SaveSystem` (last, so it loads after the systems it writes into).
+(UI scene), `NotebookPanel` (UI scene), `SaveSystem` (last, so it loads after the systems
+it writes into).
 `Inventory` holds items **and** gold and persists across scene changes.
 `DaySystem` holds the day + per-gatherable depletion state. `QuestSystem` stores quest
 states (`not_started`, `active`, `ready_to_turn_in`, `completed`) and checks small
@@ -264,9 +308,10 @@ and `data/quests.json` (Sage/Camellia quest gates, turn-ins, rewards, and dialog
 **Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing,ShopExterior,MapletonLane}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/{Cat,Camellia}.tscn`,
 `scenes/player/Player.tscn`,
-`scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
+`scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel,NotebookPanel}.tscn`.
 Slice 1.0 adds `scripts/core/NoticeBoard.gd` and the lane-specific
-`scripts/npc/CamelliaLaneNPC.gd`.
+`scripts/npc/CamelliaLaneNPC.gd`; slice 1.2 extends the board to a tiny authored
+sequence and adds `scripts/npc/SageLaneNPC.gd`.
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
@@ -316,19 +361,37 @@ Rules:
   `db8d4cb`). Keep committing after each focused batch — it's the real safety net (an
   early loss of crisp Marigold frames predates the baseline). `.gitignore` excludes
   `.godot/`, `backups/`, and keeps `*.import` files.
-- Current handoff note for the next session: the worktree contains the uncommitted 1.0
-  implementation and docs, plus the planned 1.1 notebook documentation. Before starting
-  1.1 implementation, run the 0.6-1.0 verifiers and consider committing the 1.0 batch.
+- Current handoff note for the next session: the worktree contains the uncommitted 1.1
+  notebook implementation/docs, the uncommitted 1.2 Sage delivery implementation/docs,
+  and the planned 1.3 forest path documentation. Before starting implementation, run the
+  0.6-1.2 verifiers and consider committing the current focused batch.
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 1.1 — Marigold's Notebook / Quest and Recipe Notes v1.
+- [ ] Vertical Slice 1.3 — Forest Path Unlock and Brookmint Tea v1.
+      See `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`. Add one quest-gated
+      forest path, one Brookmint gatherable, one Brookmint Tea recipe, and one Camellia
+      request after Sage's restock quest. Keep it to a single tiny new scene and existing
+      systems; do not add a full forest, seasons, farming, combat, new NPCs, schedules,
+      board menu, repeatable requests, map UI, quality, or shop-pricing systems.
+- [ ] Manual 1.2 acceptance playthrough in the Godot editor.
+- [x] Vertical Slice 1.2 — Sage's Posted Delivery and Lane Presence v1.
+      See `docs/plans/vertical_slice_1_2_sage_posted_delivery.md`. Add one sequential
+      board request after Camellia's delivery, a static Sage plant-stall presence in
+      Mapleton Lane, and the smallest notice-board extension needed to choose between
+      authored requests. Reuse Root-Wake Tonic and existing Sage art. Do not add new
+      items, recipes, gathering nodes, farming, plant-shop gameplay, schedules, a board
+      menu, repeatable requests, new NPCs, or new areas. Done 2026-06-28; see
+      `tools/verify_vertical_slice_1_2.gd`.
+- [ ] Manual 1.1 acceptance playthrough in the Godot editor.
+- [x] Vertical Slice 1.1 — Marigold's Notebook / Quest and Recipe Notes v1.
       See `docs/plans/vertical_slice_1_1_notebook_notes.md`. Add a compact notebook UI
       with Quests and Recipes tabs so the player can review current objectives,
       completed quests, known recipes, ingredient counts, and brew readiness. Keep it
       read-only and data-driven from existing quest, recipe, inventory, and recipe
       knowledge systems. Do not add new quests, recipes, map markers, a calendar,
-      relationship UI, recipe discovery, or a broad journal framework.
+      relationship UI, recipe discovery, or a broad journal framework. Done 2026-06-28;
+      see `tools/verify_vertical_slice_1_1.gd`.
 - [x] Manual 1.0 acceptance playthrough in the Godot editor. The user reported "That
       works great" after playing the Mapleton Lane delivery loop on 2026-06-27.
 - [x] Vertical Slice 1.0 — Mapleton Lane and First Hand Delivery v1.

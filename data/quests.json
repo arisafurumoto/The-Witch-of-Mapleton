@@ -94,5 +94,46 @@
     "post_complete_lines": [
       "The cordial has already earned a few approving nods. That is high praise before lunch."
     ]
+  },
+  {
+    "id": "sage_seedling_restock",
+    "title": "A Gentle Restock",
+    "npc_name": "Sage",
+    "turn_in_item_id": "root_wake_tonic",
+    "turn_in_quantity": 1,
+    "reward_gold": 45,
+    "reward_items": {},
+    "reward_recipes": [],
+    "required_quests": ["camellia_cordial_delivery"],
+    "minimum_day": 4,
+    "board_speaker": "Notice Board",
+    "board_unavailable_lines": [
+      "The Mapleton notices are pinned neatly, but nothing here needs Marigold today."
+    ],
+    "board_start_lines": [
+      "Request: one Root-Wake Tonic for Sage's seedling shelf.",
+      "Please deliver it to the plant stall when it is ready."
+    ],
+    "board_active_lines": [
+      "Sage still needs one Root-Wake Tonic delivered to the plant stall."
+    ],
+    "board_completed_lines": [
+      "Sage's restock request has a tidy check mark beside it."
+    ],
+    "not_started_lines": [
+      "I pinned a small restock note to the board, if you are taking town errands."
+    ],
+    "reminder_lines": [
+      "One Root-Wake Tonic should be enough for this shelf.",
+      "The seedlings are not in danger. They are simply taking their time."
+    ],
+    "complete_lines": [
+      "Ah, there it is. The seedlings will appreciate the gentleness.",
+      "Thank you, Marigold. A careful tonic is better than a loud one.",
+      "Please take this for the trouble."
+    ],
+    "post_complete_lines": [
+      "The seedlings have perked up without becoming dramatic. That is ideal."
+    ]
   }
 ]
