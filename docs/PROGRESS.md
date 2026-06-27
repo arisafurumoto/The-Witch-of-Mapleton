@@ -161,6 +161,14 @@ seasons, farming, combat, new NPCs, schedules, request-board menu, repeatable re
 map UI, item quality, or shop-pricing/customer-preference systems. See
 `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`.
 
+**Rough roadmap:** The current near-term direction is Marigold's first week in Mapleton:
+use authored quests to unlock one tiny forest path, add a few useful recipes, make those
+recipes matter in the shop, add small ambient town texture, and only then consider a
+tiny Moonleaf Seed Packet payoff. Keep full town systems, schedules, relationships,
+seasons, farming, combat, item quality, shop pricing, cafe, and Homunculi deferred until
+the quest/crafting/shop loop has more weight. See
+`docs/plans/vertical_slice_roadmap.md`.
+
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
 Long-term vision notes now live in `docs/GDD.md`: **Atelier series meets cosy life
@@ -368,6 +376,11 @@ Rules:
 
 ## Next steps / backlog
 
+- [ ] Rough roadmap for slices 1.3-1.8.
+      See `docs/plans/vertical_slice_roadmap.md`. Current direction: finish a compact
+      first week in Mapleton by alternating tiny quest/content expansions with focused
+      shop and town readability improvements. Treat it as guidance, not a locked
+      implementation contract.
 - [ ] Vertical Slice 1.3 — Forest Path Unlock and Brookmint Tea v1.
       See `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`. Add one quest-gated
       forest path, one Brookmint gatherable, one Brookmint Tea recipe, and one Camellia
