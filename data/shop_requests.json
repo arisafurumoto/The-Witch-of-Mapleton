@@ -11,8 +11,8 @@
       "I can pay 18 gold for one."
     ],
     "success_lines": [
-      "This smells wonderful. Thank you, witch.",
-      "Here is your 18 gold. I will be back."
+      "I will take the {item_name}, please.",
+      "Here is your {gold} gold. I will be back."
     ],
     "fail_lines": [
       "No Calming Tea brewed yet? That is alright.",

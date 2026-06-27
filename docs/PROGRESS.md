@@ -100,14 +100,27 @@ outside scene/position restores, and the existing visitor/customer use of the in
 front-door markers is preserved. See
 `docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`.
 
-**Vertical Slice 0.9 — "Stackable Display and Customer Queue v1" is planned.** This
-should deepen the existing shop loop by letting one display hold multiple copies of one
-sellable item and serving a tiny sequential customer queue from that displayed stock.
-Only displayed items may be sold; customers should never buy directly from inventory.
-Glowberry Cordial should become sellable through the normal display loop after
-Camellia's quest unlocks it. The parked posted-request idea should wait until there is
-a town/delivery space where Marigold can hand items to requesters in person. See
+**Vertical Slice 0.9 — "Stackable Display and Customer Queue v1" is implemented and
+headless-verified.** The single shop display now holds a visible stack of one sellable
+crafted item, adds one matching item per interaction, refuses to replace existing stock
+with a different item, and persists through `ShopState`. Calming Tea remains stockable by
+default, and Glowberry Cordial can be stocked/sold once its recipe is known. Opening the
+shop plans a tiny sequential queue from displayed stock only, capped at three customers;
+each customer reserves and buys exactly one displayed item, awards that item's sell
+price, leaves through the front route, and only then allows the next customer to enter.
+Active queue state is transient and not saved. See
 `docs/plans/vertical_slice_0_9_stackable_display_customer_queue.md`.
+
+**Vertical Slice 1.0 — "Mapleton Lane and First Hand Delivery v1" is planned.** This
+should add one tiny town lane beyond the shop exterior and use it for the first posted
+request that ends with in-person delivery. The intended request is
+`camellia_cordial_delivery`: after Camellia's first shop request is complete, Marigold
+accepts a notice-board request, brings `glowberry_cordial` x2 to Camellia at a simple
+restaurant doorway/stall in Mapleton Lane, receives gold, and saves the completed quest.
+Keep the scope to one lane, one notice board, one reused Camellia NPC, and one authored
+quest. Do not add a full village, restaurant interior, repeatable board, schedules,
+mailbox turn-ins, reputation, relationships, new recipes, or new NPCs. See
+`docs/plans/vertical_slice_1_0_mapleton_lane_hand_delivery.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -149,6 +162,12 @@ and an olive collar with a gold-framed amber crystal pendant.
 # Focused 0.7 quest-chaining acceptance check
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_7.gd
 
+# Focused 0.8 exterior threshold acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_8.gd
+
+# Focused 0.9 stackable display / customer queue acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_9.gd
+
 # Play the game
 /Applications/Godot.app/Contents/MacOS/Godot --path .
 ```
@@ -185,11 +204,17 @@ shop exterior threshold scene → walk the bounded front step/path area → re-e
 shop → confirm Saffron follows both ways and save/continue restores the exterior if the
 game is saved outside.
 
-Planned 0.9 shop loop: craft multiple copies of Calming Tea or unlocked Glowberry
+0.9 shop loop: craft multiple copies of Calming Tea or unlocked Glowberry
 Cordial → stock the single display repeatedly until it shows a stack such as `x3` →
 open the shop → serve customers one at a time as each buys one displayed item → confirm
 display stock and gold update per sale → sleep/continue and confirm remaining display
 stock persists.
+
+Planned 1.0 delivery loop: complete Camellia's first request → sleep to the required
+day → leave the shop exterior for a tiny Mapleton Lane → read the notice board → accept
+`camellia_cordial_delivery` → craft or carry Glowberry Cordial x2 → talk to Camellia at
+the restaurant doorway/stall → hand over the cordials in person → receive gold →
+sleep/continue and confirm completion persists.
 
 ## Architecture
 
@@ -225,6 +250,8 @@ and `data/quests.json` (Sage/Camellia quest gates, turn-ins, rewards, and dialog
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/{Cat,Camellia}.tscn`,
 `scenes/player/Player.tscn`,
 `scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
+Planned for 1.0: `scenes/world/MapletonLane.tscn`, plus small lane-specific
+`NoticeBoard` and Camellia delivery scripts if needed.
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
@@ -271,21 +298,31 @@ Rules:
 - `backups/` holds local art snapshots; it has a `.gdignore` (Godot skips it) and is
   git-ignored. See `backups/README.md`. Snapshots are taken before destructive art ops.
 - **The repo is committed through 0.6** (latest implementation commit at handoff:
-  `8cadb64`). Keep
-  committing after each focused batch — it's the real safety net (an early loss of crisp
-  Marigold frames predates the baseline). `.gitignore` excludes `.godot/`, `backups/`,
-  and keeps `*.import` files. The implementation worktree was clean before this
-  documentation-only handoff update.
+  `8cadb64`). Keep committing after each focused batch — it's the real safety net (an
+  early loss of crisp Marigold frames predates the baseline). `.gitignore` excludes
+  `.godot/`, `backups/`, and keeps `*.import` files.
+- Current handoff note for the next session: the worktree contains the uncommitted 0.9
+  implementation, the 0.9 verifier/docs, and this 1.0 planning documentation. Before
+  starting 1.0 implementation, run the 0.6-0.9 verifiers and consider committing the 0.9
+  batch.
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.9 — Stackable Display and Customer Queue v1.
+- [ ] Vertical Slice 1.0 — Mapleton Lane and First Hand Delivery v1.
+      See `docs/plans/vertical_slice_1_0_mapleton_lane_hand_delivery.md`. Add one tiny
+      `MapletonLane` scene beyond the shop exterior, one notice-board request, and one
+      in-person Camellia delivery for `glowberry_cordial` x2. Reuse existing quest,
+      inventory, dialogue, transition, save/load, and Camellia art patterns. Do not add
+      a full village, restaurant interior, schedules, repeatable board, mailbox turn-ins,
+      relationships, reputation, new recipes, or new NPCs.
+- [x] Vertical Slice 0.9 — Stackable Display and Customer Queue v1.
       See `docs/plans/vertical_slice_0_9_stackable_display_customer_queue.md`. Let the
       single display hold a stack of one sellable item, allow unlocked Glowberry Cordial
       to be stocked and sold, and serve a tiny sequential customer queue from displayed
       stock only. Do not add direct inventory sales, mixed display items, multiple
       displays, simultaneous customers, preferences, schedules, reputation, price
-      setting, town delivery, posted requests, or queue save/load.
+      setting, town delivery, posted requests, or queue save/load. Done 2026-06-27; see
+      `tools/verify_vertical_slice_0_9.gd`.
 - [x] Vertical Slice 0.8 — Shop Threshold and Arrival v1.
       See `docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`. Add one tiny
       front-of-shop exterior threshold, wire the shop front door as a player transition,

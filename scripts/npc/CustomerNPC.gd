@@ -20,6 +20,8 @@ var _waiting_position: Vector2 = Vector2.ZERO
 var _present: bool = true
 var _state: String = "hidden"
 var _session_generation: int = 0
+var _queue_active: bool = false
+var _queued_customers_remaining: int = 0
 
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var _sprite: AnimatedSprite2D = $Visual
@@ -43,13 +45,30 @@ func interact() -> void:
 	if _state == "at_counter":
 		_confirm_display_sale()
 
-func start_shop_session() -> void:
-	if _busy or _present or _fulfilled:
+func start_shop_session(planned_customer_count: int = 1) -> void:
+	if _busy or _present or _queue_active:
 		return
 	var display := _display()
 	if display == null or not display.has_method("has_stock") or not bool(display.call("has_stock")):
 		HUD.show_toast("Stock the display first")
 		return
+	var available_stock := _display_stock_quantity(display)
+	if available_stock <= 0:
+		HUD.show_toast("Stock the display first")
+		return
+	var customer_count := mini(clampi(planned_customer_count, 1, 3), available_stock)
+	_queue_active = true
+	_queued_customers_remaining = customer_count - 1
+	await _start_customer_visit()
+
+func _start_customer_visit() -> void:
+	if _busy or _present:
+		return
+	var display := _display()
+	if display == null or not display.has_method("has_stock") or not bool(display.call("has_stock")):
+		_end_queue()
+		return
+	_fulfilled = false
 	_busy = true
 	_session_generation += 1
 	var session_generation: int = _session_generation
@@ -69,10 +88,12 @@ func start_shop_session() -> void:
 		return
 	if not bool(display.call("has_stock")):
 		await _leave_shop()
+		_end_queue()
 		return
 	var chosen_item_id := String(display.call("get_stock_item_id"))
 	if not display.has_method("reserve_stock") or not bool(display.call("reserve_stock")):
 		await _leave_shop()
+		_end_queue()
 		return
 	HUD.show_toast("Customer chose %s" % ItemDatabase.get_item_name(chosen_item_id))
 	await _walk_to(_counter_aisle_position())
@@ -91,7 +112,7 @@ func start_shop_session() -> void:
 	_set_collision_enabled(true)
 
 func is_shop_session_active() -> bool:
-	return _present or _busy or _state != "hidden"
+	return _queue_active or _queued_customers_remaining > 0 or _present or _busy or _state != "hidden"
 
 func show_prompt(value: bool) -> void:
 	if _label:
@@ -109,6 +130,8 @@ func _on_day_changed(_day: int) -> void:
 	_fulfilled = false
 	_busy = false
 	_state = "hidden"
+	_queue_active = false
+	_queued_customers_remaining = 0
 	_set_present(false)
 
 func _confirm_display_sale() -> void:
@@ -121,18 +144,28 @@ func _confirm_display_sale() -> void:
 	var stock: Dictionary = display.call("consume_stock")
 	if stock.is_empty():
 		await _say(customer_name, ["Oh, it looks like the display is empty now."])
-		_busy = false
+		await _leave_shop()
+		_end_queue()
 		return
 	var item_id := String(stock.get("item_id", ""))
 	var quantity := int(stock.get("quantity", 1))
 	var gold := int(stock.get("gold", 0))
+	var sale_completed := false
 	if ShopSystem.complete_display_sale(item_id, quantity, gold):
 		_fulfilled = true
-		await _say(customer_name, [
-			"I will take the %s, please." % ItemDatabase.get_item_name(item_id),
-			"Here is your %d gold." % gold,
-		])
+		sale_completed = true
+		var success_lines := _format_customer_lines(req.get("success_lines", []), item_id, gold)
+		if success_lines.is_empty():
+			success_lines = [
+				"I will take the %s, please." % ItemDatabase.get_item_name(item_id),
+				"Here is your %d gold." % gold,
+			]
+		await _say(customer_name, success_lines)
 	await _leave_shop()
+	if sale_completed:
+		await _start_next_queued_customer()
+	else:
+		_end_queue()
 
 func _leave_shop() -> void:
 	_busy = true
@@ -159,6 +192,45 @@ func _set_present(value: bool) -> void:
 func _set_collision_enabled(value: bool) -> void:
 	if _collision_shape:
 		_collision_shape.disabled = not value
+
+func _start_next_queued_customer() -> void:
+	if not _queue_active:
+		return
+	if _queued_customers_remaining <= 0:
+		_end_queue()
+		return
+	var display := _display()
+	if display == null or not display.has_method("has_stock") or not bool(display.call("has_stock")):
+		_end_queue()
+		return
+	_queued_customers_remaining -= 1
+	await get_tree().create_timer(0.35).timeout
+	if not _queue_active:
+		return
+	await _start_customer_visit()
+
+func _end_queue() -> void:
+	_queue_active = false
+	_queued_customers_remaining = 0
+
+func _display_stock_quantity(display: Node2D) -> int:
+	if display.has_method("get_available_stock_quantity"):
+		return int(display.call("get_available_stock_quantity"))
+	if display.has_method("get_stock_quantity"):
+		return int(display.call("get_stock_quantity"))
+	return 1 if bool(display.call("has_stock")) else 0
+
+func _format_customer_lines(source_lines: Variant, item_id: String, gold: int) -> Array:
+	var lines: Array = []
+	if typeof(source_lines) != TYPE_ARRAY:
+		return lines
+	var item_name := ItemDatabase.get_item_name(item_id)
+	for value in source_lines:
+		var line := String(value)
+		line = line.replace("{item_name}", item_name)
+		line = line.replace("{gold}", str(gold))
+		lines.append(line)
+	return lines
 
 func _walk_to(target_position: Vector2) -> void:
 	var movement: Vector2 = target_position - position

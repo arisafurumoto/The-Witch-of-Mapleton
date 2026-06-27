@@ -1,6 +1,6 @@
 extends "res://scripts/core/Interactable.gd"
 
-# Starts the tiny one-customer shop browsing prototype.
+# Starts a tiny sequential customer queue from the stocked display.
 
 @export var display_path: NodePath
 
@@ -17,7 +17,15 @@ func interact() -> void:
 	if customer == null or not customer.has_method("start_shop_session"):
 		HUD.show_toast("No customer is nearby")
 		return
-	customer.start_shop_session()
+	if customer.has_method("is_shop_session_active") and bool(customer.call("is_shop_session_active")):
+		HUD.show_toast("A customer is already shopping")
+		return
+	var stock_quantity := int(display.call("get_stock_quantity"))
+	if stock_quantity <= 0:
+		HUD.show_toast("Stock the display first")
+		return
+	var planned_customers := mini(stock_quantity, 3)
+	customer.call("start_shop_session", planned_customers)
 
 func show_prompt(value: bool) -> void:
 	prompt = "Visitor here" if _has_closed_shop_visitor() else "Open shop"

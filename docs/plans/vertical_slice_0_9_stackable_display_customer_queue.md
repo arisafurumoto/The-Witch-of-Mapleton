@@ -1,8 +1,20 @@
 # Vertical Slice 0.9 - Stackable Display and Customer Queue v1
 
-> Status: PLANNED.
-> Start after Vertical Slice 0.8 is manually accepted and the current work is safely
-> committed or otherwise backed up.
+> Status: IMPLEMENTED and headless-verified on 2026-06-27.
+> Verification: `tools/verify_vertical_slice_0_9.gd`.
+
+## Implementation Notes
+
+- `ShopDisplay` now stores one item id plus stacked quantity, shows a small `xN` label,
+  adds one matching item per interaction, and refuses to replace a stocked item with a
+  different inventory item.
+- Stockable items are known crafted goods with a positive sell price, so Calming Tea is
+  available by default and Glowberry Cordial becomes sellable after its recipe unlock.
+- `CustomerNPC` now treats the existing generic customer as a sequential queue actor:
+  opening the shop plans up to three customers from current display stock, one customer
+  is active at a time, each reserves and buys one displayed item, and the next customer
+  starts only after the previous one leaves.
+- Active customer queue state remains transient; only persistent display stock is saved.
 
 ## Goal
 
