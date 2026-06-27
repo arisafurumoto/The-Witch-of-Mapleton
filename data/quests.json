@@ -53,5 +53,46 @@
       "This will do nicely. Thank you, Marigold.",
       "Take this for the trouble. Keep the recipe; I suspect I will ask for it again."
     ]
+  },
+  {
+    "id": "camellia_cordial_delivery",
+    "title": "A Cordial Delivery",
+    "npc_name": "Camellia",
+    "turn_in_item_id": "glowberry_cordial",
+    "turn_in_quantity": 2,
+    "reward_gold": 60,
+    "reward_items": {},
+    "reward_recipes": [],
+    "required_quests": ["camellia_first_request"],
+    "minimum_day": 3,
+    "board_speaker": "Notice Board",
+    "board_unavailable_lines": [
+      "The Mapleton notices are pinned neatly, but nothing here needs Marigold today."
+    ],
+    "board_start_lines": [
+      "Request: two bottles of Glowberry Cordial for Camellia at the restaurant stall.",
+      "Please deliver them in person before the lunch rush."
+    ],
+    "board_active_lines": [
+      "Camellia still needs Glowberry Cordial x2 delivered to the restaurant stall."
+    ],
+    "board_completed_lines": [
+      "Camellia's cordial request has a small satisfied check mark beside it."
+    ],
+    "not_started_lines": [
+      "I left a small note on the notice board, if you are taking town requests."
+    ],
+    "reminder_lines": [
+      "Two Glowberry Cordials should be enough for the lunch special.",
+      "Bring them here when they are ready, please."
+    ],
+    "complete_lines": [
+      "Perfect timing. The noon regulars have been asking what smelled so bright.",
+      "Two bottles will let me test the special properly.",
+      "Thank you, Marigold. Please take this for the delivery."
+    ],
+    "post_complete_lines": [
+      "The cordial has already earned a few approving nods. That is high praise before lunch."
+    ]
   }
 ]

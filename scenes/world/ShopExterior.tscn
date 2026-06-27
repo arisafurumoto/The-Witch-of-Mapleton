@@ -144,6 +144,14 @@ polygon = PackedVector2Array(240, 176, 268, 176, 262, 210, 246, 210)
 color = Color(0.46, 0.18, 0.18, 1)
 polygon = PackedVector2Array(468, 210, 504, 210, 512, 236, 460, 236)
 
+[node name="LaneDoor" parent="." instance=ExtResource("2_door")]
+position = Vector2(360, 438)
+target_scene = "res://scenes/world/MapletonLane.tscn"
+use_target_player_position = true
+target_player_position = Vector2(360, 84)
+target_player_facing = "south"
+prompt = "To lane"
+
 [node name="ReturnDoor" parent="." instance=ExtResource("2_door")]
 position = Vector2(360, 196)
 target_scene = "res://scenes/world/ShopInterior.tscn"

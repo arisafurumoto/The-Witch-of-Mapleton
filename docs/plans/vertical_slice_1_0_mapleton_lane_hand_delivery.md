@@ -1,7 +1,6 @@
 # Vertical Slice 1.0 - Mapleton Lane and First Hand Delivery v1
 
-> Status: PLANNED.
-> Start after Vertical Slice 0.9 is committed or otherwise safely backed up.
+> Status: IMPLEMENTED, headless-verified, and manually accepted on 2026-06-27.
 
 ## Goal
 
@@ -228,3 +227,21 @@ The verifier should check:
 - The request ends with Marigold handing items to Camellia in person.
 - The quest, inventory reward, scene transitions, Saffron follow, and save/load all work.
 - Existing 0.6-0.9 focused verifiers still pass.
+
+## Implementation Notes
+
+- Added `scenes/world/MapletonLane.tscn`, a compact 720x480 placeholder lane with
+  boundaries, path shapes, a notice board, a simple restaurant stall, Camellia, Marigold,
+  Saffron, and a return door to `ShopExterior`.
+- Added `ShopExterior/LaneDoor`, which sends Marigold to Mapleton Lane at
+  `Vector2(360, 84)` facing south. The lane return door sends her back to the exterior at
+  `Vector2(360, 420)` facing north.
+- Added `camellia_cordial_delivery` to `data/quests.json`; it requires
+  `camellia_first_request`, starts on Day 3, consumes `glowberry_cordial` x2, and rewards
+  60 gold.
+- Added `scripts/core/NoticeBoard.gd` for the one authored board request and
+  `scripts/npc/CamelliaLaneNPC.gd` for the in-person delivery interaction.
+- Added `tools/verify_vertical_slice_1_0.gd`, which checks lane loading, transition
+  wiring, Saffron placement, save-scene compatibility, board quest start, delivery
+  completion, gold/item changes, and quest save-data persistence.
+- The user played the slice and reported "That works great" on 2026-06-27.

@@ -1,0 +1,169 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="3_cat"]
+[ext_resource type="Script" path="res://scripts/core/NoticeBoard.gd" id="4_notice_board"]
+[ext_resource type="Script" path="res://scripts/npc/CamelliaLaneNPC.gd" id="5_camellia_lane"]
+[ext_resource type="SpriteFrames" path="res://art/characters/npcs/camellia/Camellia.tres" id="6_camellia_frames"]
+
+[sub_resource type="RectangleShape2D" id="BoundaryHorizontal"]
+size = Vector2(720, 16)
+
+[sub_resource type="RectangleShape2D" id="BoundaryVertical"]
+size = Vector2(16, 480)
+
+[sub_resource type="RectangleShape2D" id="NoticeBoardZone"]
+size = Vector2(60, 58)
+
+[sub_resource type="RectangleShape2D" id="CamelliaZone"]
+size = Vector2(52, 56)
+
+[sub_resource type="RectangleShape2D" id="StallCollision"]
+size = Vector2(150, 42)
+
+[node name="MapletonLane" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Ground" type="Polygon2D" parent="."]
+z_index = -20
+color = Color(0.39, 0.45, 0.33, 1)
+polygon = PackedVector2Array(0, 0, 720, 0, 720, 480, 0, 480)
+
+[node name="LanePath" type="Polygon2D" parent="."]
+z_index = -19
+color = Color(0.58, 0.50, 0.39, 1)
+polygon = PackedVector2Array(300, 0, 420, 0, 448, 480, 272, 480)
+
+[node name="CrossPath" type="Polygon2D" parent="."]
+z_index = -18
+color = Color(0.52, 0.44, 0.34, 1)
+polygon = PackedVector2Array(88, 250, 632, 250, 632, 314, 88, 314)
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+
+[node name="CollTop" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(360, 8)
+shape = SubResource("BoundaryHorizontal")
+
+[node name="CollBottom" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(360, 472)
+shape = SubResource("BoundaryHorizontal")
+
+[node name="CollLeft" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(8, 240)
+shape = SubResource("BoundaryVertical")
+
+[node name="CollRight" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(712, 240)
+shape = SubResource("BoundaryVertical")
+
+[node name="RestaurantStall" type="StaticBody2D" parent="."]
+position = Vector2(535, 214)
+
+[node name="AwningBack" type="Polygon2D" parent="RestaurantStall"]
+z_index = -8
+color = Color(0.54, 0.24, 0.23, 1)
+polygon = PackedVector2Array(-94, -70, 94, -70, 82, -8, -82, -8)
+
+[node name="AwningTrim" type="Polygon2D" parent="RestaurantStall"]
+z_index = -7
+color = Color(0.91, 0.64, 0.34, 1)
+polygon = PackedVector2Array(-94, -72, 94, -72, 86, -50, -86, -50)
+
+[node name="Counter" type="Polygon2D" parent="RestaurantStall"]
+color = Color(0.33, 0.20, 0.14, 1)
+polygon = PackedVector2Array(-82, -10, 82, -10, 76, 28, -76, 28)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RestaurantStall"]
+position = Vector2(0, 10)
+shape = SubResource("StallCollision")
+
+[node name="TownhouseLeft" type="Polygon2D" parent="."]
+z_index = -10
+color = Color(0.42, 0.31, 0.25, 1)
+polygon = PackedVector2Array(70, 76, 220, 76, 220, 212, 70, 212)
+
+[node name="TownhouseLeftRoof" type="Polygon2D" parent="."]
+z_index = -9
+color = Color(0.24, 0.16, 0.22, 1)
+polygon = PackedVector2Array(52, 78, 145, 34, 238, 78, 220, 104, 70, 104)
+
+[node name="FenceLeft" type="Polygon2D" parent="."]
+color = Color(0.39, 0.25, 0.16, 1)
+polygon = PackedVector2Array(54, 354, 260, 354, 260, 368, 54, 368)
+
+[node name="FenceRight" type="Polygon2D" parent="."]
+color = Color(0.39, 0.25, 0.16, 1)
+polygon = PackedVector2Array(460, 354, 666, 354, 666, 368, 460, 368)
+
+[node name="NoticeBoard" type="Area2D" parent="."]
+position = Vector2(230, 258)
+script = ExtResource("4_notice_board")
+prompt = "Read notice"
+
+[node name="Visual" type="Polygon2D" parent="NoticeBoard"]
+color = Color(0.43, 0.25, 0.14, 1)
+polygon = PackedVector2Array(-34, -44, 34, -44, 34, 2, -34, 2)
+
+[node name="Paper" type="Polygon2D" parent="NoticeBoard"]
+color = Color(0.82, 0.70, 0.48, 1)
+polygon = PackedVector2Array(-20, -34, 18, -34, 18, -8, -20, -8)
+
+[node name="Post" type="Polygon2D" parent="NoticeBoard"]
+color = Color(0.28, 0.15, 0.09, 1)
+polygon = PackedVector2Array(-6, 0, 6, 0, 6, 48, -6, 48)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="NoticeBoard"]
+position = Vector2(0, -20)
+shape = SubResource("NoticeBoardZone")
+
+[node name="PromptLabel" type="Label" parent="NoticeBoard"]
+offset_left = -58.0
+offset_top = -78.0
+offset_right = 58.0
+offset_bottom = -62.0
+text = "Read notice"
+horizontal_alignment = 1
+
+[node name="Camellia" type="Area2D" parent="."]
+position = Vector2(506, 292)
+script = ExtResource("5_camellia_lane")
+prompt = "Talk"
+
+[node name="Visual" type="AnimatedSprite2D" parent="Camellia"]
+position = Vector2(0, -40)
+sprite_frames = ExtResource("6_camellia_frames")
+animation = &"idle_west"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camellia"]
+position = Vector2(0, -26)
+shape = SubResource("CamelliaZone")
+
+[node name="PromptLabel" type="Label" parent="Camellia"]
+offset_left = -40.0
+offset_top = -78.0
+offset_right = 40.0
+offset_bottom = -62.0
+text = "Talk"
+horizontal_alignment = 1
+
+[node name="ReturnDoor" parent="." instance=ExtResource("2_door")]
+position = Vector2(360, 54)
+target_scene = "res://scenes/world/ShopExterior.tscn"
+use_target_player_position = true
+target_player_position = Vector2(360, 420)
+target_player_facing = "north"
+prompt = "To shop"
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(360, 84)
+
+[node name="Camera2D" parent="Player" index="2"]
+limit_right = 720
+limit_bottom = 480
+
+[node name="Cat" parent="." instance=ExtResource("3_cat")]
+position = Vector2(318, 116)
+
+[editable path="Player"]

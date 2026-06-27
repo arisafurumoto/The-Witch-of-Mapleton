@@ -111,16 +111,28 @@ price, leaves through the front route, and only then allows the next customer to
 Active queue state is transient and not saved. See
 `docs/plans/vertical_slice_0_9_stackable_display_customer_queue.md`.
 
-**Vertical Slice 1.0 — "Mapleton Lane and First Hand Delivery v1" is planned.** This
-should add one tiny town lane beyond the shop exterior and use it for the first posted
-request that ends with in-person delivery. The intended request is
-`camellia_cordial_delivery`: after Camellia's first shop request is complete, Marigold
-accepts a notice-board request, brings `glowberry_cordial` x2 to Camellia at a simple
-restaurant doorway/stall in Mapleton Lane, receives gold, and saves the completed quest.
-Keep the scope to one lane, one notice board, one reused Camellia NPC, and one authored
-quest. Do not add a full village, restaurant interior, repeatable board, schedules,
-mailbox turn-ins, reputation, relationships, new recipes, or new NPCs. See
+**Vertical Slice 1.0 — "Mapleton Lane and First Hand Delivery v1" is implemented and
+headless-verified, and manually accepted.** A compact placeholder `MapletonLane` scene
+now sits beyond the shop exterior path, with a return transition, Saffron transition
+placement, a single notice board, and Camellia waiting beside a simple restaurant stall.
+The authored `camellia_cordial_delivery` request unlocks after
+`camellia_first_request` is completed and Day 3 begins; Marigold accepts it from the
+board, brings `glowberry_cordial` x2 to Camellia in person, receives 60 gold, and the
+completed quest state persists through save data. The board is intentionally not a
+menu/list system, and Mapleton Lane is only one bounded screen with placeholder shapes.
+The user reported "That works great" on 2026-06-27. See
+`tools/verify_vertical_slice_1_0.gd` and
 `docs/plans/vertical_slice_1_0_mapleton_lane_hand_delivery.md`.
+
+**Vertical Slice 1.1 — "Marigold's Notebook / Quest and Recipe Notes v1" is planned.**
+This should add a compact notebook UI that lets the player review active/ready/completed
+quests and known recipes without adding new content. The goal is readability for the
+current Sage/Camellia/request-board chain: what quests are open, what item and quantity
+are needed, which recipes are known, what ingredients are required, and what Marigold is
+currently carrying. Keep it to one UI panel with two tabs. Do not add a full journal,
+map markers, NPC portraits, relationship UI, calendar, recipe discovery, new quests,
+new recipes, or new areas. See
+`docs/plans/vertical_slice_1_1_notebook_notes.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -168,6 +180,9 @@ and an olive collar with a gold-framed amber crystal pendant.
 # Focused 0.9 stackable display / customer queue acceptance check
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_9.gd
 
+# Focused 1.0 Mapleton Lane / hand delivery acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_0.gd
+
 # Play the game
 /Applications/Godot.app/Contents/MacOS/Godot --path .
 ```
@@ -210,10 +225,10 @@ open the shop → serve customers one at a time as each buys one displayed item 
 display stock and gold update per sale → sleep/continue and confirm remaining display
 stock persists.
 
-Planned 1.0 delivery loop: complete Camellia's first request → sleep to the required
-day → leave the shop exterior for a tiny Mapleton Lane → read the notice board → accept
+1.0 delivery loop: complete Camellia's first request → sleep to Day 3 → leave the shop
+exterior for tiny Mapleton Lane → read the notice board → accept
 `camellia_cordial_delivery` → craft or carry Glowberry Cordial x2 → talk to Camellia at
-the restaurant doorway/stall → hand over the cordials in person → receive gold →
+the restaurant stall → hand over the cordials in person → receive 60 gold →
 sleep/continue and confirm completion persists.
 
 ## Architecture
@@ -246,12 +261,12 @@ cauldron crafting panel, or the new-day transition is active.
 `data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
 and `data/quests.json` (Sage/Camellia quest gates, turn-ins, rewards, and dialogue).
 
-**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing,ShopExterior}.tscn` (Y-sort enabled),
+**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing,ShopExterior,MapletonLane}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/{Cat,Camellia}.tscn`,
 `scenes/player/Player.tscn`,
 `scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
-Planned for 1.0: `scenes/world/MapletonLane.tscn`, plus small lane-specific
-`NoticeBoard` and Camellia delivery scripts if needed.
+Slice 1.0 adds `scripts/core/NoticeBoard.gd` and the lane-specific
+`scripts/npc/CamelliaLaneNPC.gd`.
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
@@ -297,24 +312,33 @@ Rules:
 
 - `backups/` holds local art snapshots; it has a `.gdignore` (Godot skips it) and is
   git-ignored. See `backups/README.md`. Snapshots are taken before destructive art ops.
-- **The repo is committed through 0.6** (latest implementation commit at handoff:
-  `8cadb64`). Keep committing after each focused batch — it's the real safety net (an
+- **The repo is committed through 0.9** (latest implementation commit at handoff:
+  `db8d4cb`). Keep committing after each focused batch — it's the real safety net (an
   early loss of crisp Marigold frames predates the baseline). `.gitignore` excludes
   `.godot/`, `backups/`, and keeps `*.import` files.
-- Current handoff note for the next session: the worktree contains the uncommitted 0.9
-  implementation, the 0.9 verifier/docs, and this 1.0 planning documentation. Before
-  starting 1.0 implementation, run the 0.6-0.9 verifiers and consider committing the 0.9
-  batch.
+- Current handoff note for the next session: the worktree contains the uncommitted 1.0
+  implementation and docs, plus the planned 1.1 notebook documentation. Before starting
+  1.1 implementation, run the 0.6-1.0 verifiers and consider committing the 1.0 batch.
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 1.0 — Mapleton Lane and First Hand Delivery v1.
-      See `docs/plans/vertical_slice_1_0_mapleton_lane_hand_delivery.md`. Add one tiny
+- [ ] Vertical Slice 1.1 — Marigold's Notebook / Quest and Recipe Notes v1.
+      See `docs/plans/vertical_slice_1_1_notebook_notes.md`. Add a compact notebook UI
+      with Quests and Recipes tabs so the player can review current objectives,
+      completed quests, known recipes, ingredient counts, and brew readiness. Keep it
+      read-only and data-driven from existing quest, recipe, inventory, and recipe
+      knowledge systems. Do not add new quests, recipes, map markers, a calendar,
+      relationship UI, recipe discovery, or a broad journal framework.
+- [x] Manual 1.0 acceptance playthrough in the Godot editor. The user reported "That
+      works great" after playing the Mapleton Lane delivery loop on 2026-06-27.
+- [x] Vertical Slice 1.0 — Mapleton Lane and First Hand Delivery v1.
+      See `docs/plans/vertical_slice_1_0_mapleton_lane_hand_delivery.md`. One tiny
       `MapletonLane` scene beyond the shop exterior, one notice-board request, and one
-      in-person Camellia delivery for `glowberry_cordial` x2. Reuse existing quest,
-      inventory, dialogue, transition, save/load, and Camellia art patterns. Do not add
-      a full village, restaurant interior, schedules, repeatable board, mailbox turn-ins,
-      relationships, reputation, new recipes, or new NPCs.
+      in-person Camellia delivery for `glowberry_cordial` x2 are implemented. Reuses
+      existing quest, inventory, dialogue, transition, save/load, and Camellia art
+      patterns. No full village, restaurant interior, schedules, repeatable board,
+      mailbox turn-ins, relationships, reputation, new recipes, or new NPCs were added.
+      Done 2026-06-27; see `tools/verify_vertical_slice_1_0.gd`.
 - [x] Vertical Slice 0.9 — Stackable Display and Customer Queue v1.
       See `docs/plans/vertical_slice_0_9_stackable_display_customer_queue.md`. Let the
       single display hold a stack of one sellable item, allow unlocked Glowberry Cordial
