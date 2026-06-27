@@ -29,5 +29,22 @@
     },
     "craft_time": 1,
     "known_by_default": false
+  },
+  {
+    "id": "glowberry_cordial",
+    "name": "Glowberry Cordial",
+    "station": "cauldron",
+    "quest_id": "camellia_first_request",
+    "ingredients": {
+      "moonleaf": 1,
+      "glowberry": 2,
+      "forest_water": 1
+    },
+    "output": {
+      "item_id": "glowberry_cordial",
+      "quantity": 1
+    },
+    "craft_time": 1,
+    "known_by_default": false
   }
 ]

@@ -23,6 +23,7 @@ func _load_quests() -> void:
 		return
 	for entry in parsed:
 		_add_quest(entry)
+	_validate_required_quests()
 	print("QuestDatabase: loaded ", _quests.size(), " quests")
 
 func _add_quest(entry: Variant) -> void:
@@ -33,9 +34,20 @@ func _add_quest(entry: Variant) -> void:
 		if not entry.has(field):
 			push_warning("QuestDatabase: quest missing field '%s': %s" % [field, str(entry)])
 			return
-	var id: String = entry["id"]
+	var id: String = String(entry["id"])
 	if _quests.has(id):
 		push_warning("QuestDatabase: duplicate quest id '%s' ignored" % id)
+		return
+	var required_quests: Variant = entry.get("required_quests", [])
+	if typeof(required_quests) != TYPE_ARRAY:
+		push_warning("QuestDatabase: quest '%s' required_quests must be an array" % id)
+		return
+	for required_quest_id in required_quests:
+		if String(required_quest_id) == "":
+			push_warning("QuestDatabase: quest '%s' has an empty required_quests entry" % id)
+			return
+	if int(entry.get("minimum_day", 1)) < 1:
+		push_warning("QuestDatabase: quest '%s' minimum_day must be 1 or higher" % id)
 		return
 	if not ItemDatabase.has_item(String(entry["turn_in_item_id"])):
 		push_warning("QuestDatabase: quest '%s' turns in unknown item '%s'" % [id, entry["turn_in_item_id"]])
@@ -55,6 +67,13 @@ func _add_quest(entry: Variant) -> void:
 			return
 	_quests[id] = entry
 
+func _validate_required_quests() -> void:
+	for quest_id in _quests:
+		var id := String(quest_id)
+		for required_quest_id in get_required_quest_ids(id):
+			if not _quests.has(required_quest_id):
+				push_warning("QuestDatabase: quest '%s' requires unknown quest '%s'" % [id, required_quest_id])
+
 func has_quest(id: String) -> bool:
 	return _quests.has(id)
 
@@ -63,6 +82,21 @@ func get_quest(id: String) -> Dictionary:
 		push_warning("QuestDatabase: unknown quest id '%s'" % id)
 		return {}
 	return _quests[id]
+
+func get_required_quest_ids(id: String) -> Array[String]:
+	var required_ids: Array[String] = []
+	if not _quests.has(id):
+		return required_ids
+	var quest: Dictionary = _quests[id]
+	for required_quest_id in quest.get("required_quests", []):
+		required_ids.append(String(required_quest_id))
+	return required_ids
+
+func get_minimum_day(id: String) -> int:
+	if not _quests.has(id):
+		return 1
+	var quest: Dictionary = _quests[id]
+	return maxi(1, int(quest.get("minimum_day", 1)))
 
 func get_all_ids() -> Array:
 	return _quests.keys()

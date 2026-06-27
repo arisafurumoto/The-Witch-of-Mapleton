@@ -26,5 +26,32 @@
       "Thank you, Marigold. You may have a good hand for green things.",
       "Please take this seed packet, and a little gold for your time."
     ]
+  },
+  {
+    "id": "camellia_first_request",
+    "title": "A Brighter Menu",
+    "npc_name": "Camellia",
+    "turn_in_item_id": "glowberry_cordial",
+    "turn_in_quantity": 1,
+    "reward_gold": 30,
+    "reward_items": {},
+    "reward_recipes": ["glowberry_cordial"],
+    "required_quests": ["sage_first_request"],
+    "minimum_day": 2,
+    "start_lines": [
+      "Marigold, yes? Camellia. I run the restaurant in town.",
+      "Sage mentioned your Root-Wake Tonic did exactly what it promised.",
+      "I am looking for something bright for the lunch menu. Gentle, not too sweet.",
+      "Could you brew a Glowberry Cordial for me?"
+    ],
+    "reminder_lines": [
+      "The cordial should be bright without shouting.",
+      "Moonleaf, glowberries, and forest water should keep it balanced."
+    ],
+    "complete_lines": [
+      "There it is. Bright, clean, and kinder than the usual tavern punch.",
+      "This will do nicely. Thank you, Marigold.",
+      "Take this for the trouble. Keep the recipe; I suspect I will ask for it again."
+    ]
   }
 ]

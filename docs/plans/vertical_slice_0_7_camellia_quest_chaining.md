@@ -1,7 +1,6 @@
 # Vertical Slice 0.7 - Camellia's First Request and Quest Chaining v1
 
-> Status: PLANNED.
-> Start after Vertical Slice 0.6 is committed and manually accepted.
+> Status: IMPLEMENTED, HEADLESS-VERIFIED, AND MANUALLY ACCEPTED on 2026-06-27.
 
 ## Goal
 
@@ -10,6 +9,18 @@ authored request without adding a broad village, schedule, relationship, or rest
 system. Camellia should visit Marigold's shop only after Sage's first request is
 complete, ask for one new drink, and permanently unlock that drink's recipe when the
 request is turned in.
+
+## Implementation Notes
+
+- Added optional quest gates with `required_quests` and `minimum_day`, validated after
+  all quest records load.
+- Added `glowberry_cordial` item/recipe data and a first-pass 16x16 placeholder icon.
+- Added `camellia_first_request`, gated behind completed `sage_first_request` and Day 2.
+- Added `scenes/npc/Camellia.tscn` and `scripts/npc/CamelliaNPC.gd`; Camellia reuses the
+  shop front-door route and centred counter visitor position.
+- Registered Camellia with `closed_shop_visitors` only while present, and prevented her
+  entrance from beginning during an active customer session.
+- Added `tools/verify_vertical_slice_0_7.gd`.
 
 ## Player Flow
 
@@ -96,13 +107,13 @@ request is turned in.
 
 ## Implementation Order
 
-1. Add and validate quest prerequisite/minimum-day fields.
-2. Add Glowberry Cordial item, icon, and recipe data.
-3. Add Camellia's quest data and verify cauldron/HUD behavior without an NPC.
-4. Add Camellia's focused visitor scene and front-door route.
-5. Register Camellia with the existing closed-shop visitor coordination.
-6. Verify save/continue and 0.6 save compatibility.
-7. Add a focused 0.7 headless verification script and update the handoff.
+1. [x] Add and validate quest prerequisite/minimum-day fields.
+2. [x] Add Glowberry Cordial item, icon, and recipe data.
+3. [x] Add Camellia's quest data and verify cauldron/HUD behavior without an NPC.
+4. [x] Add Camellia's focused visitor scene and front-door route.
+5. [x] Register Camellia with the existing closed-shop visitor coordination.
+6. [x] Verify save/continue and 0.6 save compatibility.
+7. [x] Add a focused 0.7 headless verification script and update the handoff.
 
 ## Acceptance Test
 

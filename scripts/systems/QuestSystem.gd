@@ -20,10 +20,23 @@ func _ready() -> void:
 func get_quest_state(quest_id: String) -> String:
 	return String(_quest_states.get(quest_id, STATE_NOT_STARTED))
 
-func start_quest(quest_id: String) -> void:
+func is_quest_available(quest_id: String) -> bool:
+	return can_start_quest(quest_id)
+
+func can_start_quest(quest_id: String) -> bool:
 	if not QuestDatabase.has_quest(quest_id):
-		return
+		return false
 	if get_quest_state(quest_id) != STATE_NOT_STARTED:
+		return false
+	if DaySystem.get_day() < QuestDatabase.get_minimum_day(quest_id):
+		return false
+	for required_quest_id in QuestDatabase.get_required_quest_ids(quest_id):
+		if get_quest_state(required_quest_id) != STATE_COMPLETED:
+			return false
+	return true
+
+func start_quest(quest_id: String) -> void:
+	if not can_start_quest(quest_id):
 		return
 	_set_quest_state(quest_id, STATE_ACTIVE)
 	_update_ready_state(quest_id)

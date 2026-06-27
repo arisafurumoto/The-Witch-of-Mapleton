@@ -739,17 +739,20 @@ Use these rules for AI-assisted development:
 
 ## 15. Current Priority
 
-Vertical Slice 0.6, **Home Layout and Recipe Progression v1**, is complete and playable.
-The current priority is Vertical Slice 0.7, **Camellia's First Request and Quest
-Chaining v1**: one second request that proves quest prerequisites and a second permanent
-recipe unlock without expanding into the village or restaurant systems.
+Vertical Slice 0.7, **Camellia's First Request and Quest Chaining v1**, is implemented,
+headless-verified, and manually accepted. It adds one second request that proves quest
+prerequisites and a second permanent recipe unlock without expanding into the village or
+restaurant systems.
+
+The current priority is Vertical Slice 0.8, **Shop Threshold and Arrival v1**: a tiny
+front-of-shop exterior threshold that turns the shop front door into a real player
+transition while keeping the full village, schedules, and town systems out of scope.
 
 Do not expand directly into the full long-term feature set. Choose one next system or polish pass at a time, and keep each milestone testable inside the existing loop.
 
 Near-term milestone candidates:
 
-* Complete Camellia's small second recipe/request and keep the existing loop stable.
+* Add the tiny shop exterior threshold and keep the existing loop stable.
 * Add data-driven NPC/dialogue loaders when ambient dialogue, schedules, or a third
   reusable quest visitor creates a concrete need.
-* Add a small shop exterior or village threshold only after the second request works.
 * Add calendar seasons only when a seasonal item or gatherable needs them.

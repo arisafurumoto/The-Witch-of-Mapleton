@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://f6jxa72f8372"]
+[gd_scene load_steps=28 format=3 uid="uid://f6jxa72f8372"]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="3_door"]
@@ -15,6 +15,7 @@
 [ext_resource type="SpriteFrames" path="res://art/characters/npcs/sage/Sage.tres" id="16_sage_frames"]
 [ext_resource type="Script" path="res://scripts/core/ShopDisplay.gd" id="17_shop_display"]
 [ext_resource type="Script" path="res://scripts/core/ShopOpenSign.gd" id="18_shop_open_sign"]
+[ext_resource type="PackedScene" path="res://scenes/npc/Camellia.tscn" id="19_camellia"]
 
 [sub_resource type="RectangleShape2D" id="WallHorizontalSegment"]
 size = Vector2(330, 12)
@@ -176,7 +177,7 @@ horizontal_alignment = 1
 position = Vector2(475, 170)
 script = ExtResource("4_crafting")
 prompt = "Brew"
-recipe_ids = PackedStringArray("root_wake_tonic", "calming_tea")
+recipe_ids = PackedStringArray("root_wake_tonic", "glowberry_cordial", "calming_tea")
 
 [node name="Visual" type="Sprite2D" parent="Cauldron"]
 scale = Vector2(1.25, 1.25)
@@ -280,6 +281,12 @@ offset_right = 40.0
 offset_bottom = -62.0
 text = "Talk"
 horizontal_alignment = 1
+
+[node name="Camellia" parent="." instance=ExtResource("19_camellia")]
+position = Vector2(360, 260)
+entrance_path = NodePath("../VisitorEntrance")
+interior_waypoint_path = NodePath("../VisitorInteriorWaypoint")
+home_facing = "north"
 
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(360, 185)

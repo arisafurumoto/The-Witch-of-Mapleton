@@ -138,8 +138,30 @@ func _update_visual() -> void:
 		_item_icon.texture = null
 		return
 	var icon_path := String(ItemDatabase.get_item(_stock_item_id).get("icon", ""))
-	if icon_path != "" and ResourceLoader.exists(icon_path):
-		_item_icon.texture = load(icon_path)
+	var texture := _load_icon_texture(icon_path)
+	if texture != null:
+		_item_icon.texture = texture
+
+func _load_icon_texture(icon_path: String) -> Texture2D:
+	if icon_path == "":
+		return null
+	if _imported_texture_is_ready(icon_path) and ResourceLoader.exists(icon_path):
+		return load(icon_path) as Texture2D
+	return null
+
+func _imported_texture_is_ready(icon_path: String) -> bool:
+	var import_path := icon_path + ".import"
+	if not FileAccess.file_exists(import_path):
+		return true
+	var text := FileAccess.get_file_as_string(import_path)
+	for line in text.split("\n"):
+		if not line.begins_with("dest_files="):
+			continue
+		var start: int = line.find("\"")
+		var end: int = line.find("\"", start + 1)
+		if start >= 0 and end > start:
+			return FileAccess.file_exists(line.substr(start + 1, end - start - 1))
+	return false
 
 func _on_day_changed(_day: int) -> void:
 	if not _reserved:

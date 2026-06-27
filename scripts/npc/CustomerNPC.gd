@@ -90,6 +90,9 @@ func start_shop_session() -> void:
 	_busy = false
 	_set_collision_enabled(true)
 
+func is_shop_session_active() -> bool:
+	return _present or _busy or _state != "hidden"
+
 func show_prompt(value: bool) -> void:
 	if _label:
 		_label.text = prompt

@@ -1,26 +1,24 @@
 extends "res://scripts/core/Interactable.gd"
 
-# Sage's one-request vertical-slice behavior. He appears from day 1, then
-# leaves once his quest is done.
+# Camellia's first focused request visitor. She uses the existing front-door
+# route and leaves after her one authored quest is complete.
 
-@export var quest_id: String = "sage_first_request"
+@export var quest_id: String = "camellia_first_request"
 @export var entrance_path: NodePath
 @export var interior_waypoint_path: NodePath
-@export var home_facing: String = "south"
+@export var home_facing: String = "north"
 
 const DIRECTIONS := [
 	"east", "south_east", "south", "south_west",
 	"west", "north_west", "north", "north_east",
 ]
 const WALK_SPEED: float = 90.0
-const FOREST_SCENE: String = "res://scenes/world/ForestClearing.tscn"
 
 var _busy: bool = false
 var _present: bool = false
 var _home_position: Vector2 = Vector2.ZERO
 var _leaving: bool = false
 var _entering: bool = false
-var _returned_from_forest: bool = false
 
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var _sprite: AnimatedSprite2D = $Visual
@@ -28,12 +26,11 @@ var _returned_from_forest: bool = false
 func _ready() -> void:
 	super._ready()
 	_home_position = position
-	_returned_from_forest = String(get_tree().root.get_meta("transition_from_scene", "")) == FOREST_SCENE
 	_sprite.play("idle_" + home_facing)
 	_set_present(false)
 	DaySystem.day_changed.connect(_on_world_state_changed)
 	QuestSystem.quest_state_changed.connect(_on_quest_state_changed)
-	_on_world_state_changed(DaySystem.get_day())
+	call_deferred("_refresh_presence")
 
 func interact() -> void:
 	if _busy or not _present:
@@ -47,7 +44,7 @@ func interact() -> void:
 		return
 
 	var state: String = QuestSystem.get_quest_state(quest_id)
-	var speaker_name: String = String(quest.get("npc_name", "Sage"))
+	var speaker_name: String = String(quest.get("npc_name", "Camellia"))
 	if state == QuestSystem.STATE_NOT_STARTED:
 		await _say(speaker_name, quest.get("start_lines", []))
 		QuestSystem.start_quest(quest_id)
@@ -88,15 +85,16 @@ func _refresh_presence() -> void:
 	if state == QuestSystem.STATE_ACTIVE or state == QuestSystem.STATE_READY:
 		_show_at_home()
 		return
-	if _can_offer_quest() and _returned_from_forest:
-		_show_at_home()
-	elif _can_offer_quest():
+	if _can_offer_quest() and _can_begin_entrance():
 		_show_or_enter()
 	else:
 		_set_present(false)
 
 func _can_offer_quest() -> bool:
 	return QuestSystem.is_quest_available(quest_id)
+
+func _can_begin_entrance() -> bool:
+	return not _has_blocking_visitor() and not _has_active_customer_session()
 
 func _leave_shop() -> void:
 	_busy = true
@@ -141,6 +139,11 @@ func _show_at_home() -> void:
 	_set_present(true)
 
 func _enter_shop() -> void:
+	if not _can_begin_entrance():
+		_entering = false
+		_busy = false
+		_set_present(false)
+		return
 	_entering = true
 	_busy = true
 	position = _entrance_position()
@@ -177,6 +180,18 @@ func _face_player() -> void:
 		return
 	var direction := _direction_for(player.global_position - global_position)
 	_sprite.play("idle_" + direction)
+
+func _has_blocking_visitor() -> bool:
+	for visitor in get_tree().get_nodes_in_group("closed_shop_visitors"):
+		if visitor != self:
+			return true
+	return false
+
+func _has_active_customer_session() -> bool:
+	var customer := get_tree().get_first_node_in_group("shop_customers")
+	if customer == null or not customer.has_method("is_shop_session_active"):
+		return false
+	return bool(customer.call("is_shop_session_active"))
 
 func _entrance_position() -> Vector2:
 	var entrance := get_node_or_null(entrance_path) as Node2D

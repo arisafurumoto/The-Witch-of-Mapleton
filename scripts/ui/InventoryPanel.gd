@@ -51,9 +51,10 @@ func _make_row(item_id: String, quantity: int) -> HBoxContainer:
 
 func _make_icon(item_id: String) -> Control:
 	var icon_path := String(ItemDatabase.get_item(item_id).get("icon", ""))
-	if icon_path != "" and ResourceLoader.exists(icon_path):
+	var texture := _load_icon_texture(icon_path)
+	if texture != null:
 		var texture_rect := TextureRect.new()
-		texture_rect.texture = load(icon_path)
+		texture_rect.texture = texture
 		texture_rect.custom_minimum_size = ICON_SIZE
 		texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 		texture_rect.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
@@ -63,6 +64,27 @@ func _make_icon(item_id: String) -> Control:
 	swatch.color = _swatch_color(item_id)
 	swatch.custom_minimum_size = ICON_SIZE
 	return swatch
+
+func _load_icon_texture(icon_path: String) -> Texture2D:
+	if icon_path == "":
+		return null
+	if _imported_texture_is_ready(icon_path) and ResourceLoader.exists(icon_path):
+		return load(icon_path) as Texture2D
+	return null
+
+func _imported_texture_is_ready(icon_path: String) -> bool:
+	var import_path := icon_path + ".import"
+	if not FileAccess.file_exists(import_path):
+		return true
+	var text := FileAccess.get_file_as_string(import_path)
+	for line in text.split("\n"):
+		if not line.begins_with("dest_files="):
+			continue
+		var start: int = line.find("\"")
+		var end: int = line.find("\"", start + 1)
+		if start >= 0 and end > start:
+			return FileAccess.file_exists(line.substr(start + 1, end - start - 1))
+	return false
 
 func _make_label(item_id: String, quantity: int) -> Label:
 	var label := Label.new()

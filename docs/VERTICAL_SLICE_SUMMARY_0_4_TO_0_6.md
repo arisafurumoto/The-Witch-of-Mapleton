@@ -8,8 +8,8 @@
 - **0.4 - Quest and Recipe Guidance v1:** complete.
 - **0.5 - Shop Browsing Prototype v1:** complete.
 - **0.6 - Home Layout and Recipe Progression v1:** complete.
-- **0.7 - Camellia's First Request and Quest Chaining v1:** planned in
-  `docs/plans/vertical_slice_0_7_camellia_quest_chaining.md`.
+- **0.7 - Camellia's First Request and Quest Chaining v1:** implemented and
+  headless-verified; see `docs/plans/vertical_slice_0_7_camellia_quest_chaining.md`.
 
 ## What 0.4 Added
 

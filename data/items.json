@@ -60,6 +60,16 @@
     "tags": ["plant", "tonic", "quest", "sage"]
   },
   {
+    "id": "glowberry_cordial",
+    "name": "Glowberry Cordial",
+    "category": "crafted_good",
+    "description": "A bright, berry-sweet cordial balanced with moonleaf and clear forest water.",
+    "stack_limit": 99,
+    "sell_price": 24,
+    "icon": "res://art/items/glowberry_cordial.png",
+    "tags": ["drink", "crafted", "glowberry", "camellia"]
+  },
+  {
     "id": "moonleaf_seed_packet",
     "name": "Moonleaf Seed Packet",
     "category": "seed",

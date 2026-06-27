@@ -81,11 +81,22 @@ Marigold can comfortably attend visitors from behind it. Sage and browsing custo
 now use the same centred counter position at different times: while Sage is present,
 the shop sign reads `Visitor here` and refuses to open the browsing session.
 
-**Vertical Slice 0.7 — "Camellia's First Request and Quest Chaining v1" is planned.**
-This will add one prerequisite-gated Day 2 quest, one Glowberry Cordial item/recipe made
-from existing ingredients, and one Camellia shop visit that joins the existing
-closed-shop visitor rule. See
-`docs/plans/vertical_slice_0_7_camellia_quest_chaining.md`.
+**Vertical Slice 0.7 — "Camellia's First Request and Quest Chaining v1" is implemented,
+headless-verified, and manually accepted.** Quest data now supports optional `required_quests` and
+`minimum_day` fields, and Camellia's `camellia_first_request` is gated behind completed
+`sage_first_request` plus Day 2. Glowberry Cordial is a new crafted-good item/recipe
+made from Moonleaf, Glowberry, and Forest Water; it is temporarily visible while
+Camellia's request is active/ready and permanently learned when the request is completed.
+Camellia uses her packaged walking art, enters through the front visitor door, waits at
+the existing public counter position, joins the `closed_shop_visitors` rule while
+present, turns to face Marigold, rewards 30 gold, unlocks the recipe, and leaves through
+the front door. The user played it and reported that it is working nicely on 2026-06-27.
+
+**Vertical Slice 0.8 — "Shop Threshold and Arrival v1" is planned.** This should add a
+tiny front-of-shop exterior threshold scene, wire the shop front door as a real player
+transition, preserve visitor/customer use of the existing interior front-door markers,
+verify Saffron follows through the new transition, and confirm save/continue works from
+outside. See `docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -124,6 +135,9 @@ and an olive collar with a gold-framed amber crystal pendant.
 # Focused 0.6 state/layout acceptance check
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_6.gd
 
+# Focused 0.7 quest-chaining acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_7.gd
+
 # Play the game
 /Applications/Godot.app/Contents/MacOS/Godot --path .
 ```
@@ -148,6 +162,18 @@ without losing shop stock → start Sage's request to temporarily reveal Root-Wa
 at the cauldron → complete the request to permanently learn the recipe → sleep and
 continue with the learned recipe and room position restored.
 
+0.7 quest-chaining loop: complete Sage's request → sleep to Day 2 → return to the shop
+and see Camellia enter through the front visitor door → accept **A Brighter Menu** →
+brew one Glowberry Cordial from Moonleaf (×1), Glowberry (×2), and Forest Water (×1) →
+turn it in to Camellia → receive 30 gold, permanently learn Glowberry Cordial, and see
+Camellia leave → sleep/continue and confirm the completed quest and learned recipe
+persist.
+
+Planned 0.8 threshold loop: start in the shop → use the front door → arrive in a tiny
+shop exterior threshold scene → walk the bounded front step/path area → re-enter the
+shop → confirm Saffron follows both ways and save/continue restores the exterior if the
+game is saved outside.
+
 ## Architecture
 
 **Autoload singletons** (order matters — defined in `project.godot`):
@@ -158,7 +184,8 @@ continue with the learned recipe and room position restored.
 (UI scene), `SaveSystem` (last, so it loads after the systems it writes into).
 `Inventory` holds items **and** gold and persists across scene changes.
 `DaySystem` holds the day + per-gatherable depletion state. `QuestSystem` stores quest
-states (`not_started`, `active`, `ready_to_turn_in`, `completed`). `SaveSystem` stores
+states (`not_started`, `active`, `ready_to_turn_in`, `completed`) and checks small
+quest availability gates from data (`required_quests`, `minimum_day`). `SaveSystem` stores
 inventory, gold, day/gatherable state, quests, known recipes, persistent shop stock,
 current scene path, and player position, then restores the player position when the
 saved scene's player is ready. `ShopState` owns stable display stock independently of
@@ -167,17 +194,18 @@ remain data-driven and are not duplicated in save data.
 
 **Interaction pattern:** `scripts/core/Interactable.gd` (Area2D, has `interact()`,
 `show_prompt()`, optional inline `dialogue`). Subclasses: `Door`, `Gatherable`,
-`CraftingStation`, `Bed`, `scripts/npc/CustomerNPC.gd`, and `scripts/npc/SageNPC.gd`. The player
+`CraftingStation`, `Bed`, `scripts/npc/CustomerNPC.gd`, `scripts/npc/SageNPC.gd`, and
+`scripts/npc/CamelliaNPC.gd`. The player
 (`scripts/player/PlayerController.gd`) detects nearby interactables via an Area2D and
 calls `interact()` on the nearest; movement/interaction freeze while dialogue, the
 cauldron crafting panel, or the new-day transition is active.
 
 **Data-driven content** (JSON loaders validate on load): `data/items.json`,
 `data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
-and `data/quests.json` (Sage quest turn-in/reward/dialogue).
+and `data/quests.json` (Sage/Camellia quest gates, turn-ins, rewards, and dialogue).
 
 **Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing}.tscn` (Y-sort enabled),
-reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
+reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/{Cat,Camellia}.tscn`,
 `scenes/player/Player.tscn`,
 `scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
 
@@ -196,8 +224,7 @@ Current active character resources:
 - **Sage:** `art/characters/npcs/sage/` packaged as
   `art/characters/npcs/sage/Sage.tres`.
 - **Camellia:** `art/characters/npcs/camellia/` packaged as
-  `art/characters/npcs/camellia/Camellia.tres` for the planned 0.7 slice, but not
-  instantiated in gameplay yet.
+  `art/characters/npcs/camellia/Camellia.tres` and instantiated as the 0.7 quest visitor.
 
 Rules:
 1. **Runtime humanoid frame standard:** eight direction folders (`east`, `south-east`,
@@ -210,6 +237,7 @@ Rules:
    - **Marigold:** 164px frames, `AnimatedSprite2D` `scale = 1.0`, offset `(0,-40)`.
    - **Generic customer:** 172px frames, `AnimatedSprite2D` `scale = 0.63`, offset `(0,-28)`.
    - **Sage:** 168px frames, `AnimatedSprite2D` `scale = 1.0`, offset `(0,-40)`.
+   - **Camellia:** 168px frames, `AnimatedSprite2D` `scale = 1.0`, offset `(0,-40)`.
    - **Saffron (cat):** 68px frames authored ~native, `scale = 1.0`, offset `(0,-17)`.
 3. **Direction mapping lives in the `.tres`/packager, not in guesswork.** The packager
    maps each `walk_<dir>` animation to a source folder. Marigold currently uses the
@@ -234,12 +262,20 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.7 — Camellia's First Request and Quest Chaining v1.
-      See `docs/plans/vertical_slice_0_7_camellia_quest_chaining.md`. Add one second
-      request with quest prerequisites, one recipe unlock, one Camellia visitor, and
-      register her with the existing closed-shop visitor rule. Do not add the village
-      exterior, restaurant gameplay, relationships, schedules, new gathering regions,
-      or a broad NPC system.
+- [ ] Vertical Slice 0.8 — Shop Threshold and Arrival v1.
+      See `docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`. Add one tiny
+      front-of-shop exterior threshold, wire the shop front door as a player transition,
+      preserve visitor/customer routing, verify Saffron follows, and confirm save/load
+      from outside. Do not add the village map, NPC schedules, new quests, restaurant,
+      plant shop, farming, weather, or town systems.
+- [x] Manual 0.7 acceptance playthrough in the Godot editor. The user reported the 0.7
+      flow is working nicely on 2026-06-27.
+- [x] Vertical Slice 0.7 — Camellia's First Request and Quest Chaining v1.
+      One Day 2 prerequisite-gated Camellia request, one Glowberry Cordial item/recipe,
+      one permanent recipe unlock, one focused Camellia visitor, and closed-shop visitor
+      coordination are in. The village exterior, restaurant gameplay, relationships,
+      schedules, new gathering regions, and a broad NPC system remain out of scope. Done
+      2026-06-27; see `tools/verify_vertical_slice_0_7.gd`.
 - [x] Vertical Slice 0.6 — Home Layout and Recipe Progression v1. Persistent shop state,
       separate room, three shop doors, visitor route updates, saved recipe knowledge,
       Sage's recipe reward, HUD feedback, and 0.5 save migration are complete. The front
