@@ -77,7 +77,8 @@ The art direction is:
 * Atmospheric
 * Readable at small pixel scale
 
-Humanoid character sheets are created manually by the user in Retro Diffusion.
+Humanoid character art is created and exported by the user outside the repo.
+Codex receives separated runtime PNG frames and only packages them for Godot.
 
 Aseprite or Pixelorama is used for cleanup.
 
@@ -94,7 +95,7 @@ Use:
 * 640×360 internal resolution
 * Pixel-perfect scaling
 * 16×16 base tiles
-* 50×80 frames for new four-direction humanoid sheets
+* Runtime humanoid frame folders with eight directions and six walk frames per direction
 * 128×128 dialogue portraits
 
 Use a layered 2D scene structure:
@@ -264,18 +265,18 @@ Do not spend development time on polished art before the loop is playable.
 New humanoid art will come from:
 
 ```text
-Finished Retro Diffusion sheet → lossless frame separation → Godot
+Finished separated PNG frames → SpriteFrames packaging → Godot
 ```
 
 ## Art & Asset Rules (learned — follow these)
 
-* **Never overwrite or resample source art in place.** New 200×242 humanoid sheets are
-  split into exact 50×80 crops. Do not downscale, pad, reposition, recolour, or repaint
-  their pixels. Existing high-resolution characters continue to scale at display time.
+* **Never overwrite, crop, resize, resample, recolour, or repaint character art.**
+  Runtime character PNG frames are treated as final user-supplied art. Existing
+  high-resolution characters continue to scale at display time.
 * **Snapshot to `backups/` before any destructive art op.** `backups/` is `.gdignore`d and git-ignored.
-* **Build SpriteFrames with the generators in `tools/`** (`build_*_spriteframes.py`); regenerate the
+* **Build SpriteFrames with `tools/build_character_spriteframes.py`;** regenerate the
   `.tres` after a re-export. The animation→folder direction mapping lives there.
-* **If a character faces the wrong way, fix the mapping in its generator — trust the
+* **If a character faces the wrong way, fix the mapping in the packager — trust the
   in-game observation over reading the frames.** When the user says the source folders are
   correct, do not second-guess the art; the bug is in the mapping.
 * Place each sprite's feet/base at the bottom-centre of its canvas; offset the

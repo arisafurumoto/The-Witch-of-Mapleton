@@ -78,7 +78,7 @@ Pixel art, non-isometric, top-down or slightly top-down 2D.
 Recommended production specs:
 
 * Tile size: 16×16 px
-* New humanoid character frame: 50×80 px from a finished 200×242 four-direction sheet
+* Humanoid runtime frames: separated PNG folders with eight directions, six walk frames per direction, and one idle frame per direction
 * Dialogue portraits: 96×96 px
 * UI icons: 16×16 px
 * Larger item icons: 32×32 px

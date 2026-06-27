@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-21.
+> Last updated: 2026-06-27.
 > Milestone summaries: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md` and
 > `docs/VERTICAL_SLICE_SUMMARY_0_4_TO_0_6.md`.
 
@@ -183,34 +183,39 @@ reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/Cat.tscn`,
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
-The user now creates finished humanoid sheets manually in Retro Diffusion. New sheets
-use Sage's 200x242 layout: four 50x80 direction columns (`south`, `west`, `east`,
-`north`), three rows (`idle`, `walk_a`, `walk_b`), and two transparent trailing rows.
-Codex preserves the finished sheet and runs `tools/separate_character_sheet.py`; it
-does not generate source images, downscale, pad, reposition, recolour, clean, or repaint
-the supplied frames. See `docs/CHARACTER_SPRITE_SHEET_WORKFLOW.md`.
+The user now supplies finished separated runtime PNG frames for humanoid characters.
+Codex does not generate source images, crop, resize, downscale, pad, reposition,
+recolour, clean, or repaint the supplied frames. It only packages existing frames into
+Godot `SpriteFrames` `.tres` resources with `tools/build_character_spriteframes.py`.
 
-`tools/build_4dir_spriteframes.py` packages separated new sheets into a Godot
-`SpriteFrames` `.tres`, reusing cardinal textures for the diagonal animation names
-expected by current movement code. Existing characters retain their current production
-art and frame sizes until deliberately replaced.
-Marigold's active walking and idle art is the `with_staff` variant under
-`art/characters/marigold/with_staff/`; the `default` and `no_hat` folders are inactive
-outfit references and are not included in `Marigold.tres`.
+Current active character resources:
+- **Marigold:** `art/characters/marigold/default/` packaged as
+  `art/characters/marigold/Marigold.tres`.
+- **Generic customer:** `art/characters/npcs/generic_customer/young_man/` packaged as
+  `art/characters/npcs/generic_customer/GenericCustomer.tres`.
+- **Sage:** `art/characters/npcs/sage/` packaged as
+  `art/characters/npcs/sage/Sage.tres`.
+- **Camellia:** `art/characters/npcs/camellia/` packaged as
+  `art/characters/npcs/camellia/Camellia.tres` for the planned 0.7 slice, but not
+  instantiated in gameplay yet.
 
 Rules:
-1. **New humanoid frame standard:** exact 50x80 crops from the supplied sheet. No
-   proportion or face reconstruction is performed in the repo.
-2. **Never overwrite/resample source art in place.** New humanoid frames are exact
-   source-cell crops. Existing high-resolution art continues to scale only at display
-   time with the Nearest filter.
-   - **Marigold:** 180px frames, `AnimatedSprite2D` `scale = 0.63`, offset `(0,-28)`.
+1. **Runtime humanoid frame standard:** eight direction folders (`east`, `south-east`,
+   `south`, `south-west`, `west`, `north-west`, `north`, `north-east`), one idle PNG
+   per direction under `rotations/`, and six walk frames per direction under
+   `animations/walking/` or `animations/Walking/`.
+2. **Never overwrite/resample source art in place.** Humanoid PNG frames are final
+   user-supplied runtime art. Existing high-resolution art continues to scale only at
+   display time with the Nearest filter.
+   - **Marigold:** 164px frames, `AnimatedSprite2D` `scale = 1.0`, offset `(0,-40)`.
+   - **Generic customer:** 172px frames, `AnimatedSprite2D` `scale = 0.63`, offset `(0,-28)`.
+   - **Sage:** 168px frames, `AnimatedSprite2D` `scale = 1.0`, offset `(0,-40)`.
    - **Saffron (cat):** 68px frames authored ~native, `scale = 1.0`, offset `(0,-17)`.
-3. **Direction mapping lives in the `.tres`/generator, not in guesswork.** The generator
+3. **Direction mapping lives in the `.tres`/packager, not in guesswork.** The packager
    maps each `walk_<dir>` animation to a source folder. Marigold currently uses the
    **identity** mapping (folder name = direction) because the art folders are correctly
-   organised. If a character faces the wrong way, fix the folder→animation mapping in its
-   generator — **trust the in-game observation over reading the frames.** (We lost time
+   organised. If a character faces the wrong way, fix the folder→animation mapping in the
+   packager — **trust the in-game observation over reading the frames.** (We lost time
    applying a wrong "mirror" remap; reverted to identity.)
 4. **Feet/base at bottom-centre of the canvas**; set the sprite offset so the feet sit at
    the node origin. Y-sort uses node position, so this keeps depth + collision aligned.
@@ -284,8 +289,9 @@ Rules:
 - [x] Forest gatherable sprites — `art/props/forest/{moonleaf_bush,forest_water_spring}.png`
       replace the reusable gatherable `Visual`; zones/scripts/collision unchanged.
       Done 2026-06-16.
-- [x] Generic customer sprite — `art/characters/npcs/generic_customer.png` replaces the
-      customer `Polygon2D`; sale request logic/collision unchanged. Done 2026-06-16.
+- [x] Generic customer sprite — `art/characters/npcs/generic_customer/young_man/`
+      now feeds `GenericCustomer.tres`; sale request logic/collision unchanged.
+      Updated 2026-06-27.
 - [x] Shop sign sprite — `art/props/shop/shop_sign.png` replaces the sign `Polygon2D`;
       sign dialogue/collision unchanged. Done 2026-06-16.
 - [x] Shop counter sprite — `art/props/shop/shop_counter.png` replaces the central

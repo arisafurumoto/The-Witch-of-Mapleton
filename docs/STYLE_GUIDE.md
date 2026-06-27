@@ -64,20 +64,19 @@ Use a Chef RPG screenshot as the direct production reference.
 ## 3. Art Pipeline
 
 Humanoid character image creation is user-managed outside the repository. The repo
-receives one finished Retro Diffusion sheet and performs only lossless separation and
+receives finished separated PNG frames and performs only SpriteFrames packaging and
 Godot import:
 
 ```text
-1. The user supplies a finished 200x242 transparent sheet.
-2. Codex preserves the sheet unchanged under concept_art/.
-3. tools/separate_character_sheet.py extracts twelve exact 50x80 cells.
-4. The character's SpriteFrames generator packages those cells for Godot.
-5. The four directions and two walk frames are checked at game scale.
+1. The user supplies finished transparent runtime PNG frames.
+2. Codex preserves those PNGs unchanged under art/characters/.
+3. tools/build_character_spriteframes.py packages existing frames for Godot.
+4. The eight directions, six walk frames, and idle poses are checked at game scale.
 ```
 
 The repo does not create appearance sources, call image-generation APIs, downscale
 figures, reconstruct faces, clean transparency, or repaint supplied pixels. The full
-input contract is in `docs/CHARACTER_SPRITE_SHEET_WORKFLOW.md`.
+frame-folder contract is described in this guide.
 
 ## 4. Technical Art Specs
 
@@ -86,10 +85,10 @@ Recommended production specs:
 ```text
 Base tile size: 16×16 px
 Primary environment modules: 16×16 px and 32×32 px
-New humanoid frame canvas: 50×80 px
-New humanoid sheet: 200×242 px (4 columns × 3 rows + 2 transparent rows)
-Column order: south, west, east, north
-Row order: idle, walk A, walk B
+Humanoid frame canvas: transparent PNG canvas, size may vary by character
+Humanoid directions: east, south-east, south, south-west, west, north-west, north, north-east
+Humanoid idle frames: rotations/<direction>.png
+Humanoid walk frames: animations/walking/<direction>/frame_000.png through frame_005.png
 Character display scale: set per character at the 640×360 internal resolution
 Black cat sprite: approximately 24×24 px or 24×32 px
 Item icons: 16×16 px
@@ -102,13 +101,10 @@ Output scale: 3× for 1920×1080
 Default recommendation:
 
 ```text
-Use 16×16 tiles, exact 50×80 crops for new humanoid frames, 128×128 portraits, and a
-640×360 internal resolution. Existing characters keep their current frame sizes until
-they are deliberately replaced.
+Use 16×16 tiles, separated runtime humanoid PNG folders, 128×128 portraits, and a
+640×360 internal resolution. Character frame canvases may vary by character; align feet
+with scene offsets rather than editing pixels.
 ```
-
-The machine-readable sheet contract is
-`art/style_reference/character_standard.json`.
 
 ## 5. Camera and Perspective
 
@@ -210,7 +206,7 @@ smooth vector
 
 ## 8. Main Character Style
 
-Gameplay faces are accepted exactly as supplied in the finished character sheet.
+Gameplay faces are accepted exactly as supplied in the finished runtime frames.
 
 Main character:
 
@@ -220,7 +216,7 @@ Role: young witch and shop owner
 Hair: long wavy copper-orange hair with loose curls and optional braid details
 Eyes: soft golden-brown
 Outfit: moss-green layered dress, cream puff-sleeve blouse, rust-orange shawl/capelet, olive witch hat, brown boots, warm amber staff
-Silhouette: readable within the supplied 50×80 frame at the 640×360 game resolution
+Silhouette: readable within the supplied runtime frame at the 640×360 game resolution
 Personality in sprite: warm, gentle, capable, cosy, practical, lightly magical
 ```
 
@@ -391,11 +387,11 @@ Y-sort should be used for:
 * Signs
 * Large props
 
-## 13. Character Sheet Intake
+## 13. Character Frame Intake
 
-Finished humanoid sheets must match Sage's 200×242 layout. Preserve the source sheet,
-separate it with `tools/separate_character_sheet.py`, and assess it only in Godot. Do
-not normalize the art or repair individual frames during import.
+Finished humanoid frame folders are the source of truth. Preserve the supplied PNG
+frames, package them with `tools/build_character_spriteframes.py`, and assess them only
+in Godot. Do not normalize the art or repair individual frames during import.
 
 ## 14. Asset Approval Checklist
 

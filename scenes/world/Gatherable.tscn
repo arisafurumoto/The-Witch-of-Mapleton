@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/core/Gatherable.gd" id="1_gatherable"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gather_zone"]
-size = Vector2(52, 52)
+size = Vector2(58, 58)
 
 [node name="Gatherable" type="Area2D"]
 script = ExtResource("1_gatherable")
@@ -11,15 +11,16 @@ prompt = "Gather"
 
 [node name="Visual" type="Sprite2D" parent="."]
 position = Vector2(0, -4)
+scale = Vector2(1.15, 1.15)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -16)
+position = Vector2(0, -18)
 shape = SubResource("RectangleShape2D_gather_zone")
 
 [node name="PromptLabel" type="Label" parent="."]
 offset_left = -52.0
-offset_top = -52.0
+offset_top = -60.0
 offset_right = 52.0
-offset_bottom = -36.0
+offset_bottom = -44.0
 horizontal_alignment = 1
 text = "Gather"

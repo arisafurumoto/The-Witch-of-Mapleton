@@ -296,8 +296,8 @@ NPCs define identity, role, relationship data, likes, dislikes, and dialogue ref
   "id": "camellia",
   "name": "Camellia",
   "role": "restaurant_owner",
-  "portrait": "res://art/characters/portraits/camellia.png",
-  "sprite": "res://art/characters/npcs/camellia.png",
+  "portrait": "",
+  "sprite_frames": "res://art/characters/npcs/camellia/Camellia.tres",
   "relationship": 0,
   "default_dialogue": "camellia_first_meeting",
   "likes": ["calming_tea"],
@@ -314,7 +314,7 @@ id
 name
 role
 portrait
-sprite
+sprite_frames
 relationship
 default_dialogue
 likes
@@ -331,8 +331,8 @@ tags
     "id": "camellia",
     "name": "Camellia",
     "role": "restaurant_owner",
-    "portrait": "res://art/characters/portraits/camellia.png",
-    "sprite": "res://art/characters/npcs/camellia.png",
+    "portrait": "",
+    "sprite_frames": "res://art/characters/npcs/camellia/Camellia.tres",
     "relationship": 0,
     "default_dialogue": "camellia_first_meeting",
     "likes": ["calming_tea"],
@@ -344,8 +344,8 @@ tags
     "id": "generic_customer",
     "name": "Villager",
     "role": "customer",
-    "portrait": "res://art/characters/portraits/generic_customer.png",
-    "sprite": "res://art/characters/npcs/generic_customer.png",
+    "portrait": "",
+    "sprite_frames": "res://art/characters/npcs/generic_customer/GenericCustomer.tres",
     "relationship": 0,
     "default_dialogue": "customer_first_sale",
     "likes": ["calming_tea"],
@@ -357,8 +357,8 @@ tags
     "id": "cat",
     "name": "Saffron",
     "role": "companion",
-    "portrait": "res://art/characters/portraits/saffron.png",
-    "sprite": "res://art/characters/saffron/Saffron.tres",
+    "portrait": "",
+    "sprite_frames": "res://art/characters/saffron/Saffron.tres",
     "relationship": 0,
     "default_dialogue": "saffron_default",
     "likes": [],
@@ -715,11 +715,11 @@ Possible outfit record:
 
 ```json
 {
-  "id": "default_autumn_witch",
-  "name": "Autumn Witch Dress",
+  "id": "default",
+  "name": "Default Outfit",
   "description": "Marigold's default moss-green dress, rust shawl, olive hat, and brown boots.",
-  "sprite_frames": "res://art/characters/marigold/outfits/default_autumn_witch.tres",
-  "portrait": "res://art/characters/portraits/marigold_default_autumn_witch.png",
+  "sprite_frames": "res://art/characters/marigold/Marigold.tres",
+  "portrait": "",
   "unlocked_by_default": true,
   "tags": ["default", "autumn", "witch", "shop", "gathering"]
 }

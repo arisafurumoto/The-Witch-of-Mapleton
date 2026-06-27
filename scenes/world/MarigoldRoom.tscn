@@ -21,7 +21,7 @@ size = Vector2(9, 360)
 size = Vector2(9, 70)
 
 [sub_resource type="RectangleShape2D" id="BedZone"]
-size = Vector2(80, 64)
+size = Vector2(110, 76)
 
 [node name="MarigoldRoom" type="Node2D"]
 y_sort_enabled = true
@@ -80,18 +80,19 @@ script = ExtResource("4_bed")
 prompt = "Sleep"
 
 [node name="Visual" type="Sprite2D" parent="Bed"]
+scale = Vector2(1.45, 1.45)
 texture = ExtResource("5_bed_tex")
 offset = Vector2(0, -22)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
-position = Vector2(0, -26)
+position = Vector2(0, -38)
 shape = SubResource("BedZone")
 
 [node name="PromptLabel" type="Label" parent="Bed"]
 offset_left = -40.0
-offset_top = -74.0
+offset_top = -92.0
 offset_right = 40.0
-offset_bottom = -58.0
+offset_bottom = -76.0
 text = "Sleep"
 horizontal_alignment = 1
 

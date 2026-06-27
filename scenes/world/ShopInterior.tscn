@@ -179,6 +179,7 @@ prompt = "Brew"
 recipe_ids = PackedStringArray("root_wake_tonic", "calming_tea")
 
 [node name="Visual" type="Sprite2D" parent="Cauldron"]
+scale = Vector2(1.25, 1.25)
 texture = ExtResource("8_cauldron_tex")
 offset = Vector2(0, -28)
 
@@ -188,9 +189,9 @@ shape = SubResource("CauldronZone")
 
 [node name="PromptLabel" type="Label" parent="Cauldron"]
 offset_left = -70.0
-offset_top = -64.0
+offset_top = -86.0
 offset_right = 70.0
-offset_bottom = -48.0
+offset_bottom = -70.0
 text = "Brew"
 horizontal_alignment = 1
 
@@ -239,20 +240,19 @@ display_path = NodePath("../ShopDisplay")
 counter_position = Vector2(360, 260)
 
 [node name="Visual" type="AnimatedSprite2D" parent="Customer"]
-position = Vector2(0, -28)
-scale = Vector2(0.63, 0.63)
+position = Vector2(0, -42)
 sprite_frames = ExtResource("10_customer_frames")
 animation = &"idle_south"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Customer"]
-position = Vector2(0, -22)
+position = Vector2(0, -26)
 shape = SubResource("CustomerZone")
 
 [node name="PromptLabel" type="Label" parent="Customer"]
 offset_left = -40.0
-offset_top = -66.0
+offset_top = -96.0
 offset_right = 40.0
-offset_bottom = -50.0
+offset_bottom = -80.0
 text = "Talk"
 horizontal_alignment = 1
 

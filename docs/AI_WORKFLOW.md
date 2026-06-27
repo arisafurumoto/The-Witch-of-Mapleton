@@ -11,7 +11,7 @@ The official tool roles are:
 ```text
 ChatGPT: design, planning, documentation, art direction, prompts, architecture review, debugging explanation
 Claude Code: Godot implementation, file edits, refactoring, local project work
-Retro Diffusion character-sheet creation: user-managed outside the repository
+Character image creation/export: user-managed outside the repository
 Godot: implementation, scene testing, gameplay validation
 ```
 
@@ -273,7 +273,7 @@ It is not isometric. It uses conventional 2D movement and collision, but objects
 
 The art direction is cosy, witchy, warm, magical, dense, handcrafted, autumnal, lantern-lit, and readable.
 
-Finished humanoid sprite sheets are supplied by the user and imported without pixel edits.
+Finished humanoid runtime frames are supplied by the user and packaged without pixel edits.
 
 ## Current Target
 
@@ -307,14 +307,15 @@ Use:
 Do not hard-code item names, recipe ingredients, NPC dialogue, or shop requests unless explicitly temporary.
 ```
 
-## 9. Character Sheet Intake
+## 9. Character Frame Intake
 
-The user supplies each finished humanoid sheet in Sage's 200×242 Retro Diffusion
-layout. Codex preserves it, separates exact 50×80 cells, packages the SpriteFrames,
-and tests the result in Godot. Codex does not generate, resize, pad, reposition,
-recolour, clean, or repaint character pixels.
+The user supplies finished separated humanoid PNG frames. Each character uses eight
+direction folders, six walking frames per direction, and one idle PNG per direction.
+Codex packages those frames with `tools/build_character_spriteframes.py` and tests the
+result in Godot. Codex does not generate, crop, resize, pad, reposition, recolour,
+clean, or repaint character pixels.
 
-See `docs/CHARACTER_SPRITE_SHEET_WORKFLOW.md` for the input contract and command.
+Frame folders are treated as the runtime source of truth.
 
 ## 10. ChatGPT Usage
 
