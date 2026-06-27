@@ -206,7 +206,11 @@ prompt = "To forest"
 
 [node name="FrontDoor" parent="." instance=ExtResource("3_door")]
 position = Vector2(360, 465)
-prompt = "Outside coming soon"
+target_scene = "res://scenes/world/ShopExterior.tscn"
+use_target_player_position = true
+target_player_position = Vector2(360, 230)
+target_player_facing = "south"
+prompt = "To outside"
 
 [node name="RoomDoor" parent="." instance=ExtResource("3_door")]
 position = Vector2(692, 135)

@@ -739,20 +739,28 @@ Use these rules for AI-assisted development:
 
 ## 15. Current Priority
 
-Vertical Slice 0.7, **Camellia's First Request and Quest Chaining v1**, is implemented,
-headless-verified, and manually accepted. It adds one second request that proves quest
-prerequisites and a second permanent recipe unlock without expanding into the village or
-restaurant systems.
+Vertical Slice 0.8, **Shop Threshold and Arrival v1**, is implemented and
+headless-verified. It adds a tiny front-of-shop exterior threshold and turns the shop
+front door into a real player transition while keeping the full village, schedules, and
+town systems out of scope.
 
-The current priority is Vertical Slice 0.8, **Shop Threshold and Arrival v1**: a tiny
-front-of-shop exterior threshold that turns the shop front door into a real player
-transition while keeping the full village, schedules, and town systems out of scope.
+The current priority is Vertical Slice 0.9, **Stackable Display and Customer Queue v1**:
+one display can hold a stack of one sellable item, and a tiny sequential customer queue
+can buy from that displayed stock one customer at a time. This should make Glowberry
+Cordial useful in normal shop play after Camellia unlocks it, while avoiding direct
+inventory sales, multiple displays, simultaneous customers, preferences, schedules,
+reputation, price setting, or a full shop simulator.
+
+The earlier posted-request idea is deferred until Marigold can personally deliver items
+to requesters in a town/delivery space. Do not implement anonymous mailbox or
+request-board turn-ins before that exists.
 
 Do not expand directly into the full long-term feature set. Choose one next system or polish pass at a time, and keep each milestone testable inside the existing loop.
 
 Near-term milestone candidates:
 
-* Add the tiny shop exterior threshold and keep the existing loop stable.
+* Add stackable display stock plus a tiny sequential customer queue and keep the
+  existing loop stable.
 * Add data-driven NPC/dialogue loaders when ambient dialogue, schedules, or a third
   reusable quest visitor creates a concrete need.
 * Add calendar seasons only when a seasonal item or gatherable needs them.

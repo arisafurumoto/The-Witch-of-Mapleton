@@ -1,0 +1,165 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
+[ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="3_cat"]
+
+[sub_resource type="RectangleShape2D" id="BoundaryHorizontal"]
+size = Vector2(720, 16)
+
+[sub_resource type="RectangleShape2D" id="BoundaryVertical"]
+size = Vector2(16, 480)
+
+[sub_resource type="RectangleShape2D" id="FacadeCollision"]
+size = Vector2(300, 72)
+
+[sub_resource type="RectangleShape2D" id="CrateCollision"]
+size = Vector2(34, 28)
+
+[sub_resource type="RectangleShape2D" id="ShrubCollision"]
+size = Vector2(58, 22)
+
+[node name="ShopExterior" type="Node2D"]
+y_sort_enabled = true
+
+[node name="Ground" type="Polygon2D" parent="."]
+z_index = -20
+color = Color(0.34, 0.43, 0.29, 1)
+polygon = PackedVector2Array(0, 0, 720, 0, 720, 480, 0, 480)
+
+[node name="Path" type="Polygon2D" parent="."]
+z_index = -19
+color = Color(0.58, 0.49, 0.36, 1)
+polygon = PackedVector2Array(318, 158, 402, 158, 420, 480, 300, 480)
+
+[node name="FrontStep" type="Polygon2D" parent="."]
+z_index = -18
+color = Color(0.48, 0.43, 0.38, 1)
+polygon = PackedVector2Array(304, 174, 416, 174, 404, 218, 316, 218)
+
+[node name="BlockedPathLeft" type="Polygon2D" parent="."]
+z_index = -18
+color = Color(0.41, 0.34, 0.25, 1)
+polygon = PackedVector2Array(0, 390, 290, 390, 300, 430, 0, 430)
+
+[node name="BlockedPathRight" type="Polygon2D" parent="."]
+z_index = -18
+color = Color(0.41, 0.34, 0.25, 1)
+polygon = PackedVector2Array(430, 390, 720, 390, 720, 430, 420, 430)
+
+[node name="ShopFacade" type="StaticBody2D" parent="."]
+position = Vector2(360, 108)
+
+[node name="Wall" type="Polygon2D" parent="ShopFacade"]
+z_index = -10
+color = Color(0.55, 0.38, 0.27, 1)
+polygon = PackedVector2Array(-142, -52, 142, -52, 142, 48, -142, 48)
+
+[node name="Roof" type="Polygon2D" parent="ShopFacade"]
+z_index = -9
+color = Color(0.26, 0.16, 0.22, 1)
+polygon = PackedVector2Array(-168, -52, 0, -108, 168, -52, 148, -20, -148, -20)
+
+[node name="RoofTrim" type="Polygon2D" parent="ShopFacade"]
+z_index = -8
+color = Color(0.42, 0.24, 0.22, 1)
+polygon = PackedVector2Array(-158, -24, 158, -24, 148, -8, -148, -8)
+
+[node name="DoorPanel" type="Polygon2D" parent="ShopFacade"]
+z_index = -7
+color = Color(0.22, 0.13, 0.11, 1)
+polygon = PackedVector2Array(-28, -18, 28, -18, 28, 68, -28, 68)
+
+[node name="WindowLeft" type="Polygon2D" parent="ShopFacade"]
+z_index = -7
+color = Color(0.94, 0.69, 0.31, 1)
+polygon = PackedVector2Array(-104, -22, -60, -22, -60, 20, -104, 20)
+
+[node name="WindowRight" type="Polygon2D" parent="ShopFacade"]
+z_index = -7
+color = Color(0.94, 0.69, 0.31, 1)
+polygon = PackedVector2Array(60, -22, 104, -22, 104, 20, 60, 20)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShopFacade"]
+position = Vector2(0, -8)
+shape = SubResource("FacadeCollision")
+
+[node name="Boundaries" type="StaticBody2D" parent="."]
+
+[node name="CollTop" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(360, 8)
+shape = SubResource("BoundaryHorizontal")
+
+[node name="CollBottom" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(360, 472)
+shape = SubResource("BoundaryHorizontal")
+
+[node name="CollLeft" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(8, 240)
+shape = SubResource("BoundaryVertical")
+
+[node name="CollRight" type="CollisionShape2D" parent="Boundaries"]
+position = Vector2(712, 240)
+shape = SubResource("BoundaryVertical")
+
+[node name="Crates" type="StaticBody2D" parent="."]
+position = Vector2(520, 308)
+
+[node name="Visual" type="Polygon2D" parent="Crates"]
+color = Color(0.45, 0.27, 0.15, 1)
+polygon = PackedVector2Array(-26, -26, 18, -26, 26, 10, -18, 10)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Crates"]
+position = Vector2(0, -8)
+shape = SubResource("CrateCollision")
+
+[node name="Shrubs" type="StaticBody2D" parent="."]
+position = Vector2(194, 304)
+
+[node name="Visual" type="Polygon2D" parent="Shrubs"]
+color = Color(0.22, 0.45, 0.24, 1)
+polygon = PackedVector2Array(-38, -12, -22, -28, -4, -18, 14, -32, 38, -10, 28, 8, -34, 8)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shrubs"]
+position = Vector2(0, -4)
+shape = SubResource("ShrubCollision")
+
+[node name="FenceLeft" type="Polygon2D" parent="."]
+color = Color(0.39, 0.25, 0.16, 1)
+polygon = PackedVector2Array(70, 384, 296, 384, 296, 398, 70, 398)
+
+[node name="FenceRight" type="Polygon2D" parent="."]
+color = Color(0.39, 0.25, 0.16, 1)
+polygon = PackedVector2Array(424, 384, 650, 384, 650, 398, 424, 398)
+
+[node name="LanternPost" type="Polygon2D" parent="."]
+color = Color(0.18, 0.12, 0.1, 1)
+polygon = PackedVector2Array(250, 184, 258, 184, 258, 270, 250, 270)
+
+[node name="LanternGlow" type="Polygon2D" parent="."]
+color = Color(0.96, 0.68, 0.32, 1)
+polygon = PackedVector2Array(240, 176, 268, 176, 262, 210, 246, 210)
+
+[node name="Mailbox" type="Polygon2D" parent="."]
+color = Color(0.46, 0.18, 0.18, 1)
+polygon = PackedVector2Array(468, 210, 504, 210, 512, 236, 460, 236)
+
+[node name="ReturnDoor" parent="." instance=ExtResource("2_door")]
+position = Vector2(360, 196)
+target_scene = "res://scenes/world/ShopInterior.tscn"
+use_target_player_position = true
+target_player_position = Vector2(360, 420)
+target_player_facing = "north"
+prompt = "To shop"
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(360, 230)
+
+[node name="Camera2D" parent="Player" index="2"]
+limit_right = 720
+limit_bottom = 480
+
+[node name="Cat" parent="." instance=ExtResource("3_cat")]
+position = Vector2(320, 238)
+
+[editable path="Player"]

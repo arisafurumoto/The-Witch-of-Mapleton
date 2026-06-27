@@ -7,7 +7,7 @@ func _initialize() -> void:
 
 func _run() -> void:
 	_check_scene_layout()
-	_check_shop_state()
+	await _check_shop_state()
 	_check_recipe_progression()
 	if _failures.is_empty():
 		print("Vertical Slice 0.6 verification passed")
@@ -31,6 +31,7 @@ func _check_scene_layout() -> void:
 	_check(room.has_node("ShopDoor"), "Marigold's room is missing its return door")
 	_check(shop.get_node("Background").scale == Vector2(0.75, 0.75), "Shop footprint is not scaled to 720x480")
 	_check(room.get_node("Background").scale == Vector2(0.5625, 0.5625), "Room footprint is not scaled to 540x360")
+	_check(room.get_node("Player/Camera2D").zoom == Vector2.ONE, "Room camera zoom does not match the rest of the game")
 	var sage := shop.get_node("Sage")
 	_check(sage.position == Vector2(360, 260), "Sage is not centred in front of the counter")
 	_check(String(sage.get("home_facing")) == "north", "Sage is not facing the counter")
@@ -41,7 +42,7 @@ func _check_scene_layout() -> void:
 	_check(counter_shape.size == Vector2(96, 32), "Counter collision is not half-height")
 	_check(counter_collision.position == Vector2(0, -16), "Counter collision is not aligned to the counter base")
 	var front_door := shop.get_node("FrontDoor")
-	_check(String(front_door.get("target_scene")) == "", "Front door unexpectedly targets a scene")
+	_check(String(front_door.get("target_scene")) == "res://scenes/world/ShopExterior.tscn", "Front door target is incorrect")
 	var room_door := shop.get_node("RoomDoor")
 	_check(String(room_door.get("target_scene")) == "res://scenes/world/MarigoldRoom.tscn", "Room door target is incorrect")
 	shop.free()
@@ -49,6 +50,7 @@ func _check_scene_layout() -> void:
 
 func _check_shop_state() -> void:
 	var shop_state := root.get_node("ShopState")
+	root.get_node("DaySystem").call("apply_state", 1, {})
 	# Keep Sage stationary while this check briefly loads and unloads the shop.
 	root.get_node("QuestSystem").call("load_from", {"sage_first_request": "completed"})
 	shop_state.call("clear")
@@ -73,6 +75,7 @@ func _check_shop_state() -> void:
 	sign.call("show_prompt", true)
 	_check(String(sign.get_node("PromptLabel").text) == "Visitor here", "Shop sign did not show its disabled visitor prompt")
 	sage.call("_set_present", false)
+	await process_frame
 	_check(not bool(sign.call("_has_closed_shop_visitor")), "Shop sign stayed disabled after the visitor left")
 	player.position = sage.position + Vector2(80, 0)
 	sage.call("_face_player")

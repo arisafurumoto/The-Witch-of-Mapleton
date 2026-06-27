@@ -92,11 +92,22 @@ the existing public counter position, joins the `closed_shop_visitors` rule whil
 present, turns to face Marigold, rewards 30 gold, unlocks the recipe, and leaves through
 the front door. The user played it and reported that it is working nicely on 2026-06-27.
 
-**Vertical Slice 0.8 — "Shop Threshold and Arrival v1" is planned.** This should add a
-tiny front-of-shop exterior threshold scene, wire the shop front door as a real player
-transition, preserve visitor/customer use of the existing interior front-door markers,
-verify Saffron follows through the new transition, and confirm save/continue works from
-outside. See `docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`.
+**Vertical Slice 0.8 — "Shop Threshold and Arrival v1" is implemented and
+headless-verified.** A compact front-of-shop exterior threshold scene now lets Marigold
+leave through the shop front door, walk a bounded doorstep/path area, and re-enter the
+shop. Saffron follows through both transitions, SaveSystem remains compatible with
+outside scene/position restores, and the existing visitor/customer use of the interior
+front-door markers is preserved. See
+`docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`.
+
+**Vertical Slice 0.9 — "Stackable Display and Customer Queue v1" is planned.** This
+should deepen the existing shop loop by letting one display hold multiple copies of one
+sellable item and serving a tiny sequential customer queue from that displayed stock.
+Only displayed items may be sold; customers should never buy directly from inventory.
+Glowberry Cordial should become sellable through the normal display loop after
+Camellia's quest unlocks it. The parked posted-request idea should wait until there is
+a town/delivery space where Marigold can hand items to requesters in person. See
+`docs/plans/vertical_slice_0_9_stackable_display_customer_queue.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
 
@@ -169,10 +180,16 @@ turn it in to Camellia → receive 30 gold, permanently learn Glowberry Cordial,
 Camellia leave → sleep/continue and confirm the completed quest and learned recipe
 persist.
 
-Planned 0.8 threshold loop: start in the shop → use the front door → arrive in a tiny
+0.8 threshold loop: start in the shop → use the front door → arrive in a tiny
 shop exterior threshold scene → walk the bounded front step/path area → re-enter the
 shop → confirm Saffron follows both ways and save/continue restores the exterior if the
 game is saved outside.
+
+Planned 0.9 shop loop: craft multiple copies of Calming Tea or unlocked Glowberry
+Cordial → stock the single display repeatedly until it shows a stack such as `x3` →
+open the shop → serve customers one at a time as each buys one displayed item → confirm
+display stock and gold update per sale → sleep/continue and confirm remaining display
+stock persists.
 
 ## Architecture
 
@@ -204,7 +221,7 @@ cauldron crafting panel, or the new-day transition is active.
 `data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
 and `data/quests.json` (Sage/Camellia quest gates, turn-ins, rewards, and dialogue).
 
-**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing}.tscn` (Y-sort enabled),
+**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing,ShopExterior}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/{Cat,Camellia}.tscn`,
 `scenes/player/Player.tscn`,
 `scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel}.tscn`.
@@ -262,12 +279,20 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Vertical Slice 0.8 — Shop Threshold and Arrival v1.
+- [ ] Vertical Slice 0.9 — Stackable Display and Customer Queue v1.
+      See `docs/plans/vertical_slice_0_9_stackable_display_customer_queue.md`. Let the
+      single display hold a stack of one sellable item, allow unlocked Glowberry Cordial
+      to be stocked and sold, and serve a tiny sequential customer queue from displayed
+      stock only. Do not add direct inventory sales, mixed display items, multiple
+      displays, simultaneous customers, preferences, schedules, reputation, price
+      setting, town delivery, posted requests, or queue save/load.
+- [x] Vertical Slice 0.8 — Shop Threshold and Arrival v1.
       See `docs/plans/vertical_slice_0_8_shop_threshold_and_arrival.md`. Add one tiny
       front-of-shop exterior threshold, wire the shop front door as a player transition,
       preserve visitor/customer routing, verify Saffron follows, and confirm save/load
       from outside. Do not add the village map, NPC schedules, new quests, restaurant,
-      plant shop, farming, weather, or town systems.
+      plant shop, farming, weather, or town systems. Done 2026-06-27; see
+      `tools/verify_vertical_slice_0_8.gd`.
 - [x] Manual 0.7 acceptance playthrough in the Godot editor. The user reported the 0.7
       flow is working nicely on 2026-06-27.
 - [x] Vertical Slice 0.7 — Camellia's First Request and Quest Chaining v1.

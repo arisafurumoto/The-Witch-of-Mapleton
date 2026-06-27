@@ -100,7 +100,6 @@ horizontal_alignment = 1
 position = Vector2(120, 180)
 
 [node name="Camera2D" parent="Player" index="2"]
-zoom = Vector2(1.2, 1.2)
 limit_right = 540
 limit_bottom = 360
 

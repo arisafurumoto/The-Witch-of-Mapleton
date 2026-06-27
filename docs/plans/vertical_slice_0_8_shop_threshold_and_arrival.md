@@ -1,6 +1,6 @@
 # Vertical Slice 0.8 - Shop Threshold and Arrival v1
 
-> Status: PLANNED.
+> Status: IMPLEMENTED.
 > Start after Vertical Slice 0.7 is committed or otherwise safely backed up.
 
 ## Goal
@@ -151,3 +151,17 @@ entrance for Sage, Camellia, and browsing customers.
 - The exterior threshold is readable, bounded, and save/load compatible.
 - Saffron follows correctly.
 - Existing 0.1-0.7 shop, quest, crafting, customer, and visitor flows remain intact.
+
+## Implementation Notes
+
+- Added `scenes/world/ShopExterior.tscn`, a compact 720x480 placeholder threshold with
+  a shop facade, front step, blocked path hints, simple props, boundary collision,
+  Marigold, camera limits, Saffron, and a return door.
+- The shop `FrontDoor` now sends the player to the exterior at `Vector2(360, 230)`,
+  facing south. The exterior `ReturnDoor` sends the player back just inside the shop
+  front door at `Vector2(360, 420)`, facing north.
+- The existing `VisitorEntrance` and `VisitorInteriorWaypoint` markers were not moved;
+  Sage, Camellia, and the browsing customer still use those interior markers.
+- Added `tools/verify_vertical_slice_0_8.gd` to check scene wiring, visitor marker
+  preservation, Saffron's transition placement, camera/collision basics, and
+  SaveSystem current-scene/player-position compatibility for the exterior.
