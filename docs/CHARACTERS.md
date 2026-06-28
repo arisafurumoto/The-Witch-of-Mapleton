@@ -84,6 +84,10 @@ He has a strong dislike for anything fake, mass-produced, sanitised, or too easy
 
 He also has a side business making handmade soap from rendered fat from his butcher work. This gives him an odd contrast: blood, blades, and carcasses on one side; clean linen, herbal soap, and careful curing racks on the other.
 
+Alder is also the main non-combat source for meat. Marigold can get meat by slaying
+monsters in caves or by buying from Alder; she should not harvest meat from her own
+ordinary farm animals or monster farm.
+
 His route explores sincerity, violence, restraint, and whether someone rough can still be deeply caring. He is inspired by the anti-polished, anti-fake intensity of Tyler Durden from *Fight Club*, but should remain an original character suited to Mapleton’s cosy fantasy world.
 
 ## Personality
@@ -186,9 +190,16 @@ He is competent, disciplined, and reliable, but also deeply tired. He has spent 
 
 ## Backstory
 
-Linden works for a large corporation and moved to Mapleton while continuing his role remotely. The move may have been framed as a lifestyle improvement, but beneath that is a quieter truth: he was exhausted.
+Linden works remotely for **Karazon**, a large online shopping corporation, and moved to Mapleton while continuing his role there. The move may have been framed as a lifestyle improvement, but beneath that is a quieter truth: he was exhausted.
 
 His corporate life taught him to be useful, controlled, and efficient. He became very good at analysing problems, improving systems, managing stakeholders, and predicting risks. Over time, this also trained him to treat himself like a resource to be managed rather than a person with needs.
+
+Karazon's CEO is originally from Mapleton, which gives Linden's work an odd local connection even though the company itself has no town storefront. Linden is not a shopkeeper in the village; he is a remote worker whose daily life is still shaped by corporate systems, metrics, and invisible online commerce.
+
+Linden does not see Karazon as simply evil or good. It is a popular business, it is
+convenient, and it is doing well. He understands why people use it. At the same time, he
+likes the small, quaint town he lives in and loves Marigold's handcrafted work because
+it has the human touch Karazon cannot reproduce.
 
 Mapleton unsettles him because it runs on a different kind of logic. People stop to talk. Shops close early. Villagers help each other without calculating return on investment. Marigold may spend a whole day gathering flowers, rearranging furniture, helping someone emotionally, or chasing a strange magical curiosity with no obvious practical benefit.
 
@@ -207,6 +218,38 @@ His appearance should contrast with Mapleton’s softer, messier village aesthet
 Over time, his design could subtly soften without fully changing who he is: loosened tie, rolled sleeves, waistcoat without jacket, slightly less rigid hair, or a coat draped over his arm rather than perfectly worn.
 
 Subtle visual motifs include glasses, muted suits, clean lines, pocket watches or slim wristwatches, notebooks, spreadsheets, fountain pens, neatly folded handkerchiefs, structured bags, and small signs of exhaustion hidden beneath immaculate presentation.
+
+# Karazon CEO
+
+## Character Description
+
+The CEO of Karazon is an ambitious, money-loving business man originally from Mapleton.
+He is still the current CEO when the game takes place. He built Karazon into a large
+online shopping corporation with next-day delivery, free shipping, and no local
+Mapleton storefront.
+
+He should not feel like a simple villain. He genuinely understands convenience,
+distribution, scale, and how to build a profitable business. His worldview is that if a
+good thing can reach more people and make more money, then scaling it is sensible.
+
+## Story Role
+
+Karazon is a rival to Marigold's values rather than a direct magical competitor. It
+does not sell magical handmade goods like hers. Its appeal is convenience: villagers can
+order ordinary things quickly and cheaply without leaving home. The cost is that it has
+no human touch, local memory, or sense of community.
+
+Long-term, the CEO hears about Marigold's growing witch shop and offers to sell her
+goods through Karazon. He promises to mass-produce them, give her a percentage, and make
+her a millionaire. Marigold refuses because she cares about the love, intention, and
+handmade care she puts into each craft, not just money.
+
+## Connection To Anemone
+
+Before he founded Karazon, the CEO met Anemone when he was young. He taught her about
+capitalism, money, and running a business. Because mermaid society works through trade
+and does not have the same concept of money, this encounter fascinated her and helped
+inspire her to start her pond-side shop.
 
 # Anemone
 
@@ -235,6 +278,17 @@ Despite this, Anemone became fascinated by the surface world. She collected obje
 Eventually, she found a way to open a secret shop connected to a dedicated pond in Mapleton. The pond acts as her safe point between water and land. It allows her to trade with villagers while hiding the full truth of her identity from those who would force her to return.
 
 Her business is partly practical and partly an act of quiet rebellion. She wants to understand land life for herself, not only through the fears of her people.
+
+Anemone's interest in business began when she once met the future CEO of Karazon while
+he was young, before he started the company. He taught her about capitalism, money, and
+running a business. This fascinated her because mermaid society is based on trade and
+does not have the same concept of money. The encounter made human society feel strange,
+structured, and exciting to her, and it eventually helped inspire her to start a shop of
+her own.
+
+This backstory should keep Anemone's innocence and curiosity intact. She is not a
+corporate character; she is someone from a gift/trade culture trying to understand why
+humans assign prices to things, keep accounts, advertise goods, and build businesses.
 
 ## Appearance
 

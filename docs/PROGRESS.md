@@ -162,11 +162,11 @@ map UI, item quality, or shop-pricing/customer-preference systems. See
 `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`.
 
 **Rough roadmap:** The current near-term direction is Marigold's first week in Mapleton:
-use authored quests to unlock one tiny forest path, add a few useful recipes, make those
-recipes matter in the shop, add small ambient town texture, and only then consider a
-tiny Moonleaf Seed Packet payoff. Keep full town systems, schedules, relationships,
-seasons, farming, combat, item quality, shop pricing, cafe, and Homunculi deferred until
-the quest/crafting/shop loop has more weight. See
+finish the tiny forest path/recipe unlock, then add dialogue portrait support, map
+blockout/readability, focused tileset and prop passes, a tiny Moonleaf planter payoff,
+and then more shop variety. Keep full town systems, schedules, relationships, seasons,
+full farming, combat, item quality, shop pricing, cafe, and Homunculi deferred until the
+quest/crafting/shop loop has more weight. See
 `docs/plans/vertical_slice_roadmap.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
@@ -176,6 +176,29 @@ sim**, with Atelier-style gathering/crafting/quests as the main progression, opt
 Moonlighter-style shop management, calendar seasons, limited farming, separate
 shop/room scenes, cooking/cafe progression, and simple supportive combat. These are
 future design directions and should not expand the current vertical-slice scope.
+Recent ideation notes added to `docs/GDD.md` and `docs/CHARACTERS.md`: Karazon is a
+large online shopping corporation with no Mapleton storefront, its CEO is originally
+from Mapleton and is still the current CEO, Linden works for Karazon remotely, and
+Anemone's interest in money/business started after meeting the CEO before he founded the
+company. Karazon/technology is a long-term philosophical rival to Marigold's handmade
+shop: convenient next-day delivery and free shipping versus human touch, love, and
+community. Long-term farming can include ordinary chickens/sheep/cows plus a separate
+monster farm on Marigold's property for magical produce. Monster capture is taming via
+monster food, open farm slots, and rarer monsters needing more food. Farm and
+monster-farm systems should not produce meat; meat comes from cave monster slaying or
+buying from Alder. Weather should eventually stay simple: mostly sunny, less-common
+rain, and snow replacing rain in winter, with forecasts available on the radio. Rain or
+snow automatically waters outside plants, including winter crops; greenhouse plants get
+no weather benefit but can grow any seasonal plant if manually watered or automated.
+Outside crops die immediately on the first day of a new season if they are no longer in
+season. Fruit trees take one whole season to mature, occupy a 3x3 grid area, can be
+replanted, produce daily fruit in season, and produce year-round if planted in the
+greenhouse. Magical item names can selectively use French words as Atelier-style
+language flavour. The first sprinkler-like magical item concept is **Nuage**, a small
+cloud named from the French word for cloud; its mechanical rule is 3x3 coverage in the
+morning while floating above the center tile so the center planting space remains
+usable. Farming automation can progress from manual watering to Nuage-like magical
+items to homunculi handling watering and harvesting.
 Additional locked design direction: progression is driven mainly by quest chains;
 alchemy quality/traits should have readable depth; daily time/stamina should be gentle;
 the world is a compact hub with unlocked authored regions; the cast should be roughly
@@ -376,11 +399,11 @@ Rules:
 
 ## Next steps / backlog
 
-- [ ] Rough roadmap for slices 1.3-1.8.
-      See `docs/plans/vertical_slice_roadmap.md`. Current direction: finish a compact
-      first week in Mapleton by alternating tiny quest/content expansions with focused
-      shop and town readability improvements. Treat it as guidance, not a locked
-      implementation contract.
+- [x] Expanded rough roadmap for slices 1.3+ and art/world/farming production tracks.
+      See `docs/plans/vertical_slice_roadmap.md`. Current recommendation: implement
+      1.3, then add dialogue portraits, map blockout/readability, focused tileset and
+      prop passes, a tiny Moonleaf planter payoff, and then more shop variety. Treat it
+      as guidance, not a locked implementation contract. Done 2026-06-28.
 - [ ] Vertical Slice 1.3 — Forest Path Unlock and Brookmint Tea v1.
       See `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`. Add one quest-gated
       forest path, one Brookmint gatherable, one Brookmint Tea recipe, and one Camellia

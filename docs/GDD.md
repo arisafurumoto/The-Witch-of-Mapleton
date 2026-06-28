@@ -79,7 +79,7 @@ Recommended production specs:
 
 * Tile size: 16×16 px
 * Humanoid runtime frames: separated PNG folders with eight directions, six walk frames per direction, and one idle frame per direction
-* Dialogue portraits: 96×96 px
+* Dialogue portraits: 140×140 px
 * UI icons: 16×16 px
 * Larger item icons: 32×32 px
 * Display scale: 3× or 4×
@@ -177,6 +177,19 @@ Item quality and traits should have **readable depth**. They should matter for c
 
 Progression should primarily come from authored quest chains. Crafting milestones, reputation, and money can support unlocks, but the clearest gates for new maps, recipes, facilities, village improvements, and larger systems should be quests.
 
+### Item Naming and Language Flavor
+
+Some magical item names can use French words as flavour, inspired by how some Atelier
+items use German names. Use this selectively for memorable magical tools, potions,
+charms, materials, or devices rather than making every item French.
+
+French display names should feel whimsical, elegant, and readable. The item description
+should explain what the item does in plain English so the player is never confused by
+the foreign-language flavour.
+
+Stable data IDs should remain simple lowercase slugs, such as `nuage`, while the display
+name can be the French word, such as **Nuage**.
+
 ### Shop Management
 
 Marigold owns a shop, but the player does not need to open it every day. The shop loop is:
@@ -194,6 +207,48 @@ Quest NPCs can visit the shop while it is closed, but not while the shop is open
 
 The shop is optional income and village flavor in normal play. Players should be able to spend several days gathering, crafting, questing, or socializing without being punished for not opening the shop.
 
+### Karazon and Business Culture
+
+Karazon is a large online shopping corporation inspired by Amazon. It should feel like
+a big external economic force rather than a normal Mapleton shop. It does not have a
+physical storefront in town, which helps it contrast with Marigold's handmade witch
+shop, Camellia's restaurant, Sage's plant stall, Anemone's pond-side shop, and Alder's
+butcher work.
+
+The CEO of Karazon is originally from Mapleton. This gives the corporation a personal
+link to the village instead of making it feel like a random outside company. He is still
+the current CEO when the game takes place. He is ambitious, money-loving, and genuinely
+good at building a business.
+
+Karazon can be used as a long-term story thread about efficiency, convenience,
+ambition, labour, money, and what small local businesses mean in a cosy fantasy town. It
+is not a magical-goods company and does not sell the same kind of handcrafted potions or
+charms as Marigold. Its strength is convenience: next-day delivery, free shipping, broad
+selection, and the ease of ordering without visiting a shop.
+
+This makes Karazon a philosophical rival to Marigold rather than a direct product copy.
+Some villagers love using it because it is convenient and reliable. What Karazon lacks
+is the human touch, local memory, face-to-face care, and sense of community that
+Marigold pours into her crafts.
+
+Long-term arc idea: once the CEO hears about Marigold's successful handmade witch
+business, he visits or contacts her and offers to put her goods on Karazon. He proposes
+mass-producing them, giving her a percentage, and making her a millionaire. Marigold
+refuses because the thing she values is not money or scale; it is the care, love, and
+personal intention she puts into each craft.
+
+Linden works for Karazon remotely from Mapleton. His corporate routine, burnout, and
+business analysis role make him a natural character lens for Karazon's values. Linden
+does not see Karazon as simply evil or good. It is popular, convenient, and successful.
+At the same time, he likes the small, quaint town he lives in and loves Marigold's
+handcrafted work.
+
+Anemone once met the future Karazon CEO when he was young, before he started Karazon. He
+taught her about capitalism, money, and running a business. Because mermaid society is
+based on trade and does not use money in the same way, Anemone became fascinated by
+human society and eventually started her own shop. This should be playful and
+character-driven, not a heavy economics lecture.
+
 ### Calendar and Seasons
 
 The game uses a calendar system like Harvest Moon. The game starts on **Spring 1**. One year has four months:
@@ -205,11 +260,107 @@ The game uses a calendar system like Harvest Moon. The game starts on **Spring 1
 
 Season should affect gathering, wild seeds, plant availability, customer demand, and item popularity. Some items should be more popular in specific seasons.
 
+### Weather
+
+The weather system should stay simple. The only normal weather states are:
+
+* Sunny
+* Rainy
+
+Rainy days should be much less common than sunny days. In winter, rainy weather appears
+as snow instead of rain. This is still the same simple watering/weather category for
+gameplay purposes, just with winter visuals and flavour.
+
+Do not add storms, cloudy days, extreme weather, or complex forecasts unless a much
+later milestone truly needs them.
+
+Rainy and snowy days matter mainly for farming and atmosphere. When it rains, outside
+farm plants are automatically watered for that day. In winter, snow waters outside
+winter crops the same way. Greenhouse plants do not receive this weather watering
+benefit because the greenhouse is sheltered.
+
+Marigold should eventually be able to check the weather forecast on the radio. The
+forecast can support simple planning without turning weather into a complex simulation.
+
 ### Farming
 
-Farming should be useful but intentionally limited so it does not become the main game. The farming area should be small, possibly a greenhouse or compact garden.
+Farming should be useful but intentionally limited so it does not become the main game.
+Marigold's property should eventually have enough space for several home facilities,
+such as a buildable garden, animal farm, greenhouse, and monster farm. These should
+unlock gradually so the property grows with her life in Mapleton.
 
 Seeds can be bought from a plant shop or gathered in the wild. Wild plants and wild seeds are seasonal. The plant shop can sell every seed type all year so the player is not locked out of important progression by the calendar.
+
+The first playable farming step should be much smaller than full farming: one Moonleaf planter that pays off Sage's Moonleaf Seed Packet reward, advances through sleep/day changes, and produces a small Moonleaf harvest.
+
+Long-term plant farming should use a grid system. There are two main planting places:
+
+* Outside ground
+* Greenhouse
+
+Outside ground uses normal seasonal rules. Only plants that belong to the current
+season can grow outside. Rainy or snowy days automatically water outside plants. Outside
+crops die immediately on the first day of a new season if they are no longer in season.
+
+The greenhouse does not get rainy-day or snowy-day watering, but it can grow plants from
+any season. Greenhouse plants need manual watering unless Marigold has installed an
+automation item.
+
+The first magical watering item concept is **Nuage**, named from the French word for
+cloud. Nuage is a small magical cloud that floats in the middle of a 3x3 farming grid
+area and waters plants in the morning. Because it floats in the air, it does not occupy
+the center planting space, so a plant can still grow beneath it. This makes the
+greenhouse useful for reliable ingredient access without making it strictly easier than
+outdoor farming.
+
+Fruit trees are a longer-term crop type. They take one whole season to grow into mature
+trees. Once mature, they produce seasonal fruit every day during their fruiting season.
+If a fruit tree is planted outside, it survives out of season but does not bear fruit
+outside its fruiting season. If a fruit tree is planted in the greenhouse, it produces
+fruit all year round.
+
+Fruit trees use the farming grid but take more space than normal crops. A tree takes a
+3x3 grid area. Fruit trees can be replanted. If Marigold wants to remove one from its
+current spot, she cuts it down with an axe.
+
+Long-term, farming can include ordinary animals and magical monster keeping, but both
+should support the crafting/shop loop instead of becoming the main game.
+
+Normal farm animals should be limited to:
+
+* Chicken
+* Sheep
+* Cow
+
+Normal animal farming should focus on non-meat produce:
+
+* Chickens produce eggs.
+* Sheep produce wool.
+* Cows produce milk.
+
+Magical variants of eggs, wool, or milk can exist later if the world needs them.
+
+Monster farming is a separate long-term system. Marigold can capture certain monsters
+from caves and keep them in a monster farm on her property for regular produce. The
+tone should be taming, not trapping. Marigold offers monster food; if the monster likes
+it, and if there is an open monster-farm slot, it comes to the farm. If there is no
+available slot, the monster cannot be tamed at that time.
+
+Rarer monsters should be harder to tame and may require more monster food or repeated
+successful feeding attempts. Tamed monsters do not help Marigold in battle. Their role
+is to live on the property and provide magical crafting ingredients.
+
+The monster farm should not produce meat. Instead, monsters provide magical crafting
+ingredients related to their type, such as fairy dust from a fairy-like monster or
+slime from a slime-like monster.
+
+The same monster ingredients can also drop when Marigold defeats those monsters in the
+cave. The monster farm exists as a more consistent, lower-risk way to get those
+materials without requiring repeated cave trips. This keeps combat useful without making
+it mandatory every time the player needs monster-derived ingredients.
+
+Meat should not come from Marigold's farm or monster farm. Meat comes from slaying
+monsters in the cave or buying from Alder.
 
 ### Shop, Room, Cooking, and Cafe
 
@@ -231,6 +382,10 @@ Combat should stay simple and supportive, closer to Stardew Valley than an actio
 
 Marigold has HP, stamina, and a combat level. Stamina decreases when she performs tool actions, from using a watering can to swinging a magic staff. Combat and monster drops should support gathering and crafting rather than becoming the main focus.
 
+Cave monsters can drop meat and monster-specific materials. Those monster-specific
+materials should overlap with the future monster farm outputs, so players can choose
+between active cave runs and steadier farm production.
+
 Daily time and stamina should create gentle limits, not harsh pressure. They should help players choose what to do each day while still leaving room to wander, experiment, and enjoy the world.
 
 If Marigold loses all HP, use a soft rescue instead of a hard fail state. She wakes up at home the next day with the village doctor nearby, loses a small amount of money, and starts later than usual. This should feel like Mapleton taking care of her, not like a punishment screen.
@@ -249,7 +404,7 @@ The core village cast should be roughly Stardew Valley-sized: large enough to fe
 
 Romance is a major optional layer. It should have meaningful scenes and rewards, but the main game remains crafting, quests, and village restoration.
 
-Homunculi are a mid-game automation system. They should unlock after the shop is established and help with shop, cafe, farm, storage, and repeat tasks. They are important to long-term progression, but should not appear before the core craft/quest/shop loop is stable.
+Homunculi are a mid-game automation system. They should unlock after the shop is established and help with shop, cafe, farm, storage, and repeat tasks. They are important to long-term progression, but should not appear before the core craft/quest/shop loop is stable. For farming, automation should progress from manual watering, to sprinkler-like magical items, to homunculi that can eventually handle watering through harvesting.
 
 The cafe is an optional expansion. It should arrive later as a second business path using cooked recipes, but the magic shop remains Marigold's primary business.
 
