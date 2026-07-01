@@ -145,6 +145,10 @@ Why it likely comes after 1.3:
 
 ### Vertical Slice 1.5 - Map Blockout and Layout Readability v1
 
+Status: planned.
+
+Detailed plan: `docs/plans/vertical_slice_1_5_map_blockout_readability.md`.
+
 Rough goal:
 
 - Decide the small playable layout language before spending time on polished map art.
