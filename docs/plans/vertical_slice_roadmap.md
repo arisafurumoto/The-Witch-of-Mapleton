@@ -1,7 +1,7 @@
 # Vertical Slice Roadmap - First Week, Art, and Tiny Farming
 
 > Status: ROUGH ROADMAP.
-> Last updated: 2026-06-28.
+> Last updated: 2026-07-01.
 > This is a direction-setting document, not a commitment to implement every detail in
 > order. Each slice still needs its own focused plan before implementation.
 
@@ -94,6 +94,8 @@ Near-term examples:
 
 ### Vertical Slice 1.3 - Forest Path Unlock and Brookmint Tea v1
 
+Status: implemented and headless-verified on 2026-06-30.
+
 Detailed plan: `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`.
 
 Purpose:
@@ -111,6 +113,8 @@ Why it matters:
   save systems are ready for small authored regions.
 
 ### Vertical Slice 1.4 - Dialogue Portraits v1
+
+Status: implemented and headless-verified on 2026-07-01.
 
 Rough goal:
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/DialogueBox.gd" id="1_dialogue"]
 
@@ -17,16 +17,58 @@ shadow_color = Color(0, 0, 0, 0.35)
 shadow_size = 4
 shadow_offset = Vector2(0, 2)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_name_plate"]
+bg_color = Color(0.12, 0.075, 0.055, 0.97)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.62, 0.42, 0.2, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
 [node name="DialogueBox" type="CanvasLayer"]
 script = ExtResource("1_dialogue")
+
+[node name="PortraitTexture" type="TextureRect" parent="."]
+offset_left = 4.0
+offset_top = 194.0
+offset_right = 154.0
+offset_bottom = 344.0
+texture_filter = 1
+expand_mode = 1
+stretch_mode = 5
+
+[node name="NamePlate" type="PanelContainer" parent="."]
+offset_left = 8.0
+offset_top = 324.0
+offset_right = 150.0
+offset_bottom = 352.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_name_plate")
+
+[node name="Margin" type="MarginContainer" parent="NamePlate"]
+theme_override_constants/margin_left = 7
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 7
+theme_override_constants/margin_bottom = 2
+
+[node name="NamePlateLabel" type="Label" parent="NamePlate/Margin"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
+theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 14
+horizontal_alignment = 1
 
 [node name="Panel" type="PanelContainer" parent="."]
 anchor_left = 0.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 8.0
-offset_top = -88.0
+offset_left = 154.0
+offset_top = -112.0
 offset_right = -8.0
 offset_bottom = -8.0
 grow_horizontal = 2
@@ -34,25 +76,28 @@ grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_dialogue_panel")
 
 [node name="Margin" type="MarginContainer" parent="Panel"]
-theme_override_constants/margin_left = 11
-theme_override_constants/margin_top = 8
-theme_override_constants/margin_right = 11
-theme_override_constants/margin_bottom = 8
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 9
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 9
 
 [node name="VBox" type="VBoxContainer" parent="Panel/Margin"]
 theme_override_constants/separation = 5
 
 [node name="NameLabel" type="Label" parent="Panel/Margin/VBox"]
+layout_mode = 2
 text = "Name"
 theme_override_colors/font_color = Color(1, 0.82, 0.43, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 15
+theme_override_font_sizes/font_size = 14
 
 [node name="LineLabel" type="Label" parent="Panel/Margin/VBox"]
+layout_mode = 2
+size_flags_vertical = 3
 text = "Line"
 autowrap_mode = 2
 theme_override_colors/font_color = Color(0.98, 0.9, 0.76, 1)
 theme_override_colors/font_outline_color = Color(0.08, 0.04, 0.03, 1)
 theme_override_constants/outline_size = 2
-theme_override_font_sizes/font_size = 14
+theme_override_font_sizes/font_size = 15

@@ -1,7 +1,7 @@
 # Vertical Slice 1.3 - Forest Path Unlock and Brookmint Tea v1
 
-> Status: PLANNED.
-> Start after Vertical Slice 1.2 is manually accepted or otherwise safely backed up.
+> Status: IMPLEMENTED and headless-verified on 2026-06-30.
+> Manual acceptance in the Godot editor is still recommended.
 
 ## Goal
 
@@ -208,7 +208,7 @@ art/items/brookmint_tea.png
 
 ## Verification
 
-Add `tools/verify_vertical_slice_1_3.gd`.
+Implemented as `tools/verify_vertical_slice_1_3.gd`; it passes headlessly.
 
 The verifier should check:
 
@@ -279,3 +279,14 @@ The verifier should check:
 - The new recipe participates in the existing notebook, cauldron, quest, and save/load
   systems.
 - Existing shop, board, lane, forest, Saffron, and save/load loops remain intact.
+
+## Implementation Notes
+
+- `scripts/core/QuestLockedDoor.gd` keeps the forest path closed until
+  `sage_seedling_restock` is completed, then behaves like the existing `Door`.
+- `scenes/world/ForestPath.tscn` uses placeholder polygon art, explicit camera limits,
+  two stable daily Brookmint gatherable ids, and a return door to `ForestClearing`.
+- `CamelliaLaneNPC.gd` now supports a tiny ordered quest list for Camellia's lane
+  deliveries while preserving the old `quest_id` export for existing verifiers/scenes.
+- Brookmint item icons are intentionally placeholder-missing for now; the existing UI
+  fallback swatches handle them until real 16x16 item art is supplied.

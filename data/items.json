@@ -40,6 +40,16 @@
     "tags": ["berry", "forest", "glow"]
   },
   {
+    "id": "brookmint",
+    "name": "Brookmint",
+    "category": "ingredient",
+    "description": "A cool green sprig that smells like rain over stone.",
+    "stack_limit": 99,
+    "sell_price": 6,
+    "icon": "res://art/items/brookmint.png",
+    "tags": ["plant", "forest", "mint"]
+  },
+  {
     "id": "calming_tea",
     "name": "Calming Tea",
     "category": "crafted_good",
@@ -68,6 +78,16 @@
     "sell_price": 24,
     "icon": "res://art/items/glowberry_cordial.png",
     "tags": ["drink", "crafted", "glowberry", "camellia"]
+  },
+  {
+    "id": "brookmint_tea",
+    "name": "Brookmint Tea",
+    "category": "crafted_good",
+    "description": "A fresh herbal tea with a cool finish and a bright forest scent.",
+    "stack_limit": 99,
+    "sell_price": 30,
+    "icon": "res://art/items/brookmint_tea.png",
+    "tags": ["tea", "crafted", "brookmint", "camellia"]
   },
   {
     "id": "moonleaf_seed_packet",

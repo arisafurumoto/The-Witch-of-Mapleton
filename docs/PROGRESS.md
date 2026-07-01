@@ -1,7 +1,7 @@
 # The Witch of Mapleton — Progress & Handoff
 
 > Living status doc. Read this first when starting a new session.
-> Last updated: 2026-06-28.
+> Last updated: 2026-07-01.
 > Milestone summaries: `docs/VERTICAL_SLICE_SUMMARY_0_1_TO_0_3_1.md` and
 > `docs/VERTICAL_SLICE_SUMMARY_0_4_TO_0_6.md`.
 
@@ -150,23 +150,43 @@ points, deadlines, quality requirements, request-board menu, or repeatable job s
 were added. See
 `docs/plans/vertical_slice_1_2_sage_posted_delivery.md`.
 
-**Vertical Slice 1.3 — "Forest Path Unlock and Brookmint Tea v1" is planned.** This
-should prove the first quest-gated world expansion: completing `sage_seedling_restock`
-opens a tiny new forest path from the existing forest clearing, where Marigold can
-gather Brookmint for Camellia's Day 5 Brookmint Tea request. The slice should add one
-small `ForestPath` scene, one new ingredient, one new cauldron recipe, and one authored
-request, while reusing the notice board, notebook, cauldron, inventory, quest, save/load,
-and Saffron transition patterns. Do not add a full forest region, multiple new screens,
-seasons, farming, combat, new NPCs, schedules, request-board menu, repeatable requests,
-map UI, item quality, or shop-pricing/customer-preference systems. See
+**Vertical Slice 1.3 — "Forest Path Unlock and Brookmint Tea v1" is implemented and
+headless-verified.** Completing `sage_seedling_restock` now unlocks a small
+`ForestPath` scene from the existing forest clearing. The path has two daily Brookmint
+patches, a return transition, camera limits, boundaries, and Saffron transition
+placement. Camellia's Day 5 notice-board request `camellia_brookmint_request` asks for
+Brookmint Tea, a new quest-active cauldron recipe made from Brookmint x2 and Forest
+Water x1; completing the request awards 80 gold and permanently learns the recipe.
+Lane Camellia now supports a tiny ordered quest list while keeping the old `quest_id`
+compatibility field. No full forest region, multiple new screens, seasons, farming,
+combat, new NPCs, schedules, board menu, repeatable requests, map UI, item quality, or
+shop-pricing/customer-preference systems were added. See
+`tools/verify_vertical_slice_1_3.gd` and
 `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`.
 
+**Vertical Slice 1.4 — "Dialogue Portraits v1" is implemented and headless-verified.**
+`DialogueBox` now uses a larger reference-style portrait layout: the active character
+portrait stands on the lower-left of the screen with a separate nameplate, while the
+dialogue box shifts right and remains readable. A follow-up pass puts Marigold's
+portrait/nameplate on the lower-right while NPC portraits stay on the lower-left, and
+clears the portrait/nameplate when dialogue closes. Dialogue still supports the old
+`show_dialogue(speaker, lines)` string-array API, and now also accepts optional per-line
+dictionaries with `speaker`, `expression`, and `text` so conversations can alternate
+between NPCs and Marigold. Marigold, Sage, and Camellia use existing
+default/thinking/concerned/laugh-style portrait exports where available; speakers
+without portrait art, such as Notice Board and Villager, cleanly hide the portrait slot.
+Sage and Camellia quest conversations now include a few Marigold replies for a more
+natural back-and-forth. No new portrait art, relationship UI, branching
+conversation choices, visual-novel cutscenes, full dialogue database rewrite, or NPC
+database migration were added. See
+`tools/verify_vertical_slice_1_4.gd` and
+`docs/plans/vertical_slice_1_4_dialogue_portraits.md`.
+
 **Rough roadmap:** The current near-term direction is Marigold's first week in Mapleton:
-finish the tiny forest path/recipe unlock, then add dialogue portrait support, map
-blockout/readability, focused tileset and prop passes, a tiny Moonleaf planter payoff,
-and then more shop variety. Keep full town systems, schedules, relationships, seasons,
-full farming, combat, item quality, shop pricing, cafe, and Homunculi deferred until the
-quest/crafting/shop loop has more weight. See
+next add map blockout/readability, focused tileset and prop passes, a tiny Moonleaf
+planter payoff, and then more shop variety. Keep full town systems, schedules,
+relationships, seasons, full farming, combat, item quality, shop pricing, cafe, and
+Homunculi deferred until the quest/crafting/shop loop has more weight. See
 `docs/plans/vertical_slice_roadmap.md`.
 
 Engine: **Godot 4.1.3** at `/Applications/Godot.app`. Main scene: `scenes/ui/TitleMenu.tscn`.
@@ -247,6 +267,12 @@ and an olive collar with a gold-framed amber crystal pendant.
 # Focused 1.2 Sage posted delivery / lane presence acceptance check
 /Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_2.gd
 
+# Focused 1.3 forest path / Brookmint Tea acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_3.gd
+
+# Focused 1.4 dialogue portrait acceptance check
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_4.gd
+
 # Play the game
 /Applications/Godot.app/Contents/MacOS/Godot --path .
 ```
@@ -305,6 +331,20 @@ Mapleton Lane → read the notice board → accept `sage_seedling_restock` → b
 Root-Wake Tonic x1 → deliver it to Sage at the placeholder plant stall → receive 45
 gold → sleep/continue and confirm completion persists.
 
+1.3 Brookmint loop: complete `sage_seedling_restock` → sleep to Day 5 → read the
+Mapleton Lane notice board → accept **A Fresh Pot** → go to the forest clearing → use
+the newly unlocked forest path → gather Brookmint x2 → return to the shop → brew
+Brookmint Tea → open the notebook and confirm quest/recipe counts are readable →
+deliver Brookmint Tea to Camellia in Mapleton Lane → receive 80 gold and permanently
+learn Brookmint Tea → sleep/continue and confirm completion persists.
+
+1.4 portrait check: trigger dialogue with Marigold, Sage, or Camellia and confirm the
+large portrait appears with a nameplate; advance through a quest conversation and
+confirm NPC portraits use the lower-left, Marigold replies use the lower-right, and the
+portrait/expression switches by speaker; finish the conversation and confirm the
+portrait/nameplate disappear; read the notice board or serve a generic customer and
+confirm the portrait slot hides cleanly for speakers without portrait art.
+
 ## Architecture
 
 **Autoload singletons** (order matters — defined in `project.godot`):
@@ -330,19 +370,24 @@ remain data-driven and are not duplicated in save data.
 `scripts/npc/CamelliaNPC.gd`. The player
 (`scripts/player/PlayerController.gd`) detects nearby interactables via an Area2D and
 calls `interact()` on the nearest; movement/interaction freeze while dialogue, the
-cauldron crafting panel, or the new-day transition is active.
+cauldron crafting panel, or the new-day transition is active. `DialogueBox` keeps the
+same `show_dialogue(speaker, lines)` API for string arrays, can also consume per-line
+dialogue dictionaries (`speaker`, `expression`, `text`), and maps known speaker names
+to optional portrait art internally.
 
 **Data-driven content** (JSON loaders validate on load): `data/items.json`,
 `data/recipes.json`, `data/shop_requests.json` (customer request + inline dialogue lines),
 and `data/quests.json` (Sage/Camellia quest gates, turn-ins, rewards, and dialogue).
 
-**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing,ShopExterior,MapletonLane}.tscn` (Y-sort enabled),
+**Scenes:** `scenes/world/{ShopInterior,MarigoldRoom,ForestClearing,ForestPath,ShopExterior,MapletonLane}.tscn` (Y-sort enabled),
 reusable `scenes/world/{Door,Gatherable}.tscn`, `scenes/npc/{Cat,Camellia}.tscn`,
 `scenes/player/Player.tscn`,
 `scenes/ui/{DialogueBox,HUD,InventoryPanel,CauldronCraftingPanel,NotebookPanel}.tscn`.
 Slice 1.0 adds `scripts/core/NoticeBoard.gd` and the lane-specific
 `scripts/npc/CamelliaLaneNPC.gd`; slice 1.2 extends the board to a tiny authored
-sequence and adds `scripts/npc/SageLaneNPC.gd`.
+sequence and adds `scripts/npc/SageLaneNPC.gd`; slice 1.3 adds
+`scripts/core/QuestLockedDoor.gd` and extends lane Camellia to choose from a small
+ordered quest list.
 
 ## Art pipeline & conventions (IMPORTANT — learned the hard way)
 
@@ -353,13 +398,19 @@ Godot `SpriteFrames` `.tres` resources with `tools/build_character_spriteframes.
 
 Current active character resources:
 - **Marigold:** `art/characters/marigold/default/` packaged as
-  `art/characters/marigold/Marigold.tres`.
+  `art/characters/marigold/Marigold.tres`; default dialogue portrait at
+  `art/characters/marigold/portraits/default.png`, with concerned/thinking/laugh
+  expression portraits also available.
 - **Generic customer:** `art/characters/npcs/generic_customer/young_man/` packaged as
   `art/characters/npcs/generic_customer/GenericCustomer.tres`.
 - **Sage:** `art/characters/npcs/sage/` packaged as
-  `art/characters/npcs/sage/Sage.tres`.
+  `art/characters/npcs/sage/Sage.tres`; default dialogue portrait at
+  `art/characters/npcs/sage/portraits/default.png`, with neutral/concerned/thinking/
+  laugh/blushed expression portraits also available.
 - **Camellia:** `art/characters/npcs/camellia/` packaged as
-  `art/characters/npcs/camellia/Camellia.tres` and instantiated as the 0.7 quest visitor.
+  `art/characters/npcs/camellia/Camellia.tres` and instantiated as the 0.7 quest visitor;
+  default dialogue portrait at `art/characters/npcs/camellia/portraits/default.png`,
+  with concerned/thinking/laugh/blushed expression portraits also available.
 
 Rules:
 1. **Runtime humanoid frame standard:** eight direction folders (`east`, `south-east`,
@@ -394,22 +445,35 @@ Rules:
   `.godot/`, `backups/`, and keeps `*.import` files.
 - Current handoff note for the next session: the worktree contains the uncommitted 1.1
   notebook implementation/docs, the uncommitted 1.2 Sage delivery implementation/docs,
-  and the planned 1.3 forest path documentation. Before starting implementation, run the
-  0.6-1.2 verifiers and consider committing the current focused batch.
+  the uncommitted 1.3 forest path/Brookmint implementation/docs, and the uncommitted 1.4
+  dialogue portrait implementation/docs. Before starting the next slice, run the
+  0.6-1.4 verifiers and consider committing the current focused batch.
 
 ## Next steps / backlog
 
 - [x] Expanded rough roadmap for slices 1.3+ and art/world/farming production tracks.
-      See `docs/plans/vertical_slice_roadmap.md`. Current recommendation: implement
-      1.3, then add dialogue portraits, map blockout/readability, focused tileset and
-      prop passes, a tiny Moonleaf planter payoff, and then more shop variety. Treat it
-      as guidance, not a locked implementation contract. Done 2026-06-28.
-- [ ] Vertical Slice 1.3 — Forest Path Unlock and Brookmint Tea v1.
-      See `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`. Add one quest-gated
-      forest path, one Brookmint gatherable, one Brookmint Tea recipe, and one Camellia
-      request after Sage's restock quest. Keep it to a single tiny new scene and existing
-      systems; do not add a full forest, seasons, farming, combat, new NPCs, schedules,
-      board menu, repeatable requests, map UI, quality, or shop-pricing systems.
+      See `docs/plans/vertical_slice_roadmap.md`. Current recommendation: add map
+      blockout/readability, focused tileset and prop passes, a tiny Moonleaf planter
+      payoff, and then more shop variety. Treat it as guidance, not a locked
+      implementation contract. Done 2026-06-28; updated 2026-07-01 after 1.4.
+- [ ] Manual 1.4 acceptance playthrough in the Godot editor.
+- [x] Vertical Slice 1.4 — Dialogue Portraits v1.
+      See `docs/plans/vertical_slice_1_4_dialogue_portraits.md`. Added a larger
+      lower-left DialogueBox portrait/nameplate layout, speaker-name and expression
+      lookup for existing Marigold, Sage, and Camellia portrait art, optional per-line
+      dialogue dictionaries, and a few Marigold replies in quest conversations. Follow-up
+      feedback put Marigold's portrait/nameplate on the right and fixed portrait cleanup
+      after dialogue closes. Speakers without portrait art use a clean no-portrait
+      fallback. No new art, relationship UI, branching dialogue choices, or NPC database
+      migration was added. Done 2026-07-01; see `tools/verify_vertical_slice_1_4.gd`.
+- [ ] Manual 1.3 acceptance playthrough in the Godot editor.
+- [x] Vertical Slice 1.3 — Forest Path Unlock and Brookmint Tea v1.
+      See `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`. Added one
+      quest-gated forest path, two Brookmint gatherables, one Brookmint Tea recipe, and
+      one Camellia request after Sage's restock quest. Kept it to a single tiny new scene
+      and existing systems; no full forest, seasons, farming, combat, new NPCs,
+      schedules, board menu, repeatable requests, map UI, quality, or shop-pricing
+      systems. Done 2026-06-30; see `tools/verify_vertical_slice_1_3.gd`.
 - [ ] Manual 1.2 acceptance playthrough in the Godot editor.
 - [x] Vertical Slice 1.2 — Sage's Posted Delivery and Lane Presence v1.
       See `docs/plans/vertical_slice_1_2_sage_posted_delivery.md`. Add one sequential

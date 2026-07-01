@@ -137,7 +137,7 @@ shape = SubResource("PlantStallCollision")
 position = Vector2(230, 258)
 script = ExtResource("4_notice_board")
 prompt = "Read notice"
-quest_ids = PackedStringArray("camellia_cordial_delivery", "sage_seedling_restock")
+quest_ids = PackedStringArray("camellia_cordial_delivery", "sage_seedling_restock", "camellia_brookmint_request")
 
 [node name="Visual" type="Polygon2D" parent="NoticeBoard"]
 color = Color(0.43, 0.25, 0.14, 1)
@@ -167,6 +167,7 @@ horizontal_alignment = 1
 position = Vector2(506, 292)
 script = ExtResource("5_camellia_lane")
 prompt = "Talk"
+quest_ids = PackedStringArray("camellia_cordial_delivery", "camellia_brookmint_request")
 
 [node name="Visual" type="AnimatedSprite2D" parent="Camellia"]
 position = Vector2(0, -40)

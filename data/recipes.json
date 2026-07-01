@@ -46,5 +46,21 @@
     },
     "craft_time": 1,
     "known_by_default": false
+  },
+  {
+    "id": "brookmint_tea",
+    "name": "Brookmint Tea",
+    "station": "cauldron",
+    "quest_id": "camellia_brookmint_request",
+    "ingredients": {
+      "brookmint": 2,
+      "forest_water": 1
+    },
+    "output": {
+      "item_id": "brookmint_tea",
+      "quantity": 1
+    },
+    "craft_time": 1,
+    "known_by_default": false
   }
 ]

@@ -11,20 +11,20 @@
     },
     "reward_recipes": ["root_wake_tonic"],
     "start_lines": [
-      "Marigold? I am Sage. I keep the plant shop, mostly upright.",
-      "I hope I am not interrupting your first morning in the shop.",
-      "I have a tray of young roots that will not wake after being moved.",
-      "I know plants, but this feels like it wants a gentler sort of magic.",
-      "Could you make a Root-Wake Tonic for them?"
+      {"speaker": "Sage", "expression": "concerned", "text": "Marigold? I am Sage. I keep the plant shop, mostly upright."},
+      {"speaker": "Marigold", "expression": "default", "text": "You are not interrupting. What can I do?"},
+      {"speaker": "Sage", "expression": "thinking", "text": "I have a tray of young roots that will not wake after being moved."},
+      {"speaker": "Marigold", "expression": "thinking", "text": "Sleepy roots. That sounds like it wants soft magic, not a shove."},
+      {"speaker": "Sage", "expression": "default", "text": "Exactly. Could you make a Root-Wake Tonic for them?"}
     ],
     "reminder_lines": [
-      "No hurry. The roots are sleeping stubbornly, but not dangerously.",
-      "Dewcap mushroom and glowberries should wake them gently."
+      {"speaker": "Sage", "expression": "thinking", "text": "No hurry. The roots are sleeping stubbornly, but not dangerously."},
+      {"speaker": "Marigold", "expression": "thinking", "text": "Dewcap mushroom and glowberries, right? I will keep it gentle."}
     ],
     "complete_lines": [
-      "That is exactly it. Soft magic, not too sharp.",
-      "Thank you, Marigold. You may have a good hand for green things.",
-      "Please take this seed packet, and a little gold for your time."
+      {"speaker": "Sage", "expression": "laugh", "text": "That is exactly it. Soft magic, not too sharp."},
+      {"speaker": "Marigold", "expression": "laugh", "text": "Good. I was hoping not to startle anyone's seedlings on my first week."},
+      {"speaker": "Sage", "expression": "default", "text": "Thank you, Marigold. Please take this seed packet, and a little gold for your time."}
     ]
   },
   {
@@ -39,19 +39,20 @@
     "required_quests": ["sage_first_request"],
     "minimum_day": 2,
     "start_lines": [
-      "Marigold, yes? Camellia. I run the restaurant in town.",
-      "Sage mentioned your Root-Wake Tonic did exactly what it promised.",
-      "I am looking for something bright for the lunch menu. Gentle, not too sweet.",
-      "Could you brew a Glowberry Cordial for me?"
+      {"speaker": "Camellia", "expression": "default", "text": "Marigold, yes? Camellia. I run the restaurant in town."},
+      {"speaker": "Marigold", "expression": "default", "text": "It is nice to meet you. Sage said Mapleton's lunches are famous."},
+      {"speaker": "Camellia", "expression": "laugh", "text": "Famous on a very local scale, which is the best kind."},
+      {"speaker": "Camellia", "expression": "thinking", "text": "I need something bright for the menu. Gentle, not too sweet."},
+      {"speaker": "Marigold", "expression": "thinking", "text": "Glowberries with moonleaf should keep it balanced. I can brew that."}
     ],
     "reminder_lines": [
-      "The cordial should be bright without shouting.",
-      "Moonleaf, glowberries, and forest water should keep it balanced."
+      {"speaker": "Camellia", "expression": "thinking", "text": "The cordial should be bright without shouting."},
+      {"speaker": "Marigold", "expression": "default", "text": "Moonleaf, glowberries, and forest water. Bright, but polite."}
     ],
     "complete_lines": [
-      "There it is. Bright, clean, and kinder than the usual tavern punch.",
-      "This will do nicely. Thank you, Marigold.",
-      "Take this for the trouble. Keep the recipe; I suspect I will ask for it again."
+      {"speaker": "Camellia", "expression": "laugh", "text": "There it is. Bright, clean, and kinder than the usual tavern punch."},
+      {"speaker": "Marigold", "expression": "laugh", "text": "That is exactly the review I wanted."},
+      {"speaker": "Camellia", "expression": "default", "text": "This will do nicely. Keep the recipe; I suspect I will ask for it again."}
     ]
   },
   {
@@ -83,13 +84,13 @@
       "I left a small note on the notice board, if you are taking town requests."
     ],
     "reminder_lines": [
-      "Two Glowberry Cordials should be enough for the lunch special.",
-      "Bring them here when they are ready, please."
+      {"speaker": "Camellia", "expression": "thinking", "text": "Two Glowberry Cordials should be enough for the lunch special."},
+      {"speaker": "Marigold", "expression": "default", "text": "I will bring them here as soon as they are bottled."}
     ],
     "complete_lines": [
-      "Perfect timing. The noon regulars have been asking what smelled so bright.",
-      "Two bottles will let me test the special properly.",
-      "Thank you, Marigold. Please take this for the delivery."
+      {"speaker": "Camellia", "expression": "laugh", "text": "Perfect timing. The noon regulars have been asking what smelled so bright."},
+      {"speaker": "Marigold", "expression": "laugh", "text": "Then I had better not stand between them and lunch."},
+      {"speaker": "Camellia", "expression": "default", "text": "Two bottles will let me test the special properly. Please take this for the delivery."}
     ],
     "post_complete_lines": [
       "The cordial has already earned a few approving nods. That is high praise before lunch."
@@ -124,16 +125,58 @@
       "I pinned a small restock note to the board, if you are taking town errands."
     ],
     "reminder_lines": [
-      "One Root-Wake Tonic should be enough for this shelf.",
-      "The seedlings are not in danger. They are simply taking their time."
+      {"speaker": "Sage", "expression": "thinking", "text": "One Root-Wake Tonic should be enough for this shelf."},
+      {"speaker": "Marigold", "expression": "default", "text": "They are still just taking their time?"},
+      {"speaker": "Sage", "expression": "default", "text": "Yes. The seedlings are not in danger. They are simply unhurried."}
     ],
     "complete_lines": [
-      "Ah, there it is. The seedlings will appreciate the gentleness.",
-      "Thank you, Marigold. A careful tonic is better than a loud one.",
-      "Please take this for the trouble."
+      {"speaker": "Sage", "expression": "laugh", "text": "Ah, there it is. The seedlings will appreciate the gentleness."},
+      {"speaker": "Marigold", "expression": "laugh", "text": "I am beginning to think Mapleton plants have strong opinions."},
+      {"speaker": "Sage", "expression": "default", "text": "Most do. A careful tonic is better than a loud one. Please take this for the trouble."}
     ],
     "post_complete_lines": [
       "The seedlings have perked up without becoming dramatic. That is ideal."
+    ]
+  },
+  {
+    "id": "camellia_brookmint_request",
+    "title": "A Fresh Pot",
+    "npc_name": "Camellia",
+    "turn_in_item_id": "brookmint_tea",
+    "turn_in_quantity": 1,
+    "reward_gold": 80,
+    "reward_items": {},
+    "reward_recipes": ["brookmint_tea"],
+    "required_quests": ["sage_seedling_restock"],
+    "minimum_day": 5,
+    "board_speaker": "Notice Board",
+    "board_unavailable_lines": [
+      "The Mapleton notices are pinned neatly, but nothing here needs Marigold today."
+    ],
+    "board_start_lines": [
+      "Request: one pot of Brookmint Tea for Camellia at the restaurant stall.",
+      "The newly cleared forest path should have enough fresh brookmint."
+    ],
+    "board_active_lines": [
+      "Camellia still needs Brookmint Tea delivered to the restaurant stall."
+    ],
+    "board_completed_lines": [
+      "Camellia's Brookmint Tea request has a neat check mark beside it."
+    ],
+    "not_started_lines": [
+      "I left a fresh note on the board. It is a small experiment for the lunch menu."
+    ],
+    "reminder_lines": [
+      {"speaker": "Camellia", "expression": "thinking", "text": "Brookmint Tea should be cool and green, but not sharp."},
+      {"speaker": "Marigold", "expression": "thinking", "text": "Fresh enough to clear the room, not freeze it. I understand."}
+    ],
+    "complete_lines": [
+      {"speaker": "Camellia", "expression": "laugh", "text": "Oh, that is wonderfully fresh."},
+      {"speaker": "Marigold", "expression": "laugh", "text": "The forest path was worth the mud on my boots, then."},
+      {"speaker": "Camellia", "expression": "default", "text": "Absolutely. Keep the recipe; I will want this again."}
+    ],
+    "post_complete_lines": [
+      "The Brookmint Tea has already made the kitchen feel cooler. I am calling that a success."
     ]
   }
 ]

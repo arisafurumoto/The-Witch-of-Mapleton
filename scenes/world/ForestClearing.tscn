@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -15,6 +15,7 @@
 [ext_resource type="Texture2D" path="res://art/props/forest/glowberry_bush.png" id="13_glowberry"]
 [ext_resource type="Texture2D" path="res://art/props/forest/moonleaf_bush_harvested.png" id="14_moonleaf_harvested"]
 [ext_resource type="Texture2D" path="res://art/props/forest/glowberry_bush_harvested.png" id="15_glowberry_harvested"]
+[ext_resource type="Script" path="res://scripts/core/QuestLockedDoor.gd" id="16_quest_locked_door"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(900, 16)
@@ -24,6 +25,9 @@ size = Vector2(16, 600)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tree_base"]
 size = Vector2(28, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_path_door"]
+size = Vector2(72, 74)
 
 [node name="ForestClearing" type="Node2D"]
 y_sort_enabled = true
@@ -115,6 +119,39 @@ item_quantity = 2
 visual_texture = ExtResource("13_glowberry")
 depleted_visual_texture = ExtResource("15_glowberry_harvested")
 visual_color = Color(0.95, 0.65, 0.28, 1)
+
+[node name="ForestPathDoor" type="Area2D" parent="."]
+position = Vector2(820, 300)
+script = ExtResource("16_quest_locked_door")
+prompt = "Forest path"
+target_scene = "res://scenes/world/ForestPath.tscn"
+use_target_player_position = true
+target_player_position = Vector2(88, 252)
+target_player_facing = "east"
+required_completed_quest_id = "sage_seedling_restock"
+locked_speaker = "Marigold"
+locked_dialogue = "The path is still tangled with sleepy roots."
+
+[node name="Visual" type="Polygon2D" parent="ForestPathDoor"]
+z_index = -1
+color = Color(0.25, 0.36, 0.19, 1)
+polygon = PackedVector2Array(-42, -56, 42, -56, 32, 2, -34, 2)
+
+[node name="RootTangle" type="Polygon2D" parent="ForestPathDoor"]
+color = Color(0.26, 0.16, 0.10, 1)
+polygon = PackedVector2Array(-38, -10, -14, -22, 8, -8, 30, -22, 42, -12, 18, 0, -10, -6, -34, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ForestPathDoor"]
+position = Vector2(0, -26)
+shape = SubResource("RectangleShape2D_path_door")
+
+[node name="PromptLabel" type="Label" parent="ForestPathDoor"]
+offset_left = -58.0
+offset_top = -86.0
+offset_right = 58.0
+offset_bottom = -70.0
+text = "Forest path"
+horizontal_alignment = 1
 
 [node name="Door" parent="." instance=ExtResource("2_door")]
 position = Vector2(450, 540)
