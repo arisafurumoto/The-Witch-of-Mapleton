@@ -2,6 +2,17 @@
 
 # The Witch of Mapleton - Visual Style Guide
 
+## Handoff Summary
+
+Use this file when a slice touches visual production, layout readability, character
+packaging, or asset approval. The current art target is modern top-down 3/4 pixel art:
+cosy, warm, witchy, dense, handcrafted, atmospheric, and readable at 640x360.
+
+Hard rule: user-supplied humanoid runtime art is final. Do not crop, resize, resample,
+recolor, repaint, or clean it in place. Package character frames for Godot, test them at
+real scale, and fix direction issues in the SpriteFrames packager rather than editing the
+source art.
+
 ## 1. Visual Target
 
 **The Witch of Mapleton** uses a modern top-down 3/4 pixel-art style. Environments

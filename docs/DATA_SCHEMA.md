@@ -2,6 +2,22 @@
 
 # The Witch of Mapleton - Data Schema
 
+## Handoff Summary
+
+Current runtime content is driven mainly by:
+
+```text
+data/items.json
+data/recipes.json
+data/shop_requests.json
+data/quests.json
+```
+
+Keep schemas simple and stable. Add fields only when the active slice needs them, and
+prefer small JSON extensions over new systems. Later sections in this file describe
+future possibilities such as relationships, calendar, seasons, traits, facilities,
+outfits, and fuller shop data; treat those as deferred design notes, not current scope.
+
 ## 1. Data Philosophy
 
 The game should be data-driven wherever practical.

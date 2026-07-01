@@ -1,5 +1,19 @@
 # The Witch of Mapleton - Phase 1 Production Brief
 
+## Handoff Summary
+
+Current implementation work should follow `docs/PROGRESS.md` and the active slice plan.
+This document is the long-term design source: **Atelier-style gathering, crafting, and
+quest unlocks inside a cosy witch life sim**. Shopkeeping, farming, relationships, cafe
+systems, combat, seasons, Homunculi, and larger town progression are real future
+directions, but they should stay out of implementation until a focused vertical slice
+explicitly needs them.
+
+For day-to-day coding, use this file only to check long-term intent or avoid building a
+system in the wrong direction. The current near-term work is still the small authored
+first-week loop around Marigold, Saffron, Sage, Camellia, the shop, Mapleton Lane, and
+the forest spaces.
+
 ## 1. Game Summary
 
 **The Witch of Mapleton** is a cosy 2D pixel-art life sim about a young witch named **Marigold** who moves to the overgrown village of Mapleton and opens a small magical shop. With the help of her black cat companion, she gathers ingredients, crafts potions and charms, fulfills requests, serves villagers, builds relationships, uncovers local mysteries, and gradually restores magic to the village.

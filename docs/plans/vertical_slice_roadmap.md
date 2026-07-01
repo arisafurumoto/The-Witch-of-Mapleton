@@ -1,9 +1,24 @@
 # Vertical Slice Roadmap - First Week, Art, and Tiny Farming
 
 > Status: ROUGH ROADMAP.
-> Last updated: 2026-07-01.
+> Last updated: 2026-07-02.
 > This is a direction-setting document, not a commitment to implement every detail in
 > order. Each slice still needs its own focused plan before implementation.
+
+## Handoff Summary
+
+Current recommendation:
+
+```text
+1.5 Map Blockout and Layout Readability
+-> 1.6 Focused Tileset and Prop Production Pass
+-> 1.7 Moonleaf Planter
+-> 1.8 Second Display and Mixed Shop Stock
+```
+
+Use this roadmap for sequencing discussions, not as an implementation checklist. The
+active next slice has its own focused plan:
+`docs/plans/vertical_slice_1_5_map_blockout_readability.md`.
 
 ## North Star
 
@@ -94,7 +109,7 @@ Near-term examples:
 
 ### Vertical Slice 1.3 - Forest Path Unlock and Brookmint Tea v1
 
-Status: implemented and headless-verified on 2026-06-30.
+Status: implemented, headless-verified, and manually accepted on 2026-07-02.
 
 Detailed plan: `docs/plans/vertical_slice_1_3_forest_path_brookmint.md`.
 
@@ -114,7 +129,7 @@ Why it matters:
 
 ### Vertical Slice 1.4 - Dialogue Portraits v1
 
-Status: implemented and headless-verified on 2026-07-01.
+Status: implemented, headless-verified, and manually accepted on 2026-07-02.
 
 Rough goal:
 

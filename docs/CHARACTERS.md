@@ -1,3 +1,13 @@
+# Character Notes - Handoff Summary
+
+Only **Marigold**, **Saffron**, **Sage**, **Camellia**, and the generic customer are in
+current implementation scope. Of those, Sage and Camellia are the main authored NPCs in
+the first-week quest chain, and Camellia/Sage/Marigold have dialogue portraits wired in.
+
+The rest of this file is long-term cast design. Do not add the wider cast, romance
+systems, schedules, relationship points, or new town roles unless a future slice
+explicitly asks for them.
+
 # Camellia
 
 ## Character Description

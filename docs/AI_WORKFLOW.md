@@ -2,6 +2,13 @@
 
 # The Witch of Mapleton - AI Workflow
 
+## Handoff Summary
+
+This is mostly historical process documentation from project setup. For current handoff,
+read `docs/PROGRESS.md` first, then the active plan in `docs/plans/`. The rule that still
+matters most is unchanged: **build the smallest working version of one system at a
+time** and keep future systems out until requested.
+
 ## 1. AI Roles
 
 This project is being developed with heavy AI assistance.
