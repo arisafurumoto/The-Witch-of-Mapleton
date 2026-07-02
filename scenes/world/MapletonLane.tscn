@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -8,6 +8,11 @@
 [ext_resource type="SpriteFrames" path="res://art/characters/npcs/camellia/Camellia.tres" id="6_camellia_frames"]
 [ext_resource type="Script" path="res://scripts/npc/SageLaneNPC.gd" id="7_sage_lane"]
 [ext_resource type="SpriteFrames" path="res://art/characters/npcs/sage/Sage.tres" id="8_sage_frames"]
+[ext_resource type="Texture2D" path="res://art/props/town/fence_long.png" id="9_fence"]
+[ext_resource type="Texture2D" path="res://art/props/town/notice_board.png" id="10_notice_board"]
+[ext_resource type="Texture2D" path="res://art/props/town/restaurant_stall.png" id="11_restaurant_stall"]
+[ext_resource type="Texture2D" path="res://art/props/town/plant_stall.png" id="12_plant_stall"]
+[ext_resource type="Texture2D" path="res://art/props/town/shrub_bank.png" id="13_shrub_bank"]
 
 [sub_resource type="RectangleShape2D" id="BoundaryHorizontal"]
 size = Vector2(720, 16)
@@ -99,6 +104,11 @@ shape = SubResource("BoundaryVertical")
 [node name="RestaurantStall" type="StaticBody2D" parent="."]
 position = Vector2(535, 214)
 
+[node name="StallSprite" type="Sprite2D" parent="RestaurantStall"]
+position = Vector2(0, -20)
+z_index = -6
+texture = ExtResource("11_restaurant_stall")
+
 [node name="AwningBack" type="Polygon2D" parent="RestaurantStall"]
 z_index = -8
 color = Color(0.54, 0.24, 0.23, 1)
@@ -135,6 +145,15 @@ polygon = PackedVector2Array(26, 386, 78, 360, 150, 386, 224, 372, 270, 402, 246
 color = Color(0.19, 0.33, 0.20, 1)
 polygon = PackedVector2Array(468, 386, 528, 362, 602, 382, 678, 366, 706, 400, 690, 426, 472, 424)
 
+[node name="VillageEdgeShrubsLeftSprite" type="Sprite2D" parent="."]
+position = Vector2(148, 394)
+texture = ExtResource("13_shrub_bank")
+
+[node name="VillageEdgeShrubsRightSprite" type="Sprite2D" parent="."]
+position = Vector2(590, 394)
+texture = ExtResource("13_shrub_bank")
+flip_h = true
+
 [node name="FenceLeft" type="Polygon2D" parent="."]
 color = Color(0.39, 0.25, 0.16, 1)
 polygon = PackedVector2Array(54, 354, 260, 354, 260, 368, 54, 368)
@@ -143,8 +162,21 @@ polygon = PackedVector2Array(54, 354, 260, 354, 260, 368, 54, 368)
 color = Color(0.39, 0.25, 0.16, 1)
 polygon = PackedVector2Array(460, 354, 666, 354, 666, 368, 460, 368)
 
+[node name="FenceLeftSprite" type="Sprite2D" parent="."]
+position = Vector2(157, 360)
+texture = ExtResource("9_fence")
+
+[node name="FenceRightSprite" type="Sprite2D" parent="."]
+position = Vector2(563, 360)
+texture = ExtResource("9_fence")
+
 [node name="PlantStall" type="StaticBody2D" parent="."]
 position = Vector2(128, 306)
+
+[node name="StallSprite" type="Sprite2D" parent="PlantStall"]
+position = Vector2(0, -14)
+z_index = -6
+texture = ExtResource("12_plant_stall")
 
 [node name="Canopy" type="Polygon2D" parent="PlantStall"]
 z_index = -7
@@ -180,6 +212,10 @@ quest_ids = PackedStringArray("camellia_cordial_delivery", "sage_seedling_restoc
 [node name="Visual" type="Polygon2D" parent="NoticeBoard"]
 color = Color(0.43, 0.25, 0.14, 1)
 polygon = PackedVector2Array(-34, -44, 34, -44, 34, 2, -34, 2)
+
+[node name="BoardSprite" type="Sprite2D" parent="NoticeBoard"]
+position = Vector2(0, 2)
+texture = ExtResource("10_notice_board")
 
 [node name="Paper" type="Polygon2D" parent="NoticeBoard"]
 color = Color(0.82, 0.70, 0.48, 1)

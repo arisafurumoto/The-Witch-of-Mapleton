@@ -1,7 +1,6 @@
 # Vertical Slice 1.6 - Focused Tileset and Prop Production Pass v1
 
-> Status: PLANNED.
-> Implementation not started.
+> Status: IMPLEMENTED, headless-verified; needs manual visual acceptance.
 
 ## Goal
 
@@ -132,6 +131,22 @@ docs/plans/vertical_slice_roadmap.md
    gatherables remain readable.
 9. Update `docs/PROGRESS.md` and this plan with implementation notes.
 
+## Implementation Notes
+
+- Added small deterministic PNG prop sprites instead of introducing broad tileset or
+  decoration tooling.
+- New shop exterior sprites cover the witch-shop facade, front step, crates, shrub,
+  polished future planter marker, lantern, mailbox, and fence runs.
+- New Mapleton Lane sprites cover the notice board, Camellia restaurant stall, Sage
+  plant stall, fence runs, and shrub-bank edges.
+- Forest Clearing keeps its existing background and gatherables, with a clearer
+  forest-path gate sprite layered onto the existing quest-locked door.
+- Forest Path now uses sprite-backed Brookmint patches, thicket sprites, and subtle
+  brook sparkle cues.
+- Existing collision, door metadata, gatherable IDs, NPC nodes, Saffron placement, quest
+  locks, and the visual-only planter marker were preserved.
+- No user-supplied humanoid character art was edited.
+
 ## Verification Plan
 
 Add `tools/verify_vertical_slice_1_6.gd`.
@@ -150,6 +165,22 @@ The verifier should check:
 - Any new art resource paths used by target scenes exist and import.
 
 The verifier should not judge beauty; final visual acceptance is manual.
+
+## Verification Results
+
+Headless focused verifiers passed after implementation:
+
+```bash
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_0_8.gd
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_0.gd
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_3.gd
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_4.gd
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_5.gd
+/Applications/Godot.app/Contents/MacOS/Godot --headless --path . --script res://tools/verify_vertical_slice_1_6.gd
+```
+
+The new PNG assets were imported by running the headless editor and waiting for the
+import scan before stopping the process.
 
 ## Manual Acceptance Test
 

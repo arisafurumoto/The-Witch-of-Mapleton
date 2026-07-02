@@ -1,7 +1,7 @@
 # The Witch of Mapleton - Progress & Handoff
 
 > Read this first when starting a session.
-> Last updated: 2026-07-02.
+> Last updated: 2026-07-03.
 > This file is the compact handoff. Detailed history lives in the milestone summaries
 > and per-slice plans under `docs/plans/`.
 
@@ -9,18 +9,18 @@
 
 - Engine: **Godot 4.1.3** at `/Applications/Godot.app`.
 - Main scene: `scenes/ui/TitleMenu.tscn`.
-- Current playable chain: First Potion Sale through **Vertical Slice 1.5 - Map
-  Blockout and Layout Readability v1**.
+- Current playable chain: First Potion Sale through **Vertical Slice 1.6 - Focused
+  Tileset and Prop Production Pass v1**.
 - User has manually confirmed **1.3** and **1.4** are working.
-- **1.5** is implemented and headless-verified; it still needs manual visual acceptance.
-- Next planned slice: **1.6 - Focused Tileset and Prop Production Pass v1**.
-  Plan: `docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md`.
+- **1.5** and **1.6** are implemented and headless-verified; both still need manual
+  visual acceptance.
+- Next planned slice: **1.7 - Moonleaf Planter v1**.
+  Plan stub: `docs/plans/vertical_slice_roadmap.md`.
 
 Near-term direction:
 
 ```text
-1.5 map blockout/readability
--> 1.6 focused tileset/prop pass
+1.6 focused tileset/prop pass
 -> 1.7 tiny Moonleaf planter payoff
 -> 1.8+ more shop variety
 ```
@@ -50,9 +50,9 @@ The game currently supports:
 - Dialogue portraits for Marigold, Sage, and Camellia, including per-line
   speaker/expression switching. Marigold appears on the lower-right; NPCs appear on the
   lower-left; speakers without portrait art hide the portrait slot.
-- Readability blockouts for the shop exterior, Mapleton Lane, forest clearing, and
-  forest path, including clearer path mouths/edges and a visual-only future planter
-  marker on the shop property.
+- Readability blockouts plus first-pass prop art for the shop exterior, Mapleton Lane,
+  forest clearing, and forest path, including clearer path mouths/edges and a
+  visual-only future planter marker on the shop property.
 
 ## Slice Index
 
@@ -73,6 +73,7 @@ The game currently supports:
 | 1.3 Forest Path and Brookmint Tea | Complete, user accepted | Quest-gated Forest Path, Brookmint, Brookmint Tea. |
 | 1.4 Dialogue Portraits | Complete, user accepted | Large portraits/nameplates and alternating speaker lines. |
 | 1.5 Map Blockout and Layout Readability | Implemented, headless-verified; needs manual acceptance | Clearer current map blockouts before polished tiles/props. |
+| 1.6 Focused Tileset and Prop Production Pass | Implemented, headless-verified; needs manual acceptance | Small reusable prop sprites layered onto the current maps without mechanics changes. |
 
 Detailed plans:
 
@@ -290,7 +291,7 @@ Non-goals:
 - No new quests, items, recipes, NPCs, areas, farming, map UI, schedules, decoration, or
   final tileset/prop production.
 
-## Current Next Slice: 1.6
+## Recently Completed Slice: 1.6
 
 Implement `docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md`.
 
@@ -299,18 +300,72 @@ Goal:
 - Replace the most visible placeholder shapes with small, reusable, readable visual
   assets for the existing maps.
 
-Likely focus:
+Changed files:
+
+```text
+art/props/shop_exterior/
+art/props/town/
+art/props/forest/brook_sparkles.png
+art/props/forest/brook_sparkles.png.import
+art/props/forest/brookmint_patch.png
+art/props/forest/brookmint_patch.png.import
+art/props/forest/forest_path_gate.png
+art/props/forest/forest_path_gate.png.import
+art/props/forest/thicket.png
+art/props/forest/thicket.png.import
+scenes/world/ShopExterior.tscn
+scenes/world/MapletonLane.tscn
+scenes/world/ForestClearing.tscn
+scenes/world/ForestPath.tscn
+tools/verify_vertical_slice_1_6.gd
+docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md
+docs/PROGRESS.md
+```
+
+Main acceptance:
 
 - Shop exterior facade/path/garden-corner props.
 - Mapleton Lane stall/board/fence/edge props.
 - Forest Clearing and Forest Path ground/path/brook/thicket/gathering readability.
+- Existing NPC, board, gathering, transition, Saffron, dialogue, cauldron, shop, and
+  save/load behavior remains unchanged.
+- `FuturePlanterMarker` remains visual-only and non-interactive.
+
+Implementation notes:
+
+- Added deterministic low-resolution PNG prop sprites rather than broad tileset tooling.
+- ShopExterior now overlays a clearer witch-shop facade, front step, fences, lantern,
+  mailbox, crates, shrub, and polished visual-only planter marker.
+- Mapleton Lane now overlays clearer notice board, restaurant stall, plant stall, fence,
+  and shrub-bank sprites.
+- Forest Clearing now has a more readable forest path gate sprite while keeping the
+  quest-locked door and root tangle.
+- Forest Path now has sprite-backed Brookmint patches, thicket sprites, and brook
+  sparkle cues.
+- `tools/verify_vertical_slice_1_6.gd` checks scene loading, transition wiring, required
+  gameplay nodes, visual-only planter status, and new art resource imports.
+- Headless focused verifiers passed for 0.8, 1.0, 1.3, 1.4, 1.5, and 1.6 after
+  implementation.
 
 Non-goals:
 
 - No new mechanics, quests, NPCs, areas, schedules, farming, decoration mode, or broad
   tileset tooling.
 
-Do not implement 1.6 until it has a focused plan and the user explicitly asks for it.
+## Current Next Slice: 1.7
+
+Use the roadmap entry for **Vertical Slice 1.7 - Moonleaf Planter v1** as the starting
+point, but write a focused plan before implementing it.
+
+Likely focus:
+
+- Pay off Sage's Moonleaf Seed Packet with one tiny controlled planter loop.
+- Keep the existing shop exterior garden marker or a similarly small location in scope.
+
+Non-goals:
+
+- No full farming system, seasons, stamina, tool upgrades, decoration mode, or expanded
+  garden plots.
 
 ## Future Feature Notes
 

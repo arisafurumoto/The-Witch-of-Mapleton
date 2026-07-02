@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=21 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" path="res://art/props/forest/moonleaf_bush_harvested.png" id="14_moonleaf_harvested"]
 [ext_resource type="Texture2D" path="res://art/props/forest/glowberry_bush_harvested.png" id="15_glowberry_harvested"]
 [ext_resource type="Script" path="res://scripts/core/QuestLockedDoor.gd" id="16_quest_locked_door"]
+[ext_resource type="Texture2D" path="res://art/props/forest/forest_path_gate.png" id="17_forest_path_gate"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall_h"]
 size = Vector2(900, 16)
@@ -148,6 +149,11 @@ locked_dialogue = "The path is still tangled with sleepy roots."
 z_index = -1
 color = Color(0.25, 0.36, 0.19, 1)
 polygon = PackedVector2Array(-42, -56, 42, -56, 32, 2, -34, 2)
+
+[node name="GateSprite" type="Sprite2D" parent="ForestPathDoor"]
+position = Vector2(0, -28)
+z_index = -1
+texture = ExtResource("17_forest_path_gate")
 
 [node name="RootTangle" type="Polygon2D" parent="ForestPathDoor"]
 color = Color(0.26, 0.16, 0.10, 1)

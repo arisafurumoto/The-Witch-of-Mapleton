@@ -1,8 +1,16 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=20 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/player/Player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://scenes/world/Door.tscn" id="2_door"]
 [ext_resource type="PackedScene" path="res://scenes/npc/Cat.tscn" id="3_cat"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/witch_shop_facade.png" id="4_facade"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/front_step.png" id="5_step"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/crates.png" id="6_crates"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/shrub_cluster.png" id="7_shrub"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/future_planter_marker.png" id="8_planter"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/lantern_post.png" id="9_lantern"]
+[ext_resource type="Texture2D" path="res://art/props/shop_exterior/mailbox.png" id="10_mailbox"]
+[ext_resource type="Texture2D" path="res://art/props/town/fence_long.png" id="11_fence"]
 
 [sub_resource type="RectangleShape2D" id="BoundaryHorizontal"]
 size = Vector2(720, 16)
@@ -52,6 +60,11 @@ z_index = -18
 color = Color(0.48, 0.43, 0.38, 1)
 polygon = PackedVector2Array(304, 174, 416, 174, 404, 218, 316, 218)
 
+[node name="FrontStepSprite" type="Sprite2D" parent="."]
+position = Vector2(360, 196)
+z_index = -17
+texture = ExtResource("5_step")
+
 [node name="BlockedPathLeft" type="Polygon2D" parent="."]
 z_index = -18
 color = Color(0.41, 0.34, 0.25, 1)
@@ -64,6 +77,11 @@ polygon = PackedVector2Array(430, 390, 720, 390, 720, 430, 420, 430)
 
 [node name="ShopFacade" type="StaticBody2D" parent="."]
 position = Vector2(360, 108)
+
+[node name="FacadeSprite" type="Sprite2D" parent="ShopFacade"]
+position = Vector2(0, -8)
+z_index = -6
+texture = ExtResource("4_facade")
 
 [node name="Wall" type="Polygon2D" parent="ShopFacade"]
 z_index = -10
@@ -124,6 +142,10 @@ position = Vector2(520, 308)
 color = Color(0.45, 0.27, 0.15, 1)
 polygon = PackedVector2Array(-26, -26, 18, -26, 26, 10, -18, 10)
 
+[node name="CrateSprite" type="Sprite2D" parent="Crates"]
+position = Vector2(0, -12)
+texture = ExtResource("6_crates")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Crates"]
 position = Vector2(0, -8)
 shape = SubResource("CrateCollision")
@@ -135,12 +157,20 @@ position = Vector2(194, 304)
 color = Color(0.22, 0.45, 0.24, 1)
 polygon = PackedVector2Array(-38, -12, -22, -28, -4, -18, 14, -32, 38, -10, 28, 8, -34, 8)
 
+[node name="ShrubSprite" type="Sprite2D" parent="Shrubs"]
+position = Vector2(0, -16)
+texture = ExtResource("7_shrub")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shrubs"]
 position = Vector2(0, -4)
 shape = SubResource("ShrubCollision")
 
 [node name="FuturePlanterMarker" type="Node2D" parent="."]
 position = Vector2(104, 306)
+
+[node name="PolishedVisual" type="Sprite2D" parent="FuturePlanterMarker"]
+z_index = -12
+texture = ExtResource("8_planter")
 
 [node name="SoilBed" type="Polygon2D" parent="FuturePlanterMarker"]
 z_index = -16
@@ -190,6 +220,14 @@ polygon = PackedVector2Array(70, 384, 296, 384, 296, 398, 70, 398)
 color = Color(0.39, 0.25, 0.16, 1)
 polygon = PackedVector2Array(424, 384, 650, 384, 650, 398, 424, 398)
 
+[node name="FenceLeftSprite" type="Sprite2D" parent="."]
+position = Vector2(183, 384)
+texture = ExtResource("11_fence")
+
+[node name="FenceRightSprite" type="Sprite2D" parent="."]
+position = Vector2(537, 384)
+texture = ExtResource("11_fence")
+
 [node name="LanternPost" type="Polygon2D" parent="."]
 color = Color(0.18, 0.12, 0.1, 1)
 polygon = PackedVector2Array(250, 184, 258, 184, 258, 270, 250, 270)
@@ -201,6 +239,14 @@ polygon = PackedVector2Array(240, 176, 268, 176, 262, 210, 246, 210)
 [node name="Mailbox" type="Polygon2D" parent="."]
 color = Color(0.46, 0.18, 0.18, 1)
 polygon = PackedVector2Array(468, 210, 504, 210, 512, 236, 460, 236)
+
+[node name="LanternPostSprite" type="Sprite2D" parent="."]
+position = Vector2(254, 228)
+texture = ExtResource("9_lantern")
+
+[node name="MailboxSprite" type="Sprite2D" parent="."]
+position = Vector2(486, 236)
+texture = ExtResource("10_mailbox")
 
 [node name="LaneDoor" parent="." instance=ExtResource("2_door")]
 position = Vector2(360, 438)
