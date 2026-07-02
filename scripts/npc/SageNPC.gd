@@ -12,7 +12,7 @@ const DIRECTIONS := [
 	"east", "south_east", "south", "south_west",
 	"west", "north_west", "north", "north_east",
 ]
-const WALK_SPEED: float = 90.0
+const WALK_SPEED: float = 105.0
 const FOREST_SCENE: String = "res://scenes/world/ForestClearing.tscn"
 
 var _busy: bool = false
@@ -33,7 +33,7 @@ func _ready() -> void:
 	_set_present(false)
 	DaySystem.day_changed.connect(_on_world_state_changed)
 	QuestSystem.quest_state_changed.connect(_on_quest_state_changed)
-	_on_world_state_changed(DaySystem.get_day())
+	_refresh_presence()
 
 func interact() -> void:
 	if _busy or not _present:
@@ -72,10 +72,12 @@ func _say(speaker_name: String, lines: Array) -> void:
 		await DialogueBox.dialogue_finished
 
 func _on_world_state_changed(_day: int) -> void:
+	ShopState.clear_visitor_arrival(quest_id)
 	_refresh_presence()
 
 func _on_quest_state_changed(changed_quest_id: String, _state: String) -> void:
 	if changed_quest_id == quest_id:
+		ShopState.clear_visitor_arrival(quest_id)
 		_refresh_presence()
 
 func _refresh_presence() -> void:
@@ -88,7 +90,7 @@ func _refresh_presence() -> void:
 	if state == QuestSystem.STATE_ACTIVE or state == QuestSystem.STATE_READY:
 		_show_at_home()
 		return
-	if _can_offer_quest() and _returned_from_forest:
+	if _can_offer_quest() and (_returned_from_forest or ShopState.has_visitor_arrived(quest_id)):
 		_show_at_home()
 	elif _can_offer_quest():
 		_show_or_enter()
@@ -135,6 +137,7 @@ func _show_or_enter() -> void:
 	call_deferred("_enter_shop")
 
 func _show_at_home() -> void:
+	ShopState.set_visitor_arrived(quest_id)
 	position = _home_position
 	_sprite.play("idle_" + home_facing)
 	_busy = false
@@ -143,6 +146,7 @@ func _show_at_home() -> void:
 func _enter_shop() -> void:
 	_entering = true
 	_busy = true
+	ShopState.set_visitor_arrived(quest_id)
 	position = _entrance_position()
 	_set_present(true)
 	_set_collision_enabled(false)

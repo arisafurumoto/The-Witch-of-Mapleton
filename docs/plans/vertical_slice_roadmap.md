@@ -18,7 +18,7 @@ Current recommendation:
 
 Use this roadmap for sequencing discussions, not as an implementation checklist. The
 active next slice has its own focused plan:
-`docs/plans/vertical_slice_1_5_map_blockout_readability.md`.
+`docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md`.
 
 ## North Star
 
@@ -160,7 +160,7 @@ Why it likely comes after 1.3:
 
 ### Vertical Slice 1.5 - Map Blockout and Layout Readability v1
 
-Status: planned.
+Status: implemented and headless-verified; manual visual acceptance pending.
 
 Detailed plan: `docs/plans/vertical_slice_1_5_map_blockout_readability.md`.
 
@@ -193,6 +193,10 @@ Why it matters:
   gameplay composition.
 
 ### Vertical Slice 1.6 - Tileset and Prop Production Pass v1
+
+Status: planned.
+
+Detailed plan: `docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md`.
 
 Rough goal:
 
@@ -525,7 +529,10 @@ After the 1.3+ roadmap, choose the next direction based on what feels weakest in
 These are still real long-term goals, but not next-slice work:
 
 - Full town map.
-- NPC schedules.
+- NPC presence/schedules. Before adding more simultaneous town/shop appearances, add a
+  tiny system that derives each NPC's current scene from day, quest state, and authored
+  rules so scene-local NPC instances do not appear in two places at once. Do not save
+  every NPC's raw position until movement schedules genuinely need it.
 - Relationship and romance systems.
 - Full farming.
 - Large property building/upgrade systems.

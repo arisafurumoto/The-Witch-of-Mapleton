@@ -12,7 +12,7 @@ const DIRECTIONS := [
 	"east", "south_east", "south", "south_west",
 	"west", "north_west", "north", "north_east",
 ]
-const WALK_SPEED: float = 90.0
+const WALK_SPEED: float = 105.0
 
 var _busy: bool = false
 var _present: bool = false

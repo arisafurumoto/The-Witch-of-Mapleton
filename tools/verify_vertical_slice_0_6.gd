@@ -8,6 +8,7 @@ func _initialize() -> void:
 func _run() -> void:
 	_check_scene_layout()
 	await _check_shop_state()
+	await _check_sage_stays_after_arriving()
 	_check_recipe_progression()
 	if _failures.is_empty():
 		print("Vertical Slice 0.6 verification passed")
@@ -90,6 +91,54 @@ func _check_shop_state() -> void:
 	var stock: Dictionary = shop_state.call("get_display_stock", "main_display")
 	_check(int(stock.get("quantity", 0)) == 1, "Shop stock was lost when the scene unloaded")
 	shop_state.call("clear")
+
+func _check_sage_stays_after_arriving() -> void:
+	var shop_state := root.get_node("ShopState")
+	var day_system := root.get_node("DaySystem")
+	var quest_system := root.get_node("QuestSystem")
+	shop_state.call("clear")
+	day_system.call("apply_state", 1, {})
+	quest_system.call("load_from", {})
+
+	var first_shop := _instantiate_scene("res://scenes/world/ShopInterior.tscn")
+	if first_shop == null:
+		return
+	root.add_child(first_shop)
+	await process_frame
+	await process_frame
+	_check(bool(shop_state.call("has_visitor_arrived", "sage_first_request")), "Sage arrival was not remembered after he entered the shop")
+	first_shop.queue_free()
+	await process_frame
+
+	var second_shop := _instantiate_scene("res://scenes/world/ShopInterior.tscn")
+	if second_shop == null:
+		shop_state.call("clear")
+		return
+	root.add_child(second_shop)
+	await process_frame
+	await process_frame
+	var sage := second_shop.get_node("Sage")
+	_check(bool(sage.get("_present")), "Sage did not stay present after returning to the shop")
+	_check(not bool(sage.get("_entering")), "Sage replayed his entrance after returning to the shop")
+	_check(not bool(sage.get("_busy")), "Sage stayed busy after returning to the shop")
+	_check(sage.position == Vector2(360, 260), "Sage did not stay at his shop position after returning")
+
+	second_shop.queue_free()
+	await process_frame
+	shop_state.call("clear")
+	root.set_meta("transition_from_scene", "res://scenes/world/ForestClearing.tscn")
+	var forest_return_shop := _instantiate_scene("res://scenes/world/ShopInterior.tscn")
+	if forest_return_shop == null:
+		root.remove_meta("transition_from_scene")
+		return
+	root.add_child(forest_return_shop)
+	await process_frame
+	await process_frame
+	_check(bool(shop_state.call("has_visitor_arrived", "sage_first_request")), "Sage arrival was not remembered after returning from the forest")
+	forest_return_shop.queue_free()
+	await process_frame
+	root.remove_meta("transition_from_scene")
+	quest_system.call("load_from", {"sage_first_request": "completed"})
 
 func _check_recipe_progression() -> void:
 	var recipe_knowledge := root.get_node("RecipeKnowledgeSystem")

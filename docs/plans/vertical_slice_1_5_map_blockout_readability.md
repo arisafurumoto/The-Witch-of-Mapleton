@@ -1,7 +1,7 @@
 # Vertical Slice 1.5 - Map Blockout and Layout Readability v1
 
-> Status: PLANNED.
-> Implementation not started.
+> Status: IMPLEMENTED, HEADLESS-VERIFIED.
+> Manual visual acceptance pending.
 
 ## Goal
 
@@ -12,6 +12,24 @@ This is a layout and readability slice, not a content slice. It should clarify w
 Marigold can walk, where each exit leads, where important NPCs and interactables sit,
 and where a future tiny planter or garden corner could belong. It should not add new
 items, recipes, quests, NPCs, map regions, farming mechanics, or shop systems.
+
+## Implementation Notes
+
+Implemented on 2026-07-02.
+
+- `ShopExterior` now has clearer path edges, a more obvious lane mouth, and a
+  visual-only `FuturePlanterMarker` on the shop property.
+- `MapletonLane` now has stronger lane/path edge cues and approach patches around the
+  notice board, Camellia's restaurant stall, and Sage's plant stall.
+- `ForestClearing` now has subtle visual route cues for the shop return and the deeper
+  forest path exit.
+- `ForestPath` now has clearer return-route, trail-edge, brook-bank, and blocked-thicket
+  cues around the Brookmint patches.
+- `tools/verify_vertical_slice_1_5.gd` verifies scene loading, transition wiring,
+  boundary collision nodes, key NPC/interactable/gatherable presence, camera limits
+  where expected, Saffron transition metadata, and that `FuturePlanterMarker` remains
+  visual-only.
+- Post-change headless checks passed for every focused verifier from 0.6 through 1.5.
 
 ## Why This Comes Next
 

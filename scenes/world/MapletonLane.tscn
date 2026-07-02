@@ -48,6 +48,36 @@ z_index = -18
 color = Color(0.52, 0.44, 0.34, 1)
 polygon = PackedVector2Array(88, 250, 632, 250, 632, 314, 88, 314)
 
+[node name="LanePathEdgeLeft" type="Polygon2D" parent="."]
+z_index = -17
+color = Color(0.36, 0.32, 0.25, 1)
+polygon = PackedVector2Array(274, 0, 300, 0, 272, 480, 238, 480)
+
+[node name="LanePathEdgeRight" type="Polygon2D" parent="."]
+z_index = -17
+color = Color(0.36, 0.32, 0.25, 1)
+polygon = PackedVector2Array(420, 0, 446, 0, 482, 480, 448, 480)
+
+[node name="ReturnPathMouth" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.64, 0.56, 0.42, 1)
+polygon = PackedVector2Array(300, 0, 420, 0, 408, 96, 312, 96)
+
+[node name="NoticeBoardApproach" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.59, 0.50, 0.38, 1)
+polygon = PackedVector2Array(172, 218, 286, 220, 304, 318, 154, 318)
+
+[node name="PlantStallApproach" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.47, 0.40, 0.31, 1)
+polygon = PackedVector2Array(54, 292, 214, 292, 242, 356, 42, 356)
+
+[node name="RestaurantApproach" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.48, 0.40, 0.31, 1)
+polygon = PackedVector2Array(442, 234, 636, 234, 654, 324, 420, 324)
+
 [node name="Boundaries" type="StaticBody2D" parent="."]
 
 [node name="CollTop" type="CollisionShape2D" parent="Boundaries"]
@@ -96,6 +126,14 @@ polygon = PackedVector2Array(70, 76, 220, 76, 220, 212, 70, 212)
 z_index = -9
 color = Color(0.24, 0.16, 0.22, 1)
 polygon = PackedVector2Array(52, 78, 145, 34, 238, 78, 220, 104, 70, 104)
+
+[node name="VillageEdgeShrubsLeft" type="Polygon2D" parent="."]
+color = Color(0.20, 0.35, 0.21, 1)
+polygon = PackedVector2Array(26, 386, 78, 360, 150, 386, 224, 372, 270, 402, 246, 424, 34, 426)
+
+[node name="VillageEdgeShrubsRight" type="Polygon2D" parent="."]
+color = Color(0.19, 0.33, 0.20, 1)
+polygon = PackedVector2Array(468, 386, 528, 362, 602, 382, 678, 366, 706, 400, 690, 426, 472, 424)
 
 [node name="FenceLeft" type="Polygon2D" parent="."]
 color = Color(0.39, 0.25, 0.16, 1)

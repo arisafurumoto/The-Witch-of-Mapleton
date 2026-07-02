@@ -35,6 +35,31 @@ z_index = -18
 color = Color(0.25, 0.46, 0.54, 1)
 polygon = PackedVector2Array(438, 0, 494, 0, 480, 110, 510, 222, 486, 480, 424, 480, 450, 230, 420, 120)
 
+[node name="TrailEdgeTop" type="Polygon2D" parent="."]
+z_index = -17
+color = Color(0.24, 0.34, 0.24, 1)
+polygon = PackedVector2Array(0, 190, 144, 174, 286, 194, 426, 232, 720, 216, 720, 244, 424, 260, 280, 222, 144, 204, 0, 220)
+
+[node name="TrailEdgeBottom" type="Polygon2D" parent="."]
+z_index = -17
+color = Color(0.23, 0.33, 0.23, 1)
+polygon = PackedVector2Array(0, 300, 128, 284, 266, 290, 420, 334, 720, 326, 720, 356, 416, 368, 258, 324, 122, 318, 0, 334)
+
+[node name="ReturnMouth" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.58, 0.49, 0.35, 1)
+polygon = PackedVector2Array(0, 218, 98, 210, 112, 294, 0, 306)
+
+[node name="BrookBankWest" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.18, 0.36, 0.34, 1)
+polygon = PackedVector2Array(410, 0, 438, 0, 420, 120, 450, 230, 424, 480, 394, 480, 424, 232, 392, 122)
+
+[node name="BrookBankEast" type="Polygon2D" parent="."]
+z_index = -16
+color = Color(0.18, 0.36, 0.34, 1)
+polygon = PackedVector2Array(494, 0, 520, 0, 506, 108, 536, 222, 512, 480, 486, 480, 510, 222, 480, 110)
+
 [node name="FernPatchTop" type="Polygon2D" parent="."]
 color = Color(0.20, 0.36, 0.22, 1)
 polygon = PackedVector2Array(88, 104, 240, 78, 360, 106, 324, 134, 170, 132)

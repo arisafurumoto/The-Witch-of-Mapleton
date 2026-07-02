@@ -12,7 +12,7 @@ extends "res://scripts/core/Interactable.gd"
 @export var counter_position: Vector2 = Vector2(250, 200)
 @export var browse_time: float = 0.8
 
-const WALK_SPEED: float = 90.0
+const WALK_SPEED: float = 105.0
 
 var _fulfilled: bool = false
 var _busy: bool = false

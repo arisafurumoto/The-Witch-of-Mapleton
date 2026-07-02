@@ -5,7 +5,7 @@ extends Node2D
 # right after a scene change) she snaps to the player. Faces and animates in the
 # direction she walks.
 
-@export var follow_speed: float = 95.0
+@export var follow_speed: float = 112.0
 @export var stop_distance: float = 46.0
 @export var snap_distance: float = 280.0
 @export var idle_turn_min_time: float = 1.8

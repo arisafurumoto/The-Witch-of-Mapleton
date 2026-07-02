@@ -9,11 +9,12 @@
 
 - Engine: **Godot 4.1.3** at `/Applications/Godot.app`.
 - Main scene: `scenes/ui/TitleMenu.tscn`.
-- Current playable chain: First Potion Sale through **Vertical Slice 1.4 - Dialogue
-  Portraits v1**.
+- Current playable chain: First Potion Sale through **Vertical Slice 1.5 - Map
+  Blockout and Layout Readability v1**.
 - User has manually confirmed **1.3** and **1.4** are working.
-- Next planned slice: **1.5 - Map Blockout and Layout Readability v1**.
-  Plan: `docs/plans/vertical_slice_1_5_map_blockout_readability.md`.
+- **1.5** is implemented and headless-verified; it still needs manual visual acceptance.
+- Next planned slice: **1.6 - Focused Tileset and Prop Production Pass v1**.
+  Plan: `docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md`.
 
 Near-term direction:
 
@@ -49,6 +50,9 @@ The game currently supports:
 - Dialogue portraits for Marigold, Sage, and Camellia, including per-line
   speaker/expression switching. Marigold appears on the lower-right; NPCs appear on the
   lower-left; speakers without portrait art hide the portrait slot.
+- Readability blockouts for the shop exterior, Mapleton Lane, forest clearing, and
+  forest path, including clearer path mouths/edges and a visual-only future planter
+  marker on the shop property.
 
 ## Slice Index
 
@@ -68,7 +72,7 @@ The game currently supports:
 | 1.2 Sage's Posted Delivery | Complete | Day 4 board request and Sage plant-stall presence. |
 | 1.3 Forest Path and Brookmint Tea | Complete, user accepted | Quest-gated Forest Path, Brookmint, Brookmint Tea. |
 | 1.4 Dialogue Portraits | Complete, user accepted | Large portraits/nameplates and alternating speaker lines. |
-| 1.5 Map Blockout and Layout Readability | Planned | Clarify current maps before polished tiles/props. |
+| 1.5 Map Blockout and Layout Readability | Implemented, headless-verified; needs manual acceptance | Clearer current map blockouts before polished tiles/props. |
 
 Detailed plans:
 
@@ -85,6 +89,7 @@ docs/plans/vertical_slice_1_2_sage_posted_delivery.md
 docs/plans/vertical_slice_1_3_forest_path_brookmint.md
 docs/plans/vertical_slice_1_4_dialogue_portraits.md
 docs/plans/vertical_slice_1_5_map_blockout_readability.md
+docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md
 docs/plans/vertical_slice_roadmap.md
 ```
 
@@ -239,7 +244,7 @@ art/characters/npcs/sage/portraits/
 art/characters/npcs/camellia/portraits/
 ```
 
-## Current Next Slice: 1.5
+## Recently Completed Slice: 1.5
 
 Implement `docs/plans/vertical_slice_1_5_map_blockout_readability.md`.
 
@@ -247,7 +252,7 @@ Goal:
 
 - Make existing playable spaces readable at 640x360 before polished map art.
 
-Likely files:
+Changed files:
 
 ```text
 scenes/world/ShopExterior.tscn
@@ -265,10 +270,55 @@ Main acceptance:
 - Existing NPC, board, gathering, transition, Saffron, dialogue, cauldron, shop, and
   save/load behavior remains unchanged.
 
+Implementation notes:
+
+- ShopExterior now has clearer path edges, lane mouth staging, and a visual-only
+  `FuturePlanterMarker`.
+- Mapleton Lane now has stronger path/approach cues around the board, restaurant stall,
+  plant stall, and return route.
+- Forest Clearing now has subtle route cues for the shop return and deeper forest path.
+- Forest Path now has stronger return, trail edge, brook bank, and thicket readability
+  cues.
+- `tools/verify_vertical_slice_1_5.gd` checks scene loading, transition wiring, camera
+  limits, boundary collision nodes, key NPC/interactable/gatherable presence, and that
+  `FuturePlanterMarker` remains visual-only.
+- Headless checks passed for every focused verifier from 0.6 through 1.5 after
+  implementation.
+
 Non-goals:
 
 - No new quests, items, recipes, NPCs, areas, farming, map UI, schedules, decoration, or
   final tileset/prop production.
+
+## Current Next Slice: 1.6
+
+Implement `docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md`.
+
+Goal:
+
+- Replace the most visible placeholder shapes with small, reusable, readable visual
+  assets for the existing maps.
+
+Likely focus:
+
+- Shop exterior facade/path/garden-corner props.
+- Mapleton Lane stall/board/fence/edge props.
+- Forest Clearing and Forest Path ground/path/brook/thicket/gathering readability.
+
+Non-goals:
+
+- No new mechanics, quests, NPCs, areas, schedules, farming, decoration mode, or broad
+  tileset tooling.
+
+Do not implement 1.6 until it has a focused plan and the user explicitly asks for it.
+
+## Future Feature Notes
+
+- Add a small NPC presence/schedule system before adding more simultaneous town/shop
+  appearances. It should answer "where should this NPC be right now?" from day, quest
+  state, and simple authored rules, then hide scene-local NPC instances that do not
+  belong. Do not save every NPC's raw position yet; save high-level story/schedule state
+  and derive presence from that.
 
 ## Longer-Term Docs
 

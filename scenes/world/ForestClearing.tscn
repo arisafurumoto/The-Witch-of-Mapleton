@@ -51,6 +51,18 @@ position = Vector2(16, 16)
 texture = ExtResource("11_detail")
 centered = false
 
+[node name="ShopReturnPathCue" type="Polygon2D" parent="."]
+color = Color(0.50, 0.41, 0.28, 0.66)
+polygon = PackedVector2Array(394, 420, 506, 420, 532, 600, 368, 600)
+
+[node name="ForestPathRouteCue" type="Polygon2D" parent="."]
+color = Color(0.43, 0.37, 0.25, 0.68)
+polygon = PackedVector2Array(600, 254, 900, 236, 900, 354, 604, 332)
+
+[node name="ForestPathMouthCue" type="Polygon2D" parent="."]
+color = Color(0.18, 0.31, 0.17, 0.78)
+polygon = PackedVector2Array(766, 214, 900, 194, 900, 402, 768, 376)
+
 [node name="Walls" type="StaticBody2D" parent="."]
 
 [node name="CollTop" type="CollisionShape2D" parent="Walls"]

@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
-@export var max_speed: float = 90.0
-@export var acceleration: float = 900.0
-@export var friction: float = 1100.0
+@export var max_speed: float = 105.0
+@export var acceleration: float = 1050.0
+@export var friction: float = 1250.0
 
 # Clockwise from east, matching the SpriteFrames animation suffixes.
 const DIRECTIONS := [
