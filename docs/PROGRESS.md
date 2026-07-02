@@ -9,20 +9,20 @@
 
 - Engine: **Godot 4.1.3** at `/Applications/Godot.app`.
 - Main scene: `scenes/ui/TitleMenu.tscn`.
-- Current playable chain: First Potion Sale through **Vertical Slice 1.6 - Focused
-  Tileset and Prop Production Pass v1**.
+- Current playable chain: First Potion Sale through **Vertical Slice 1.8.1 - Display
+  UX and Testing Balance Polish**.
 - User has manually confirmed **1.3** and **1.4** are working.
-- **1.5** and **1.6** are implemented and headless-verified; both still need manual
-  visual acceptance.
-- Next planned slice: **1.7 - Moonleaf Planter v1**.
+- **1.5** through **1.8.1** are implemented and headless-verified; 1.5 and 1.6 still
+  need manual visual acceptance, and 1.7/1.8/1.8.1 need manual play acceptance.
+- Next planned slice: **1.9 - Simple Customer Variety and Display Choice v1**.
   Plan stub: `docs/plans/vertical_slice_roadmap.md`.
 
 Near-term direction:
 
 ```text
-1.6 focused tileset/prop pass
--> 1.7 tiny Moonleaf planter payoff
--> 1.8+ more shop variety
+1.8.1 display UX/testing balance polish
+-> 1.9 simple customer variety/display choice
+-> 1.10 Mapleton Lane ambient dialogue
 ```
 
 Scope guard: keep building one tiny, working loop at a time. Do not pull in full town
@@ -38,8 +38,15 @@ The game currently supports:
 - Player movement, camera, collision, interactions, scene transitions, save/load, day
   advancement, inventory, gathering, crafting, shop sale, dialogue, HUD, notebook, and
   Saffron follow.
-- One display that holds a stack of one sellable crafted item.
-- Deterministic customer queue from displayed stock.
+- Two displays that each hold a stack of one chosen sellable crafted item, with a small
+  picker UI and a way to take stock back before a customer reserves it. Quest-active
+  crafted goods such as Root-Wake Tonic can be stocked if Marigold is carrying them.
+- Deterministic customer queue from total displayed stock.
+- One tiny Moonleaf planter on the shop exterior property that consumes a Moonleaf Seed
+  Packet, grows through sleep/day advancement, saves its state, and uses existing
+  Moonleaf bush art when mature.
+- Forest Water can be gathered from the original clearing spring and from the Forest Path
+  brook.
 - Quest-driven first-week chain:
   - Day 1 Sage request: Root-Wake Tonic.
   - Day 2 Camellia request: Glowberry Cordial.
@@ -51,8 +58,8 @@ The game currently supports:
   speaker/expression switching. Marigold appears on the lower-right; NPCs appear on the
   lower-left; speakers without portrait art hide the portrait slot.
 - Readability blockouts plus first-pass prop art for the shop exterior, Mapleton Lane,
-  forest clearing, and forest path, including clearer path mouths/edges and a
-  visual-only future planter marker on the shop property.
+  forest clearing, and forest path, including the updated shop facade art, clearer path
+  mouths/edges, and a visual-only future planter marker on the shop property.
 
 ## Slice Index
 
@@ -74,6 +81,9 @@ The game currently supports:
 | 1.4 Dialogue Portraits | Complete, user accepted | Large portraits/nameplates and alternating speaker lines. |
 | 1.5 Map Blockout and Layout Readability | Implemented, headless-verified; needs manual acceptance | Clearer current map blockouts before polished tiles/props. |
 | 1.6 Focused Tileset and Prop Production Pass | Implemented, headless-verified; needs manual acceptance | Small reusable prop sprites layered onto the current maps without mechanics changes. |
+| 1.7 Moonleaf Planter | Implemented, headless-verified; needs manual acceptance | One saved Moonleaf planter payoff for Sage's seed packet reward. |
+| 1.8 Second Display and Mixed Shop Stock | Implemented, headless-verified; needs manual acceptance | Second saved shop display and deterministic customer purchases from either display. |
+| 1.8.1 Display UX and Testing Balance Polish | Implemented, headless-verified; needs manual acceptance | Display item picker, take-back action, mature Moonleaf art reuse, and a Forest Path water source. |
 
 Detailed plans:
 
@@ -91,6 +101,8 @@ docs/plans/vertical_slice_1_3_forest_path_brookmint.md
 docs/plans/vertical_slice_1_4_dialogue_portraits.md
 docs/plans/vertical_slice_1_5_map_blockout_readability.md
 docs/plans/vertical_slice_1_6_focused_tileset_prop_pass.md
+docs/plans/vertical_slice_1_7_moonleaf_planter.md
+docs/plans/vertical_slice_1_8_second_display_mixed_stock.md
 docs/plans/vertical_slice_roadmap.md
 ```
 
@@ -155,9 +167,11 @@ QuestDatabase
 QuestSystem
 DialogueBox
 DaySystem
+PlanterSystem
 HUD
 InventoryPanel
 CauldronCraftingPanel
+DisplayStockPanel
 NotebookPanel
 SaveSystem
 ```
@@ -169,8 +183,9 @@ Important ownership:
 - `QuestSystem` stores quest states and checks `required_quests` / `minimum_day`.
 - `RecipeKnowledgeSystem` stores permanently unlocked recipes.
 - `ShopState` stores persistent display stock independently of loaded scenes.
+- `PlanterSystem` stores the one Moonleaf planter state independently of loaded scenes.
 - `SaveSystem` stores inventory, gold, day/gatherable state, quest state, known recipes,
-  persistent display stock, current scene, and player position.
+  persistent display stock, planter state, current scene, and player position.
 - `DialogueBox` supports both old string-array lines and optional per-line dictionaries:
   `{ "speaker": "...", "expression": "...", "text": "..." }`.
 
@@ -201,6 +216,7 @@ scenes/ui/DialogueBox.tscn
 scenes/ui/HUD.tscn
 scenes/ui/InventoryPanel.tscn
 scenes/ui/CauldronCraftingPanel.tscn
+scenes/ui/DisplayStockPanel.tscn
 scenes/ui/NotebookPanel.tscn
 ```
 
@@ -209,8 +225,10 @@ Notable scripts added after the base slice:
 ```text
 scripts/core/NoticeBoard.gd
 scripts/core/QuestLockedDoor.gd
+scripts/core/MoonleafPlanter.gd
 scripts/npc/CamelliaLaneNPC.gd
 scripts/npc/SageLaneNPC.gd
+scripts/systems/PlanterSystem.gd
 ```
 
 ## Art Pipeline Rules
@@ -352,20 +370,153 @@ Non-goals:
 - No new mechanics, quests, NPCs, areas, schedules, farming, decoration mode, or broad
   tileset tooling.
 
-## Current Next Slice: 1.7
+## Recently Completed Slice: 1.7
 
-Use the roadmap entry for **Vertical Slice 1.7 - Moonleaf Planter v1** as the starting
-point, but write a focused plan before implementing it.
+Implement `docs/plans/vertical_slice_1_7_moonleaf_planter.md`.
 
-Likely focus:
+Goal:
 
-- Pay off Sage's Moonleaf Seed Packet with one tiny controlled planter loop.
-- Keep the existing shop exterior garden marker or a similarly small location in scope.
+- Pay off Sage's Moonleaf Seed Packet reward with one tiny fixed Moonleaf planter.
+
+Changed files:
+
+```text
+art/props/shop_exterior/moonleaf_planter_harvested.png
+art/props/shop_exterior/moonleaf_planter_harvested.png.import
+art/props/shop_exterior/moonleaf_planter_ready.png
+art/props/shop_exterior/moonleaf_planter_ready.png.import
+art/props/shop_exterior/moonleaf_planter_sprout.png
+art/props/shop_exterior/moonleaf_planter_sprout.png.import
+art/props/shop_exterior/moonleaf_planter_young.png
+art/props/shop_exterior/moonleaf_planter_young.png.import
+project.godot
+scenes/world/ShopExterior.tscn
+scripts/core/MoonleafPlanter.gd
+scripts/systems/PlanterSystem.gd
+scripts/systems/SaveSystem.gd
+tools/verify_vertical_slice_1_7.gd
+docs/plans/vertical_slice_1_7_moonleaf_planter.md
+docs/PROGRESS.md
+```
+
+Implementation notes:
+
+- Added `PlanterSystem` for a single stable planter ID, not a generic farming system.
+- The shop exterior `FuturePlanterMarker` remains visual-only for 1.6 preservation; the
+  new `MoonleafPlanter` is a separate interactable sibling over the garden marker.
+- Planting consumes `moonleaf_seed_packet` x1, growth is computed from `DaySystem`, and
+  harvesting ready Moonleaf gives `moonleaf` x2.
+- Save/load now includes `planters`.
+- Headless verifier `tools/verify_vertical_slice_1_7.gd` passed.
 
 Non-goals:
 
-- No full farming system, seasons, stamina, tool upgrades, decoration mode, or expanded
-  garden plots.
+- No full farming, watering, tools, crop grids, seasons, crop quality, stamina, seed
+  shop, or garden expansion.
+
+## Recently Completed Slice: 1.8
+
+Implement `docs/plans/vertical_slice_1_8_second_display_mixed_stock.md`.
+
+Goal:
+
+- Let Marigold stock two small displays at once and sell from either display through the
+  existing deterministic customer queue.
+
+Changed files:
+
+```text
+scenes/world/ShopInterior.tscn
+scripts/core/ShopDisplay.gd
+scripts/core/ShopOpenSign.gd
+scripts/npc/CustomerNPC.gd
+tools/verify_vertical_slice_1_8.gd
+docs/plans/vertical_slice_1_8_second_display_mixed_stock.md
+docs/PROGRESS.md
+```
+
+Implementation notes:
+
+- Added `SecondShopDisplay` with stable display ID `side_display`.
+- `ShopState` already supported multiple display IDs, so no new shop persistence system
+  was needed.
+- `ShopOpenSign` totals available stock across `shop_displays`.
+- `CustomerNPC` picks the first stocked display by stable display ID, reserves that
+  display, and consumes from the reserved display at checkout.
+- The second display prefers `glowberry_cordial` when stocking from inventory, while
+  still using existing known-recipe stockability rules.
+- Headless verifier `tools/verify_vertical_slice_1_8.gd` passed.
+
+Non-goals:
+
+- No price setting, customer preferences, simultaneous customers, shop upgrades, direct
+  inventory sales, decoration mode, or schedules.
+
+## Recently Completed Slice: 1.8.1
+
+Implement immediate feedback from 1.7/1.8 manual testing.
+
+Goal:
+
+- Fix display usability and reduce ingredient-test friction without pulling in the full
+  time system yet.
+
+Changed files:
+
+```text
+data/items.json
+scenes/world/ForestPath.tscn
+scenes/world/ShopExterior.tscn
+scenes/ui/DisplayStockPanel.tscn
+scripts/core/ShopDisplay.gd
+scripts/player/PlayerController.gd
+scripts/ui/DisplayStockPanel.gd
+scripts/ui/TitleMenu.gd
+tools/verify_vertical_slice_0_9.gd
+tools/verify_vertical_slice_1_8_1.gd
+docs/PROGRESS.md
+```
+
+Implementation notes:
+
+- Added `DisplayStockPanel`, a compact display picker UI for choosing which known
+  sellable crafted good to stock.
+- Displays now support taking unreserved stock back into inventory.
+- Root-Wake Tonic now has a shop sell price of 22 gold.
+- Display stockability now allows recipes that are permanently known or temporarily
+  available through an active/ready quest, matching the cauldron recipe list behavior.
+- The updated shop facade sprite is scaled and anchored to the existing front step, and
+  the old facade blockout polygons are hidden so they do not show through transparent
+  parts of the new art.
+- Mature Moonleaf planter visuals now use the existing `moonleaf_bush.png` art; sprout
+  and young stages remain the small planter-specific sprites.
+- Added `BrookWaterGathering` to Forest Path so Forest Water can be gathered from the
+  brook after the path is unlocked.
+- The time system is deferred to a dedicated slice because it should own shop hours,
+  daily schedule rules, save data, UI, and any NPC timing behavior together.
+- Headless verifiers `tools/verify_vertical_slice_0_9.gd`,
+  `tools/verify_vertical_slice_1_6.gd`, `tools/verify_vertical_slice_1_8.gd`, and
+  `tools/verify_vertical_slice_1_8_1.gd` passed after this feedback patch.
+
+Non-goals:
+
+- No clock/time-of-day system yet.
+- No shop-hour rules, NPC schedules, customer preferences, or expanded farming.
+
+## Current Next Slice: 1.9
+
+Use the roadmap entry for **Vertical Slice 1.9 - Simple Customer Variety and Display
+Choice v1** as the starting point, but write a focused plan before implementing it.
+
+Likely focus:
+
+- Add a tiny amount of customer variety and display-choice flavor while keeping customer
+  visits sequential and deterministic.
+
+Non-goals:
+
+- No relationship points, schedules, reputation, price sensitivity, simultaneous
+  browsing, or complex preferences.
 
 ## Future Feature Notes
 

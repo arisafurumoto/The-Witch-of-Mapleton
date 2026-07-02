@@ -64,7 +64,7 @@ func _check_stackable_display() -> void:
 		_check(quantity_label.text == "x3", "QuantityLabel did not show x3 for stacked stock")
 
 	inventory.call("load_from", {"calming_tea": 1, "glowberry_cordial": 1}, 0)
-	display.call("interact")
+	display.call("stock_item_from_inventory", "calming_tea")
 	_check(int(display.call("get_stock_quantity")) == 4, "Adding matching stock did not increment the display")
 	_check(int(inventory.call("get_quantity", "calming_tea")) == 0, "Adding matching stock did not remove inventory")
 	saved_stock = shop_state.call("get_display_stock", "main_display")
@@ -72,7 +72,7 @@ func _check_stackable_display() -> void:
 	if quantity_label != null:
 		_check(quantity_label.text == "x4", "QuantityLabel did not update after adding stock")
 
-	display.call("interact")
+	display.call("stock_item_from_inventory", "glowberry_cordial")
 	_check(String(display.call("get_stock_item_id")) == "calming_tea", "Different inventory item overwrote existing display stock")
 	_check(int(display.call("get_stock_quantity")) == 4, "Different inventory item changed existing display quantity")
 	_check(int(inventory.call("get_quantity", "glowberry_cordial")) == 1, "Different inventory item was removed while display held another item")
@@ -83,7 +83,7 @@ func _check_stackable_display() -> void:
 
 	recipe_knowledge.call("unlock_recipe", "glowberry_cordial", false)
 	inventory.call("load_from", {"glowberry_cordial": 1}, 0)
-	display.call("interact")
+	display.call("stock_item_from_inventory", "glowberry_cordial")
 	_check(String(display.call("get_stock_item_id")) == "glowberry_cordial", "Known Glowberry Cordial could not be stocked")
 	_check(int(display.call("get_stock_quantity")) == 1, "Glowberry Cordial stock quantity was incorrect")
 

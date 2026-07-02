@@ -8,6 +8,7 @@ extends Control
 func _ready() -> void:
 	HUD.visible = false
 	InventoryPanel.visible = false
+	DisplayStockPanel.visible = false
 	_continue_button.disabled = not SaveSystem.has_save()
 	_continue_button.pressed.connect(_on_continue_pressed)
 	_new_game_button.pressed.connect(_on_new_game_pressed)

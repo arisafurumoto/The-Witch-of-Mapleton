@@ -2,7 +2,7 @@ extends Node
 
 # Autoload singleton. Saves and loads the run to user://savegame.json.
 # Stores only stable ids and state (day, inventory, gold, depleted gatherables,
-# quest states, shop display stock, current scene, and player position).
+# quest states, shop display stock, planter state, current scene, and player position).
 # Auto-loads any existing save on startup. Must be the LAST autoload so the
 # systems it writes into are already initialised.
 
@@ -10,7 +10,7 @@ signal game_saved(day: int, gold: int)
 signal game_loaded(day: int, gold: int)
 
 const SAVE_PATH := "user://savegame.json"
-const VERSION := "0.6.0"
+const VERSION := "0.7.0"
 const START_SCENE := "res://scenes/world/ShopInterior.tscn"
 
 var _pending_scene_path: String = ""
@@ -34,6 +34,7 @@ func save_game() -> void:
 		"quests": QuestSystem.get_save_data(),
 		"known_recipes": RecipeKnowledgeSystem.get_save_data(),
 		"shop_displays": ShopState.get_save_data(),
+		"planters": PlanterSystem.get_save_data(),
 		"current_scene": _get_current_scene_path(),
 		"player_position": _get_player_position_data(),
 	}
@@ -60,6 +61,7 @@ func load_game(restore_scene: bool = true, notify: bool = true) -> void:
 	RecipeKnowledgeSystem.load_from(data.get("known_recipes", []))
 	QuestSystem.load_from(data.get("quests", {}))
 	ShopState.load_from(data.get("shop_displays", {}))
+	PlanterSystem.load_from(data.get("planters", {}))
 	_unlock_completed_quest_recipes()
 	_pending_scene_path = String(data.get("current_scene", ""))
 	_has_pending_player_position = _read_player_position(data.get("player_position", {}))
@@ -86,6 +88,7 @@ func start_new_game() -> void:
 	RecipeKnowledgeSystem.load_from([])
 	QuestSystem.load_from({})
 	ShopState.clear()
+	PlanterSystem.clear()
 	if has_save():
 		var save_path := ProjectSettings.globalize_path(SAVE_PATH)
 		var error := DirAccess.remove_absolute(save_path)

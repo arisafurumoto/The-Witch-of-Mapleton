@@ -1,6 +1,6 @@
 extends "res://scripts/core/Interactable.gd"
 
-# One-display shop shelf. It can hold a stack of one sellable crafted item.
+# Shop shelf. Each display holds a stack of one sellable crafted item.
 
 signal stock_changed
 
@@ -27,10 +27,7 @@ func interact() -> void:
 	if _reserved:
 		HUD.show_toast("Customer has chosen this item")
 		return
-	if has_stock():
-		_add_matching_stock_from_inventory()
-		return
-	_stock_from_inventory()
+	DisplayStockPanel.open(self)
 
 func has_stock() -> bool:
 	return _stock_item_id != "" and _stock_quantity > 0
@@ -45,6 +42,24 @@ func get_available_stock_quantity() -> int:
 	if not has_stock():
 		return 0
 	return _stock_quantity - (1 if _reserved else 0)
+
+func can_retrieve_stock() -> bool:
+	return has_stock() and not _reserved
+
+func retrieve_stock_to_inventory() -> bool:
+	if not can_retrieve_stock():
+		return false
+	var item_name := ItemDatabase.get_item_name(_stock_item_id)
+	var quantity := _stock_quantity
+	Inventory.add_item(_stock_item_id, _stock_quantity)
+	_stock_item_id = ""
+	_stock_quantity = 0
+	_reserved = false
+	_sync_shop_state()
+	HUD.show_toast("Retrieved %s x%d" % [item_name, quantity])
+	_update_visual()
+	stock_changed.emit()
+	return true
 
 func get_stock_total_price() -> int:
 	if not has_stock():
@@ -107,31 +122,54 @@ func show_prompt(value: bool) -> void:
 	if _reserved:
 		prompt = "Item chosen"
 	elif has_stock() and _is_stockable_item(_stock_item_id) and Inventory.has_item(_stock_item_id, accepted_quantity):
-		prompt = "Add stock"
+		prompt = "Manage display"
 	elif has_stock():
-		prompt = "Display stocked"
+		prompt = "Manage display"
 	else:
 		prompt = "Stock display"
 	if _label:
 		_label.text = prompt
 	super.show_prompt(value)
 
+func can_stock_item(item_id: String) -> bool:
+	if _reserved or accepted_quantity <= 0:
+		return false
+	if item_id == "" or not Inventory.has_item(item_id, accepted_quantity):
+		return false
+	if not _is_stockable_item(item_id):
+		return false
+	if has_stock() and _stock_item_id != item_id:
+		return false
+	var stack_limit := ItemDatabase.get_stack_limit(item_id)
+	if stack_limit > 0 and _stock_quantity + accepted_quantity > stack_limit:
+		return false
+	return true
+
+func stock_item_from_inventory(item_id: String) -> bool:
+	if not can_stock_item(item_id):
+		return false
+	if not Inventory.remove_item(item_id, accepted_quantity):
+		return false
+	if has_stock():
+		_stock_quantity += accepted_quantity
+	else:
+		_stock_item_id = item_id
+		_stock_quantity = accepted_quantity
+		_reserved = false
+	_sync_shop_state()
+	HUD.show_toast("Stocked %s x%d" % [ItemDatabase.get_item_name(_stock_item_id), _stock_quantity])
+	_update_visual()
+	stock_changed.emit()
+	return true
+
 func _stock_from_inventory() -> void:
 	if accepted_quantity <= 0:
 		return
 	var item_id := _find_stockable_inventory_item_id()
 	if item_id == "":
-		HUD.show_toast("Need a known crafted good to stock")
+		HUD.show_toast("Need a sellable crafted good to stock")
 		return
-	if not Inventory.remove_item(item_id, accepted_quantity):
-		return
-	_stock_item_id = item_id
-	_stock_quantity = accepted_quantity
-	_reserved = false
-	_sync_shop_state()
-	HUD.show_toast("Stocked %s x%d" % [ItemDatabase.get_item_name(_stock_item_id), _stock_quantity])
-	_update_visual()
-	stock_changed.emit()
+	stock_item_from_inventory(item_id)
 
 func _add_matching_stock_from_inventory() -> void:
 	if not has_stock():
@@ -146,13 +184,7 @@ func _add_matching_stock_from_inventory() -> void:
 	if stack_limit > 0 and _stock_quantity + accepted_quantity > stack_limit:
 		HUD.show_toast("Display is full")
 		return
-	if not Inventory.remove_item(_stock_item_id, accepted_quantity):
-		return
-	_stock_quantity += accepted_quantity
-	_sync_shop_state()
-	HUD.show_toast("Added %s x%d" % [ItemDatabase.get_item_name(_stock_item_id), _stock_quantity])
-	_update_visual()
-	stock_changed.emit()
+	stock_item_from_inventory(_stock_item_id)
 
 func _update_visual() -> void:
 	var visible_quantity := get_available_stock_quantity()
@@ -192,7 +224,17 @@ func _is_stockable_item(item_id: String) -> bool:
 	var recipe: Dictionary = RecipeDatabase.get_recipe_for_output(item_id)
 	if recipe.is_empty():
 		return false
-	return RecipeKnowledgeSystem.is_recipe_known(String(recipe.get("id", "")))
+	return _is_recipe_available_for_sale(recipe)
+
+func _is_recipe_available_for_sale(recipe: Dictionary) -> bool:
+	var recipe_id := String(recipe.get("id", ""))
+	if RecipeKnowledgeSystem.is_recipe_known(recipe_id):
+		return true
+	var quest_id := String(recipe.get("quest_id", ""))
+	if quest_id == "":
+		return false
+	var state := QuestSystem.get_quest_state(quest_id)
+	return state == QuestSystem.STATE_ACTIVE or state == QuestSystem.STATE_READY
 
 func _load_icon_texture(icon_path: String) -> Texture2D:
 	if icon_path == "":

@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			target.interact()
 
 func _is_modal_ui_active() -> bool:
-	return DialogueBox.is_active() or CauldronCraftingPanel.is_active() or NotebookPanel.is_active() or HUD.is_day_transition_active()
+	return DialogueBox.is_active() or CauldronCraftingPanel.is_active() or DisplayStockPanel.is_active() or NotebookPanel.is_active() or HUD.is_day_transition_active()
 
 func _update_animation() -> void:
 	if velocity.length() > 5.0:

@@ -65,7 +65,7 @@
     "category": "crafted_good",
     "description": "A mild tonic for young roots that need a little magical encouragement.",
     "stack_limit": 99,
-    "sell_price": 0,
+    "sell_price": 22,
     "icon": "res://art/items/root_wake_tonic.png",
     "tags": ["plant", "tonic", "quest", "sage"]
   },

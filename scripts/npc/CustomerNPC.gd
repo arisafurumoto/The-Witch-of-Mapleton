@@ -1,6 +1,6 @@
 extends "res://scripts/core/Interactable.gd"
 
-# A prototype shop customer. After the shop is opened, they browse the stocked
+# A prototype shop customer. After the shop is opened, they browse a stocked
 # display, bring the item to the counter, and wait for Marigold to confirm the sale.
 
 @export var request_id: String = "first_calming_tea_request"
@@ -22,6 +22,7 @@ var _state: String = "hidden"
 var _session_generation: int = 0
 var _queue_active: bool = false
 var _queued_customers_remaining: int = 0
+var _reserved_display: Node2D = null
 
 @onready var _collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var _sprite: AnimatedSprite2D = $Visual
@@ -48,11 +49,7 @@ func interact() -> void:
 func start_shop_session(planned_customer_count: int = 1) -> void:
 	if _busy or _present or _queue_active:
 		return
-	var display := _display()
-	if display == null or not display.has_method("has_stock") or not bool(display.call("has_stock")):
-		HUD.show_toast("Stock the display first")
-		return
-	var available_stock := _display_stock_quantity(display)
+	var available_stock := _total_available_stock_quantity()
 	if available_stock <= 0:
 		HUD.show_toast("Stock the display first")
 		return
@@ -64,8 +61,8 @@ func start_shop_session(planned_customer_count: int = 1) -> void:
 func _start_customer_visit() -> void:
 	if _busy or _present:
 		return
-	var display := _display()
-	if display == null or not display.has_method("has_stock") or not bool(display.call("has_stock")):
+	var display := _select_display()
+	if display == null:
 		_end_queue()
 		return
 	_fulfilled = false
@@ -86,7 +83,7 @@ func _start_customer_visit() -> void:
 	await get_tree().create_timer(browse_time).timeout
 	if session_generation != _session_generation:
 		return
-	if not bool(display.call("has_stock")):
+	if _display_stock_quantity(display) <= 0:
 		await _leave_shop()
 		_end_queue()
 		return
@@ -95,6 +92,7 @@ func _start_customer_visit() -> void:
 		await _leave_shop()
 		_end_queue()
 		return
+	_reserved_display = display
 	HUD.show_toast("Customer chose %s" % ItemDatabase.get_item_name(chosen_item_id))
 	await _walk_to(_counter_aisle_position())
 	if session_generation != _session_generation:
@@ -132,16 +130,18 @@ func _on_day_changed(_day: int) -> void:
 	_state = "hidden"
 	_queue_active = false
 	_queued_customers_remaining = 0
+	_reserved_display = null
 	_set_present(false)
 
 func _confirm_display_sale() -> void:
-	var display := _display()
+	var display := _reserved_display if _reserved_display != null and is_instance_valid(_reserved_display) else _select_display()
 	if display == null or not display.has_method("consume_stock"):
 		return
 	_busy = true
 	var req := ShopRequestDatabase.get_request(request_id)
 	var customer_name := String(req.get("customer_name", "Customer"))
 	var stock: Dictionary = display.call("consume_stock")
+	_reserved_display = null
 	if stock.is_empty():
 		await _say(customer_name, ["Oh, it looks like the display is empty now."])
 		await _leave_shop()
@@ -199,8 +199,7 @@ func _start_next_queued_customer() -> void:
 	if _queued_customers_remaining <= 0:
 		_end_queue()
 		return
-	var display := _display()
-	if display == null or not display.has_method("has_stock") or not bool(display.call("has_stock")):
+	if _total_available_stock_quantity() <= 0:
 		_end_queue()
 		return
 	_queued_customers_remaining -= 1
@@ -218,7 +217,15 @@ func _display_stock_quantity(display: Node2D) -> int:
 		return int(display.call("get_available_stock_quantity"))
 	if display.has_method("get_stock_quantity"):
 		return int(display.call("get_stock_quantity"))
-	return 1 if bool(display.call("has_stock")) else 0
+	if display.has_method("has_stock"):
+		return 1 if bool(display.call("has_stock")) else 0
+	return 0
+
+func _total_available_stock_quantity() -> int:
+	var total := 0
+	for display in _stocked_displays():
+		total += _display_stock_quantity(display)
+	return total
 
 func _format_customer_lines(source_lines: Variant, item_id: String, gold: int) -> Array:
 	var lines: Array = []
@@ -279,4 +286,27 @@ func _counter_approach_position() -> Vector2:
 	return counter_position
 
 func _display() -> Node2D:
+	return _select_display()
+
+func _select_display() -> Node2D:
+	var displays := _stocked_displays()
+	if not displays.is_empty():
+		return displays[0]
 	return get_node_or_null(display_path) as Node2D
+
+func _stocked_displays() -> Array[Node2D]:
+	var displays: Array[Node2D] = []
+	for value in get_tree().get_nodes_in_group("shop_displays"):
+		var display := value as Node2D
+		if display != null and _display_stock_quantity(display) > 0:
+			displays.append(display)
+	displays.sort_custom(_sort_displays_by_path)
+	return displays
+
+func _sort_displays_by_path(a: Node2D, b: Node2D) -> bool:
+	return _display_sort_key(a) < _display_sort_key(b)
+
+func _display_sort_key(display: Node2D) -> String:
+	if display.has_method("get_save_id"):
+		return String(display.call("get_save_id"))
+	return String(display.get_path())

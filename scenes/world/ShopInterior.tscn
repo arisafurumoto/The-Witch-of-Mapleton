@@ -182,6 +182,44 @@ offset_bottom = -32.0
 text = "Stock display"
 horizontal_alignment = 1
 
+[node name="SecondShopDisplay" type="Area2D" parent="."]
+position = Vector2(590, 350)
+script = ExtResource("17_shop_display")
+prompt = "Stock display"
+display_id = "side_display"
+accepted_item_id = "glowberry_cordial"
+
+[node name="Visual" type="Polygon2D" parent="SecondShopDisplay"]
+position = Vector2(0, -8)
+color = Color(0.36, 0.21, 0.14, 1)
+polygon = PackedVector2Array(-32, -12, 32, -12, 28, 12, -28, 12)
+
+[node name="ItemIcon" type="Sprite2D" parent="SecondShopDisplay"]
+position = Vector2(0, -12)
+scale = Vector2(2, 2)
+visible = false
+
+[node name="QuantityLabel" type="Label" parent="SecondShopDisplay"]
+visible = false
+offset_left = 12.0
+offset_top = -32.0
+offset_right = 44.0
+offset_bottom = -16.0
+text = "x1"
+theme_override_font_sizes/font_size = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SecondShopDisplay"]
+position = Vector2(0, -8)
+shape = SubResource("DisplayZone")
+
+[node name="PromptLabel" type="Label" parent="SecondShopDisplay"]
+offset_left = -56.0
+offset_top = -66.0
+offset_right = 56.0
+offset_bottom = -50.0
+text = "Stock display"
+horizontal_alignment = 1
+
 [node name="Cauldron" type="Area2D" parent="."]
 position = Vector2(475, 170)
 script = ExtResource("4_crafting")
